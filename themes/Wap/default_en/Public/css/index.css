@@ -1,0 +1,102 @@
+@charset "utf-8";
+/* CSS Document */
+.gsys li{ float:left; display:inline-table;padding:10px 0 10px 4%;width:96%; height:60px; overflow:hidden;}
+.gsys li label{font-size:12px; color:#383838; line-height:18px; height:60px; overflow:hidden; white-space:normal;}
+.gsys li label b{font-size:18px;color:#ff6000;line-height:20px;}
+.gsys li span{ float:left; display:block; width:60px; line-height:60px; text-align:center; vertical-align:middle; color:#fff; border-radius:8px; font-size:30px; margin-right:10px;
+	background-image:-webkit-linear-gradient(left,#ff6000, #ff9000);background-image:linear-gradient(left,#ff6000,#ff9000);font-family:"微软雅黑";}
+
+.cases{ padding:10px 5%;}
+.cases li{ float:left; width:30%; height:35px; margin:10px 3% 10px 0%; overflow:hidden; border:1px solid #d3d3d3; box-shadow:0px 0px 3px #e5e5e5 ;text-align:center; vertical-align:middle; background-color:#fff; text-align:center;}
+.cases li a{ display:table-cell; height:35px; vertical-align:middle;}
+.cases li a img{ max-width:100%;}
+.cases li:nth-child(3),.cases li:nth-child(6){ margin-right:0;}
+
+.tags {
+	height: 35px;
+	padding: 0 10px;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom:3px solid #ccc;
+}
+
+.tags label a{
+	float:right;
+	line-height:35px;
+	font-size:12px;
+}
+.tags li {
+	float: left;
+	height: 35px;
+}
+li.tabs-title  a {
+    font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+	display: block;
+	float: left;
+	text-align: center;
+	width: 100%;
+	padding: 0 5px;
+	line-height: 30px;
+	color: #1A1A1A;
+}
+.tabs-title>a:focus, .tabs-title>a:hover, .tabs-title>a[aria-selected=true]{
+    background: #f9f9f9;
+}
+.tags li.is-active a,
+.tags li.is-active a:active{
+	border-bottom:3px solid #0195FF;
+	line-height: 32px;
+}
+.tags li.is-active a:hover {
+	text-decoration: none;
+}
+
+.section a.more{
+    position: absolute;
+    right: 5px;
+    top:0;
+    line-height: 34px;
+    font-size: 14px;
+}
+.section .more .iconfont{
+    font-size: 14px;
+}
+
+.tabs-panel {
+    padding: 8px;
+}
+.news_i{
+	display:block;
+}
+.news_i li{
+	line-height:26px;
+	height:26px;
+	overflow:hidden;
+	border-bottom:1px dashed #cfd3d6;
+}
+.news_i li a{ font-size:13px;}
+.news_i li .iconfont {
+	color: #949494;
+    font-size: 13px;
+}
+.section .tabs-content{
+    border: 0;
+}
+
+
+.swiper-container {
+	width: 100%;
+	height: 100%;
+}
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+}
+
+.swiper-container .swiper-button-prev,.swiper-container .swiper-button-next{
+    height: 27px;
+}

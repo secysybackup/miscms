@@ -1,0 +1,68 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<form id="myform" action="" method="post">
+    <volist name="fields" id="r">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">{$r.name}</label>
+            <div class="col-md-6">
+                {$r|getform=$form,###}
+            </div>
+        </div>
+    </volist>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">提交时间</label>
+        <div class="col-md-6">
+            <input type="text" value="{$vo['createtime']|toDate=###,'Y-m-d'}" class="form-control" disabled>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">状态:</label>
+        <div class="col-md-2">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="status" value="1"<eq name="vo.status" value="1"> checked</eq>>通过审核
+
+            </label>
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="status" value="0"<eq name="vo.status" value="0"> checked</eq>>待审核
+
+            </label>
+            </div>
+    </div>
+    <div class="form-actions">
+        <input type="hidden" name="id" value="{$vo.id}"/>
+        <input type="submit" value="提交" class="btn btn-primary" />
+        <a class="btn btn-primary" href="javascript:window.history.go(-1);">返回</a>
+    </div>
+</form>
+</block>
+
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

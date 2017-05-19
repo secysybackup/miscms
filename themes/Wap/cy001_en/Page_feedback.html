@@ -1,0 +1,28 @@
+<?php include "header.php";?>
+<div class="mainBox">
+	<?php include "banner.php";?>
+	<?php include "position.php";?>
+	<div class="listWrapper">
+		<div class="feedback">
+		    <form id="frm" method="post" action="{:U('Form/insert')}">
+		        <input type="hidden"  name="formid" value="1" />
+		        <input type="hidden"  name="title" value="手机端留言" />
+		        <ul>
+		            <li class="f1"><input name="username" type="text"  placeholder="username" ></li>
+		            <li class="f2"><input name="tel" type="text"  placeholder="tel" ></li>
+		            <li class="f3"><input name="email" type="text"  placeholder="email" ></li>
+		            <li class="tarea"> <textarea name="content" cols="" rows="" placeholder="message"></textarea></li>
+		            <li class="code">
+		                <input class="input-group-field" name="verifyCode" type="text">
+		                <span class="input-group-field">
+		                    <img src="{:U('Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();" class="fl l10" alt="code">
+		                </span>
+		            </li>
+		        </ul>
+		        <input type="submit" value="submit" class="button" id="submit">
+		    </form>
+		</div>
+	</div>
+	<?php include "footer.php";?>
+</div>
+</div>

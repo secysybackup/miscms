@@ -1,0 +1,20 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="main" class="container">
+    <Gr:list name="comment" field="title,content,createtime" order="id desc,listorder asc" id="vo">
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+            <img class="media-object" src="__PUBLIC__/images/nophoto.gif" alt="..." width="50">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">游客：匿名</h4>
+            <span>时间：{$vo.createtime|toDate=###,'Y-m-d'}</span></dd>
+            <dt>{$vo.content}</dt>
+        </div>
+    </div>
+    </Gr:list>
+</div>
+</block>

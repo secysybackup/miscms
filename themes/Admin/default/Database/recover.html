@@ -1,0 +1,39 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <a href="{:U('Database/index')}" class="btn btn-primary">备份数据</a>
+    <button class="btn btn-danger" onclick="myform.action='{:U('Database/recover?do=delete')}'; $('#myform').submit();">删除</button>
+</div>
+
+<form id="myform" name="myform" method="post" action="">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th class="w-50"><input type="checkbox" id="check_box" onclick="selectall('files[]');"></th>
+          <th align="left">名称</th>
+          <th align="left">大小</th>
+          <th align="left">备份时间</th>
+          <th align="left">下载</th>
+          <th align="left" style="width:8%">还原数据</th>
+        </tr>
+      </thead>
+
+    <tbody>
+    <volist name="files" id="vo">
+    <tr>
+      <td><input type="checkbox" name="files[]" value="{$vo.path}"> </td>
+      <td>{$vo.name}</td>
+      <td>{$vo.size|byte_format}</td>
+      <td>{$vo.time|toDate}</td>
+      <td><a class="btn btn-sm btn-primary" href="javascript:window.location='{:U('Database/download?filename='.$vo[name])}'">下载</a></td>
+      <td><a href="javascript:if(confirm('确认要还原数据吗？')) window.location='{:U('Database/recover?do=import&filename='.$vo[name])}'">还原数据</a></td>
+    </tr>
+    </volist>
+
+    </tbody>
+    </table>
+</form>
+
+</block>

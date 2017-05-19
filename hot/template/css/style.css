@@ -1,0 +1,29 @@
+@charset "utf-8";
+html,body{
+	margin:0;
+	padding:0;
+}
+/* CSS Document */
+.obtain form,.obtain div,.obtain h4,.obtain img,.obtain input,.obtain textarea,.obtain p{margin:0;padding:0}
+fieldset,img{border:0;}
+img{vertical-align:middle;}
+input,textarea{font-size:12px;font-family:inherit;margin:0;outline:none;resize:none;border:none;}
+.obtain .fl{
+    float: left;}
+.obtain .fr{
+    float: right;
+}
+/* 在线获取 */
+.obtain{background:url(../images/opcLine.png); height:125px;width:100%;position:fixed;bottom:0;left:0;color:#fff;font-family:"微软雅黑";}
+.obtain .grWidth{position:relative;height:125px;z-index:99;width: 1000px;margin: 0 auto;}
+.botainImg{position:absolute;left:0;top:-50px;}
+.obtain .tie{float:left;width:150px;padding:70px 0 0 230px;line-height:20px;font-size:14px;font-weight:normal;}
+.obtain .obtainForm{width:540px;overflow:hidden;float:right;padding-top:15px;}
+.obtain .obtainForm .left{width:390px;}
+.obtain .obtainForm .left p{height:26px;margin-bottom:10px;}
+.obtain .obtainForm .left input{width:177px;height:26px;line-height:26px;background:#fff;padding:0 5px;color:#999;}
+.obtain .obtainForm .left .name{margin-right:10px;}
+.obtain .obtainForm .left textarea{width:380px;background:#fff;height:50px;padding:5px;color:#999;font-family:"微软雅黑";}
+.obtain .obtainForm .submit{float:right;width:125px;height:50px;color:#fff;font-size:18px;background:#ff6c00;transition:all 0.3s;margin-top:30px;cursor:pointer;border:2px solid #ff6c00}
+.obtain .obtainForm .submit:hover{background:#333;transition:all 0.3s;background:none;box-shadow:0 0 10px #ff6c00 inset;}
+.obtain .obtainForm .left input:hover,.obtainForm .left textarea:hover{box-shadow:0 0 3px 1px #ff6c00 inset;}

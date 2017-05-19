@@ -1,0 +1,15 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="newsDetail">
+			<h1 class="tie">{$picture.title}</h1>
+			<p class="time">{$picture.createtime|toDate=###,'Y-m-d'}</p>
+			<div class="font"><div style="text-align:center"><img src="{$picture.thumb}" alt="{$r.title}"></div>{$picture.content}</div>
+			<p class="prea pageP">上一个：{if $prea!=''} <a href="{$prea.url}">{$prea.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+			<p class="prea pageN">下一个：{if $next!=''} <a href="{$next.url}">{$next.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+		</div>
+	</div>
+</block>

@@ -1,0 +1,35 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="box-bd">
+    <div class="portal-main clearfix">
+        <div class="user-card">
+            <h2 class="username">{$user['username']}</h2>
+            <p>
+                <i class="fa fa-users"></i><span>{$role[$user['groupid']]['name']}</span>
+            </p>
+            <p>下午好</p>
+
+            <img src="{:ltrim($user['avatar'], '.')}" width="150" onerror="this.src='__PUBLIC__/images/default_avatar.jpg'" class="avatar">
+        </div>
+    </div>
+
+    <div class="portal-sub">
+
+        <h4 style="line-height: 50px;">最近登录信息</h4>
+        <p>
+            注册ip：{$user['reg_ip']}
+        </p>
+        <p>
+            上次登录ip：{$user['last_ip']}
+        </p>
+        <p>
+            最后登录： {$user['last_logintime']|toDate}
+        </p>
+        <p>
+            注册时间：{$user['reg_time']|toDate}
+        </p>
+    </div>
+</div>
+
+</block>

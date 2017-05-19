@@ -1,0 +1,66 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form action="{:U('Role/edit')}" method="post" name="form" id="myform">
+    <input type="hidden" name="id" value="{$info.id}">
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">角色名称：</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="name" value="{$info.name}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">角色状态：</label>
+        <div class="col-md-5">
+            <label class="radio-inline">
+                <input type="radio" class="radio" value="1" name="status" <if condition="($info.status eq 1) OR ($info['status'] eq '') ">checked=""</if> >
+                启用
+            </label>
+            <label class="radio-inline">
+                <input type="radio" class="radio" value="0" name="status" <eq name="info.status" value="0">checked=""</eq> >
+                关闭
+            </label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">备注说明：</label>
+        <div class="col-md-5">
+            <input type="text" name="remark" class="form-control" value="{$info.remark}">
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+    </form>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

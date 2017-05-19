@@ -1,0 +1,73 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<style>.pay_desc a {color:#FB0000;}</style>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <form id="myform" name="myform" action="{:U('payment/listorder')}" method="post">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>支付名称</th>
+                    <th width="500">描述</th>
+                    <th>插件版本</th>
+                    <th>插件作者</th>
+                    <th>管理操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="list" id="vo" key="k">
+                    <tr>
+                        <td>{$vo['pay_name']}</td>
+                        <td class="pay_desc">{$vo['pay_desc']}</td>
+                        <td>{$vo['version']}</td>
+                        <td>{$vo['author']}</td>
+                        <td>
+                        {if $vo['id']}
+                            {if $vo['status']}
+                            <a class="btn btn-sm btn-warning" href="javascript:;" onclick="change_status('{:U('payment/edit',array(id=>$vo['id'],status=>0))}')">禁用</a>
+                            {else}
+                            <a class="btn btn-sm btn-primary" href="javascript:;" onclick="change_status('{:U('payment/edit',array(id=>$vo['id'],status=>1))}')">启用</a>
+                            {/if}
+                            <a class="btn btn-sm btn-info" href="javascript:;" onclick="openwin('{:U('payment/edit',array(id=>$vo['id']))}','安装','700px','550px')">配置</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:;" onclick="confirm_delete('{:U('payment/delete',array(id=>$vo['id']))}')">卸载</a>
+                            {else}
+                            <a class="btn btn-sm btn-primary" href="javascript:;" onclick="openwin('{:U('payment/add',array(code=>$vo['pay_code']))}','安装','700px','550px')">安装</a>
+                        {/if}
+                        </td>
+                    </tr>
+
+                </volist>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+    <script>
+        function change_status(url){
+            $.ajax({
+                url:url,
+                success:function(data){
+                    if (data.status == 1) {
+                        layer.msg(data.info, {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.reload();
+                            return true;
+                        });
+                    } else {
+                        layer.msg(data.info, {
+                            icon: 2,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+</block>

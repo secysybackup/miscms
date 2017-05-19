@@ -1,0 +1,36 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <div class="newsShow">
+                <h2>{$picture['title']}</h2>
+                <h3><span>文章来源：新闻来源：{if $comefrom}{$comefrom}{else}{$site_name}{/if}</span><span>人气：{$hits}</span><span>发表时间：{$r['createtime']|toDate=###,'Y-m-d'}</span><span class="fontResizer">【<a href="javascript:void(0);" class="smallFont">小</a><a href="javascript:void(0);" class="medFont">中</a><a href="javascript:void(0);" class="largeFont">大</a>】</span></h3>
+                <div class="newsShowBox fontsizebox">
+                    {$picture['content']}
+                </div>
+            </div>
+        </div>
+        <!-- 上下篇 -->
+        <div class="fenyList">
+            <div class="prew">{if $prea}上一篇:<a href="{$prea.url}">{$prea.title}</a>{else}<a>上一篇:无</a>{/if}</div>
+            <div class="nextw">{if $next}下一篇:<a href="{$next.url}">{$next.title}</a>{else}<a>下一篇:无</a>{/if}</div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- 推荐资讯 -->
+        <div class="recCase">
+            <div class="recTitle">相关案例</div>
+            <ul>
+                <Gr:list order="listorder asc,id desc" catid="catid" key="i" posid="1" field="title,url,thumb" limit="3" id="r">
+                    <li><a href="{$r[url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"><span>{$r['title']|str_cut=###,45}</span></a></li>
+                </Gr:list>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+</block>

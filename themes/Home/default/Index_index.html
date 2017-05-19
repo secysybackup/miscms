@@ -1,0 +1,504 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!-- 数十项荣誉认证印证我们的实力 -->
+<div class="mainHigh">
+    <div class="w980">
+        <h2 class="fl"><img src="__IMG__/yz.jpg" alt="{$Cats[124][catname]}"></h2>
+        <div class="highBox fr">
+            <a class="prev" href="javascript:;"></a>
+            <a class="next" href="javascript:;"></a>
+            <div class="bd">
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="16" key="i" field="title,url,thumb" limit="10" id="r">
+                        <li><a href="{$Cats[124][url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a></li>
+                    </Gr:list>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mainRz yzh-editable" editable-type="block" editable-id="17"><img src="{$block[17]}"></div>
+<!-- 产品 -->
+<div class="mainProd">
+    <div class="w980">
+        <div class="prodBar fl">
+            <h2><span>优色产品分类</span>Product categories</h2>
+            <ul>
+                <Gr:cat catid="2" id="r" key="i">
+                    <li><a class="{if $i==1}active{/if}"  href="{$r.url}" title="{$r.catname}">{$r.catname}</a>
+                        {if $r['child']=="1"}
+                            <ol>
+                                <Gr:cat catid="$r['id']" id="rr" key='ii'>
+                                    <li><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></li>
+                                </Gr:cat>
+                            </ol>
+                        {/if}
+                    </li>
+                </Gr:cat>
+            </ul>
+        </div>
+        <div class="prodShow fr">
+            <div class="prodA fl yzh-editable" editable-type="block" editable-id="3,4">
+                <a href="{$block[3]}"><img src="{$block[4]}" alt=""></a>
+            </div>
+            <div class="prodB fr yzh-editable" editable-type="block" editable-id="5,6">
+                <a href="{$block[5]}"><img src="{$block[6]}" alt=""></a>
+            </div>
+            <div class="prodC fl yzh-editable" editable-type="block" editable-id="7,8">
+                <a href="{$block[7]}"><img src="{$block[8]}" alt=""></a>
+            </div>
+            <div class="prodD fl yzh-editable" editable-type="block" editable-id="9,10">
+                <a href="{$block[9]}"><img src="{$block[10]}" alt=""></a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="prodE fl yzh-editable" editable-type="block" editable-id="11,12">
+                <a href="{$block[11]}"><img src="{$block[12]}" alt=""></a>
+            </div>
+            <div class="prodF fl yzh-editable" editable-type="block" editable-id="13,14">
+                <a href="{$block[13]}"><img src="{$block[14]}" alt=""></a>
+            </div>
+            <div class="prodG fl yzh-editable" editable-type="block" editable-id="15,16">
+                <a href="{$block[16]}"><img src="{$block[16]}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 广告条 -->
+<div class="mainAd">
+    <div class="w1000 yzh-editable" editable-type="block" editable-id="18"><img src="{$block[18]}"></div>
+</div>
+<!-- 解决方案 -->
+<div class="mainSolu">
+    <div class="w980">
+        <div class="soluList fl">
+            <h2><img src="__IMG__/sobt.png" alt="行业解决方案"></h2>
+            <ul>
+                <li class="on"><a href="{$Cats[27][url]}">行政机构专显解决方案</a></li>
+                <li class=""><a href="{$Cats[29][url]}">事业单位专显解决方案</a></li>
+                <li class=""><a href="{$Cats[130][url]}">教育机构专显解决方案</a></li>
+                <li class=""><a href="{$Cats[128][url]}">休闲娱乐专显解决方案</a></li>
+                <li class=""><a href="{$Cats[126][url]}">电子通讯专显解决方案</a></li>
+                <li class=""><a href="{$Cats[127][url]}"> 酒店餐饮专显解决方案</a></li>
+            </ul>
+            <a class="more" href="{$Cats[3][url]}">更多行业方案>></a>
+        </div>
+        <div class="soluShow fr">
+            <!-- 01教育机构专显解决方案 -->
+            <div class="soluShowBox">
+                <div class="soPic">
+                    <Gr:list order="listorder asc,id desc" catid="27" key="i" posid="1" field="title,url,thumb,description" limit="1" id="r">
+                        <img width="268" height="208" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}">
+                        <h3>{$r[title]|str_cut=###,40}</h3>
+                        <p>{$r['description']|str_cut=###,220}</p>
+                        <a href="{$r[url]}" title="{$r[title]}">查看详情</a>
+                    </Gr:list>
+                </div>
+                <h4>典型应用案例</h4>
+                <div class="scrollBd">
+                    <div class="bd">
+                        <ul>
+                            <Gr:list order="listorder asc,id desc" catid="4" key="i"  field="title,url,thumb" id="r">
+                                <li><a href="{$r[url]}" title="{$r[title]}"><img width="200" height="155" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a><span>{$r[title]|str_cut=###,25}</span></li>
+                            </Gr:list>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 优势 -->
+<div class="mainOdds w980">
+    <h3><span>携手优色专显</span>以科技的力量创造价值！</h3>
+    <h4><span>Customer case</span>坚信客户的成功就是我们的成功</h4>
+    <h2>选择我们的6大理由</h2>
+    <div class="oddsA">
+        <h5><span>领先的</span>技术水平</h5>
+        <p>起始于2003年，<span>是国内最早提出专用显示器概念、</span>并从事专显研发/生产/销售服务的企业。</p>
+        <p>强大的安防背景，保证显示技术长期领先于同行，<span>多项成果荣获国家专利认证。</span></p>
+    </div>
+    <div class="oddsB">
+        <h5><span>完善的</span>产品结构</h5>
+        <p>优色显示器<span>按照不同尺寸/功能/款式/安装方式/应用场所，</span>可细分为20多个系列。</p>
+        <p>具体<span>型号超过200款</span>,是目前<span>国内专显领域中产品线最为完善</span>的企业之一。</p>
+    </div>
+    <div class="oddsC">
+        <h5><span>个性的</span>产品定制</h5>
+        <p>汇聚了一批<span>经验丰富的工业产品外观设计师、结构工程师</span>、可为广大行业客户提供从新产品开发。</p>
+        <p>产品<span>改良到模具生产制造、产品外壳生产加工、后加工表面后处理</span>的整体技术援助。</p>
+    </div>
+    <div class="oddsD">
+        <h5><span>严格的</span>品质管理</h5>
+        <p>大规模现代化厂房+先进自动化生产线+国际化质检流程</p>
+        <p>现已通过ISO9001-2008体系认证，产品获得CCC、CE、FCC、ROHS、UL认证、公安部检测认证、行业十大品牌等几十项荣誉认证。</p>
+    </div>
+    <div class="oddsE">
+        <h5><span>丰富的</span>工程案例</h5>
+        <p>国内：<span>同众多国内外知名企业建立战略合作关系</span>，并为世博会、亚运会等国家重大体育赛事提供服务</p>
+        <p>国外：除<span>成品远销海外50多个国家和地区</span>外,还为国际一线品牌提供OEM/ODM代工、市场口碑良好</p>
+    </div>
+    <div class="oddsF">
+        <h5><span>贴心的</span>售后服务</h5>
+        <p><span>所售产品提供1-3年质保和免费售后维护，</span>并有<span>超500家售后服务网点</span>，分布全国各省市地区。</p>
+        <p>快速响应；专业的技术支持人员，就近提供上门维护。</p>
+    </div>
+</div>
+<!-- 关于我们 -->
+<div class="mainAbout">
+    <div class="w980">
+        <div class="aboutBox fl">
+            <h2><img height="35" src="__IMG__/abt.jpg" alt="关于优色专显"></h2>
+            <div class="about yzh-editable" editable-type="block" editable-id="2">
+                {$block[2]}
+                <a href="{$Cats[1][url]}">详细>></a>
+            </div>
+            <h3><a class="acitve" href="{$Cats[10][url]}">企业文化</a><a href="{$Cats[11][url]}">组织架构</a><a href="{$Cats[13][url]}">发展历程</a></h3>
+        </div>
+        <div class="videoBox fl yzh-editable" editable-type="block" editable-id="1">
+            {$block[1]}
+        </div>
+    </div>
+</div>
+<!-- 公司风采 -->
+<div class="mainSetting">
+    <h2>360度了解优色</h2>
+    <h3><span>Panoramic USER</span>建有7000多平方米现代化工厂，拥有多条国际先进的自动化生产线覆盖</h3>
+    <div class="settingBox">
+        <div class="w980">
+            <div class="setShow">
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="45" key="i" posid="1" field="title,url,thumb" limit="6" id="r">
+                        <li><a href="{$Cats[45][url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a></li>
+                        {if $i%3==0 && $i<6}<li class="more"><a href="{$Cats[45][url]}">查看更多</a></li>{/if}
+                    </Gr:list>
+                </ul>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="18" key="i" posid="1" field="title,url,thumb" limit="6" id="r">
+                        <li><a href="{$Cats[18][url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a></li>
+                        {if $i%3==0 && $i<6}<li class="more"><a href="{$Cats[18][url]}">查看更多</a></li>{/if}
+                    </Gr:list>
+                </ul>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="46" key="i" posid="1" field="title,url,thumb" limit="6" id="r">
+                        <li><a href="{$Cats[46][url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a></li>
+                        {if $i%3==0 && $i<6}<li class="more"><a href="{$Cats[46][url]}">查看更多</a></li>{/if}
+                    </Gr:list>
+                </ul>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="47" key="i" posid="1" field="title,url,thumb" limit="6" id="r">
+                        <li><a href="{$Cats[47][url]}" title="{$r[title]}"><img src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a></li>
+                        {if $i%3==0 && $i<6}<li class="more"><a href="{$Cats[47][url]}">查看更多</a></li>{/if}
+                    </Gr:list>
+                </ul>
+            </div>
+            <div class="setList">
+                <ul>
+                    <li>厂房<br/>车间<span>Workshop</span></li>
+                    <li>办公<br/>环境<span>Office</span></li>
+                    <li>技术<br/>研发<span>Research</span></li>
+                    <li>团队<br/>活动<span>Team</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新闻 -->
+<div class="mainNews w980">
+    <!-- 常见问题 -->
+    <div class="faqBox fl">
+        <h2><a href="{$Cats[44][url]}">MORE+</a><span>知识小问答 / Q&A</span></h2>
+        <div class="bd">
+            <ul>
+                <Gr:list order="listorder asc,id desc" catid="44" key="i" posid="1" field="title,url,description" limit="9" id="r">
+                    <li>
+                        <h3><a href="{$r[url]}" title="{$r[title]}">{$r[title]|str_cut=###,35}</a></h3>
+                        <p>{$r['description']|str_cut=###,105}</p>
+                    </li>
+                </Gr:list>
+            </ul>
+        </div>
+    </div>
+    <!-- 新闻资讯 -->
+    <div class="newsBox fr">
+        <div class="hd">
+            <ul>
+                <li class="on">公司新闻 / News</li>
+                <li>行业新闻 / Trade news</li>
+            </ul>
+            <a href="{$Cats[5][url]}">MORE+</a>
+        </div>
+        <div class="bd">
+            <div class="bdList">
+                <div class="bdPic">
+                    <Gr:list order="listorder asc,id desc" catid="33" key="i" posid="2" field="title,url,description,createtime,thumb" limit="1" id="r">
+                        <a class="pic" href="{$r[url]}" title="{$r[title]}"><img width="227" height="185" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a>
+                        <h4><span>{$r.createtime|toDate=###,'d'}</span>-{$r.createtime|toDate=###,'m'}</h4>
+                        <h3><a href="{$r[url]}" title="{$r[title]}">{$r[title]|str_cut=###,50}</a></h3>
+                        <h5>{$r['description']|str_cut=###,260}</h5>
+                    </Gr:list>
+                </div>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="33" key="i" posid="1" field="title,url,createtime" limit="4" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}">{$r[title]|str_cut=###,60}</a><span>{$r.createtime|toDate=###,'Y-m-d'}</span></li>
+                    </Gr:list>
+                </ul>
+            </div>
+            <div class="bdList">
+                <div class="bdPic">
+                    <Gr:list order="listorder asc,id desc" catid="34" key="i" posid="2" field="title,url,description,createtime,thumb" limit="1" id="r">
+                        <a class="pic" href="{$r[url]}" title="{$r[title]}"><img width="227" height="185" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a>
+                        <h4><span>{$r.createtime|toDate=###,'d'}</span>-{$r.createtime|toDate=###,'m'}</h4>
+                        <h3><a href="{$r[url]}" title="{$r[title]}">{$r[title]|str_cut=###,50}</a></h3>
+                        <h5>{$r['description']|str_cut=###,260}</h5>
+                    </Gr:list>
+                </div>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="34" key="i" posid="1" field="title,url,createtime" limit="4" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}">{$r[title]|str_cut=###,60}</a><span>{$r.createtime|toDate=###,'Y-m-d'}</span></li>
+                    </Gr:list>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 留言 -->
+<div class="mainMess">
+    <div class="messMap fl">
+        <p>优色全球设有4个营销事业部，分别是安防监控显示事业部、商用显示事业部OEM/ODM专显定制事业部、外贸事业部，致力于为客户提供最广泛、最全面、最便捷、最迅速的服务！</p>
+    </div>
+    <div class="messBox fr">
+        <h2><span>20秒快速填表</span>名额有限，赶快提交吧...</h2>
+        <form name="myform" id="Form1" action="/form/insert" method="post">
+            <input type="hidden" name="formid" value="1"/>
+            <input name="uname" class="text mr15" type="text" value="您的姓名：" onFocus="this.value=''" onBlur="if(!value){value=defaultValue;}">
+
+            <input name="tel" class="text" type="text" value="您的电话：" onFocus="this.value=''" onBlur="if(!value){value=defaultValue;}" >
+
+            <input name="title" class="text mr15" type="text" value="您的地址：" onFocus="this.value=''" onBlur="if(!value){value=defaultValue;}" >
+
+            <input name="email" class="text" type="text" value="您的邮箱：" onFocus="this.value=''" onBlur="if(!value){value=defaultValue;}">
+
+            <input name="content" class="text mr15" type="text" ><p>* ( 采购机型  OEM定制  招商代理  其他合作 )</p>
+            <textarea name="content" class="textarea"></textarea>
+            <input class="subt" type="submit" value="立即提交">
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(".highBox").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:4,interTime:45,trigger:"click"});
+    // jQuery(".mainSolu").slide({ titCell:".soluList li", mainCell:".soluShow",delayTime:0 });
+    jQuery(".settingBox").slide({ titCell:".setList li", mainCell:".setShow",delayTime:0 });
+    jQuery(".scrollBd").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:3,interTime:40});
+    jQuery(".faqBox").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:3,interTime:40});
+    jQuery(".newsBox").slide({ titCell:".hd li", mainCell:".bd",delayTime:0 });
+    $("#Form1").submit(function () {
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data) {
+            if (data.status) {
+                layer.msg('提交成功！');
+                $('#orderform')[0].reset();
+            } else {
+                layer.msg(data.info);
+            }
+        }
+    });
+</script>
+
+
+
+    <style>
+        #wapIframe{
+            box-sizing: border-box;
+            background: url("__IMG__/small_phone.png");
+            width: 291px;
+            cursor: move;
+            height: 483px;
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            padding: 33px 13px 50px 13px;
+            z-index: 10000;
+        }
+
+        @media screen and (min-width:1440px) {
+            #wapIframe{
+                background: url("__IMG__/big_phone.png");
+                width: 295px;
+                height: 592px;
+            }
+        }
+
+        .mobiPlatformIcon {
+            position: fixed;
+            _position: absolute;
+            width: 47px;
+            height: 60px;
+            z-index: 9031;
+        }
+        .wapIcon_right {
+            top: 50%;
+            right: 0;
+            background: url(__IMG__/phoneTip_right.png) no-repeat 0 0;
+        }
+        .wapIcon-handle {
+            display: block;
+            width: 100%;
+            height: 100%;
+            outline: 0;
+        }
+
+        .popupBg {
+            position: fixed;
+            margin: 0;
+            padding: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            _position: absolute;
+            _height: expression(document.documentElement.clientHeight);
+            background-color: #000;
+            filter: alpha(opacity=70);
+            z-index: 9031;
+            overflow: hidden;
+            opacity: .7;
+        }
+    </style>
+
+    <iframe id="wapIframe" name="wapIframe" src="http://m.v1.grwy.net" frameborder="0"></iframe>
+    <div id="wapIcon" class="mobiPlatformIcon wapIcon_right" style="display: none;">
+        <a href="javascript:;" class="wapIcon-handle" onclick="showMobiPlatform();return false;" hidefocus="true"></a></div>
+
+    <div id="WapBg" class="popupBg" style="z-index: 9032; opacity: 0; display: none;"></div>
+    <script>
+        var oDiv=document.getElementById('wapIframe');
+
+        var oBg = document.getElementById('WapBg');
+        window.onload=function ()
+        {
+
+            var disX=0;
+            var disY=0;
+
+            oDiv.onmouseover = function (ev)
+            {
+                startMove(WapBg, 'opacity', 60);
+                oBg.style.display = "block";
+            }
+            oDiv.onmouseout = function ()
+            {
+                startMove(WapBg, 'opacity', 0);
+                oBg.style.display = "none";
+            }
+
+            oDiv.onmousedown=function (ev)
+            {
+                var oEvent=ev||event;
+
+                disX=oEvent.clientX-oDiv.offsetLeft;
+                disY=oEvent.clientY-oDiv.offsetTop;
+
+                document.onmousemove=function (ev)
+                {
+                    var oEvent=ev||event;
+                    var l=oEvent.clientX-disX;
+                    var t=oEvent.clientY-disY;
+
+                    if(l<0)
+                    {
+                        l=0;
+                    }
+                    else if(l>document.documentElement.clientWidth-oDiv.offsetWidth)
+                    {
+                        document.onmousemove=null;
+                        document.onmouseup=null;
+                        l=document.documentElement.clientWidth-oDiv.offsetWidth;
+                        oDiv.style.cssText = '';
+                        startMove(oDiv, 'right', -300,function(){
+                            oDiv.style.display = 'none';
+                        });
+                        document.getElementById('wapIcon').style.display = "block";
+                        return false;
+                    }
+
+                    if(t<0)
+                    {
+                        t=0;
+                    }
+                    else if(t>document.documentElement.clientHeight-oDiv.offsetHeight)
+                    {
+                        t=document.documentElement.clientHeight-oDiv.offsetHeight;
+                    }
+
+                    oDiv.style.left=l+'px';
+                    oDiv.style.top=t+'px';
+                };
+
+                document.onmouseup=function ()
+                {
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                };
+
+                return false;
+            };
+
+        };
+
+        function showMobiPlatform(){
+            oDiv.style.display = 'block';
+            startMove(oDiv, 'right', 50);
+            document.getElementById('wapIcon').style.display = "none";
+        }
+
+        function getStyle(obj, name)
+        {
+            if(obj.currentStyle) {
+                return obj.currentStyle[name];
+            } else {
+                return getComputedStyle(obj, false)[name];
+            }
+        }
+
+        function startMove(obj, attr, iTarget, fnEnd)
+        {
+            clearInterval(obj.timer);
+            obj.timer=setInterval(function (){
+                var cur=0;
+
+                if(attr=='opacity') {
+                    cur=Math.round(parseFloat(getStyle(obj, attr))*100);
+                } else {
+                    cur=parseInt(getStyle(obj, attr));
+                }
+
+                var speed=(iTarget-cur)/6;
+                speed=speed>0?Math.ceil(speed):Math.floor(speed);
+
+                if(cur==iTarget) {
+                    clearInterval(obj.timer);
+
+                    if(fnEnd)fnEnd();
+                } else {
+                    if(attr=='opacity')
+                    {
+                        obj.style.filter='alpha(opacity:'+(cur+speed)+')';
+                        obj.style.opacity=(cur+speed)/100;
+
+                        document.getElementById('WapBg').value=obj.style.opacity;
+                    }
+                    else
+                    {
+                        obj.style[attr]=cur+speed+'px';
+                    }
+                }
+            }, 30);
+        }
+    </script>
+
+</block>

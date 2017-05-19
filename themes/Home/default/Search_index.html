@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;url=http://{$Think.SERVER.SERVER_NAME}/public/browser">
+    <script>location.href="http://{$Think.SERVER.SERVER_NAME}/public/browser";</script>
+    <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="generator" content="EditPlus">
+    <meta name="keywords" content="{$seo_keywords}" />
+    <meta name="description" content="{$seo_description}" />
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/yzh.css">
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script src="__STATIC__/yzh.js"></script>
+    <title>{$seo_title}-{$site_name}</title>
+</head>
+<body >
+
+<style>
+    body {
+        font-family: Microsoft YaHei;
+        font-size: 13px;
+        color: #777;
+        background: transparent;
+        position: relative;
+    }
+    .form-search{
+        margin-top: 40px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .result {
+        table-layout: fixed;
+    }
+    .f {
+        font-size: 100%;
+        line-height: 20px;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .c-title {
+        margin-bottom: 3px;
+        line-height:27px;
+    }
+    .c-title {
+        font-weight: normal;
+        font-size: 16px;
+    }
+    .c-image {
+        float: left;
+        overflow: hidden;
+    }
+    .s0 .c-image.page-pic {
+        width: 120px;
+        height: 80px;
+    }
+    .s0 .c-abstract-image {
+        margin-left: 5px;
+        width: 680px;
+        height: 90px;
+    }
+    .c-abstract-image {
+        float: left;
+    }
+    .c-abstract-image span{
+        height: 62px;
+        display: block;
+        overflow: hidden;
+    }
+    br[Attributes Style] {
+        clear: both;
+    }
+</style>
+
+
+<div class="container">
+    <!-- 内页右侧 -->
+    <div class="form-search">
+        <div class="row">
+            <form class="form-inline" action="__SELF__" method="get">
+                <input type="hidden" name="m" value="search">
+                <input type="hidden" name="a" value="index">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="keyword" placeholder="输入关键词" value="{$Think.get.keyword}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">按类型搜索</div>
+                <ul class="nav nav-pills nav-stacked">
+                    <volist name="model_search" id="r">
+                        <li {if $modelid == $r['id']}class="active"{/if}><a href="/?m=search&a=index&modelid={$r.id}&time={$time}&keyword={$keyword}">{$r.description}</a></li>
+                    </volist>
+                </ul>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">按时间搜索</div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li {if $time == 'all'}class="active"{/if}><a href="/?m=search&a=index&time=all&modelid={$modelid}&keyword={$keyword}">全部时间</a></li>
+                    <li {if $time == 'day'}class="active"{/if}><a href="/?m=search&a=index&time=day&modelid={$modelid}&keyword={$keyword}">一天内</a></li>
+                    <li {if $time == 'week'}class="active"{/if}><a href="/?m=search&a=index&time=week&modelid={$modelid}&keyword={$keyword}">一周内</a></li>
+                    <li {if $time == 'month'}class="active"{/if}><a href="/?m=search&a=index&time=month&modelid={$modelid}&keyword={$keyword}">一月内</a></li>
+                    <li {if $time == 'year'}class="active"{/if}><a href="/?m=search&a=index&time=year&modelid={$modelid}&keyword={$keyword}">一年内</a></li>
+                </ul>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">搜索历史</div>
+                <div id="search_history">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧主体内容 -->
+        <div class="col-md-9">
+
+            {if $list}
+            <volist name="list" id="r" >
+                <div class="result f s0" style="margin-bottom:15px;">
+                    <h3 class="c-title"><a href="{$r.url}">{$r.title}</a></h3>
+                    <div>
+                        <notempty name="r.thumb">
+                        <div class="c-image page-pic">
+                            <a href="{$r.url}"><img src="{$r.thumb}" alt="{$r.title}" width="120"/></a>
+                        </div>
+                        </notempty>
+                        <div class="c-abstract-image">
+                            <span>{$r.description}</span>
+                            <div>
+                                <span class="" style="font-family:Arial,SimSun,sans-serif;font-size:13px;color:#2a8055;">{$Think.config.site_domain}{$r.url} {$r.createtime|toDate=###,'Y-m-d'}</span>
+                            </div>
+                        </div>
+                        <br clear="both">
+                    </div>
+
+
+                </div>
+            </volist>
+            {else}
+            对不起，没有找到您要的结果
+            {/if}
+
+            <div style="text-align:center" class="pagination">{$pages}</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/**
+ * History
+ * 用法
+ *  var his = new History('key');  // 参数标示cookie的键值
+ * his.add("标题", "连接 比如 http://www.baidu.com", "其他内容")；
+ * 得到历史数据 返回的是json数据
+ * var data = his.getList();  // [{title:"标题", "link": "http://www.baidu.com"}]
+ *
+ */
+
+function History(key) {
+    this.limit = 10;  // 最多10条记录
+    this.key = key || 'y_his';  // 键值
+    this.jsonData = null;  // 数据缓存
+    this.cacheTime = 24;  // 24 小时
+    this.path = '/';  // cookie path
+}
+History.prototype = {
+    constructor : History
+    ,setCookie: function(name, value, expiresHours, options) {
+        options = options || {};
+        var cookieString = name + '=' + encodeURIComponent(value);
+        //判断是否设置过期时间
+        if(undefined != expiresHours){
+            var date = new Date();
+            date.setTime(date.getTime() + expiresHours * 3600 * 1000);
+            cookieString = cookieString + '; expires=' + date.toUTCString();
+        }
+
+        var other = [
+            options.path ? '; path=' + options.path : '',
+            options.domain ? '; domain=' + options.domain : '',
+            options.secure ? '; secure' : ''
+        ].join('');
+
+        document.cookie = cookieString + other;
+    }
+    ,getCookie: function(name) {
+        // cookie 的格式是个个用分号空格分隔
+        var arrCookie = document.cookie ? document.cookie.split('; ') : [],
+                val = '',
+                tmpArr = '';
+
+        for(var i=0; i<arrCookie.length; i++) {
+            tmpArr = arrCookie[i].split('=');
+            tmpArr[0] = tmpArr[0].replace(' ', '');  // 去掉空格
+            if(tmpArr[0] == name) {
+                val = decodeURIComponent(tmpArr[1]);
+                break;
+            }
+        }
+        return val.toString();
+    }
+    ,deleteCookie: function(name) {
+        this.setCookie(name, '', -1, {"path" : this.path});
+        //console.log(document.cookie);
+    }
+    ,initRow : function(title, link, other) {
+        return '{"title":"'+title+'", "link":"'+link+'", "other":"'+other+'"}';
+    }
+    ,parse2Json : function(jsonStr) {
+        var json = [];
+        try {
+            json = JSON.parse(jsonStr);
+        } catch(e) {
+            //alert('parse error');return;
+            json = eval(jsonStr);
+        }
+
+        return json;
+    }
+
+    // 添加记录
+    ,add : function(title, link, other) {
+        var jsonStr = this.getCookie(this.key);
+        //alert(jsonStr); return;
+
+        if("" != jsonStr) {
+            this.jsonData = this.parse2Json(jsonStr);
+
+            // 排重
+            for(var x=0; x<this.jsonData.length; x++) {
+                if(link == this.jsonData[x]['link']) {
+                    return false;
+                }
+            }
+            // 重新赋值 组装 json 字符串
+            jsonStr = '[' + this.initRow(title, link, other) + ',';
+            for(var i=0; i<this.limit-1; i++) {
+                if(undefined != this.jsonData[i]) {
+                    jsonStr += this.initRow(this.jsonData[i]['title'], this.jsonData[i]['link'], this.jsonData[i]['other']) + ',';
+                } else {
+                    break;
+                }
+            }
+            jsonStr = jsonStr.substring(0, jsonStr.lastIndexOf(','));
+            jsonStr += ']';
+
+        } else {
+            jsonStr = '['+ this.initRow(title, link, other) +']';
+        }
+
+        //alert(jsonStr);
+        this.jsonData = this.parse2Json(jsonStr);
+        this.setCookie(this.key, jsonStr, this.cacheTime, {"path" : this.path});
+    }
+    // 得到记录
+    ,getList : function() {
+        // 有缓存直接返回
+        if(null != this.jsonData) {
+            return this.jsonData;  // Array
+        }
+        // 没有缓存从 cookie 取
+        var jsonStr = this.getCookie(this.key);
+        if("" != jsonStr) {
+            this.jsonData = this.parse2Json(jsonStr);
+        }
+
+        return this.jsonData;
+    }
+    // 清空历史
+    ,clearHistory : function() {
+        this.deleteCookie(this.key);
+        this.jsonData = null;
+    }
+};
+
+var his = new History('<?php echo SESSION_ID();?>');
+var keyword = '{$keyword}';
+if (keyword){
+    his.add(keyword,'/?m=search&a=index&time=all&modelid={$modelid}&keyword={$keyword}');
+}
+var data = his.getList();
+var html = '';html += '<ul class="nav nav-pills nav-stacked">';
+for (var i=1;i<data.length;i++) {
+    html += '<li><a href="'+data[i].link+'">'+data[i].title+'</a></li>';
+}
+html += '</ul>';
+$('#search_history').html(html);
+
+</script>
+</body>
+</html>

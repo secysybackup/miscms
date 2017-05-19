@@ -1,0 +1,107 @@
+<extend name="Public:base"/>
+
+
+<block name="aside">
+    <include file="Index:aside"/>
+</block>
+<block name="main">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">快捷操作 <a class="pull-right" href="javascript:add_item();"><i class="fa fa-plus"></i>新增</a></div>
+                <div class="card-block">
+                    <form class="myform form-horizontal" method="post" action="">
+                        <div id="shortcuts">
+                            <empty name="shortcuts">
+                                <div class="item item_1">
+                                    <div class="form-group row">
+                                        <label class="form-control-label col-md-1">操作名称</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="name[]">
+                                        </div>
+                                        <label class="form-control-label col-md-1">链接地址</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="url[]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <else/>
+                                <volist name="shortcuts" id="r" key="k">
+                                    <div class="item item_{$k}">
+                                        <div class="form-group row">
+                                            <label class="form-control-label col-md-1">操作名称</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" name="name[]" value="{$r['name']}">
+                                            </div>
+                                            <label class="form-control-label col-md-1">链接地址</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control"  name="url[]" value="{$r['url']}">
+                                            </div>
+                                        <neq name="k" value="0">
+                                            <div class="col-md-1">
+                                                <button type="button" onclick="del_item({$k})" class="btn btn-primary btn-sm">删除</button>
+                                            </div>
+                                        </neq>
+                                        </div>
+                                    </div>
+                                </volist>
+                            </empty>
+                        </div>
+
+                        <div class="form-actions">
+                            <input type="submit" value="保存" class="btn btn-sm btn-primary" />
+                            <input type="reset" value="重置" class="btn btn-sm btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if(data.status==1){
+                layer.msg(data.info);
+            }else{
+                layer.msg(data.info);
+            }
+        }
+
+
+        function add_item(num)
+        {
+            var num = $('.item').length+1;
+            var html = '<div class="item item_'+num+'">';
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-md-1">操作名称</label>';
+            html += '<div class="col-md-3">';
+            html += '<input class="form-control" type="text" name="name[]" >';
+            html += '</div>';
+            html += '<label class="form-control-label col-md-1">链接地址</label>';
+            html += '<div class="col-md-5">';
+            html += '<input class="form-control" type="text" name="url[]">';
+            html += '</div>';
+            html += '<div class="col-md-1">';
+            html += '<button type="button" onclick="del_item('+num+')" class="btn btn-primary btn-sm">删除</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            $('#shortcuts').append(html);
+        }
+
+        function del_item(num){
+            $('.item_'+num).remove();
+        }
+    </script>
+</block>

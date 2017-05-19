@@ -1,0 +1,83 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<div class="box">
+		<ul class="guest">
+			<form id="job_form" method="post" action="/?m=form&a=job">
+				<li>
+					<input name="username" type="text" placeholder="姓名">
+				</li>
+				<li>
+					<input type="radio" name="sex" value="1">男&nbsp;&nbsp;
+					<input type="radio" name="sex" value="2">女
+				</li>
+				<li>
+					<input name="position" type="text" placeholder="应聘职位">
+				</li>
+				<li>
+					<input name="birthday" type="text" placeholder="出生年月">
+				</li>
+				<li>
+					<input name="idnum" type="text" placeholder="身份证号">
+				</li>
+				<li>
+					<input name="address" type="text" placeholder="现居住地">
+				</li>
+				<li>
+					<input name="phone" type="text" placeholder="电话">
+				</li>
+				<li><input name="email" type="text" placeholder="邮箱"></li>
+				<li>
+					<textarea name="experiences" cols="" rows="" placeholder="工作经历"></textarea>
+				</li>
+				<li>
+					<textarea name="self_assessment" cols="" rows="" placeholder="自我评价"></textarea>
+				</li>
+				<li>
+					<div class="input-group">
+						<input name="verifyCode" type="text" class="input-group-field" placeholder="验证码">
+						<span class="input-group-field"><img src="{:U('Wap/Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();"></span>
+					</div>
+				<li>
+					<input type="submit" value="提  交" class="button">
+				</li>
+			</form>
+		</ul>
+	</div>
+</div>
+
+<script>
+$("#job_form").submit(function () {
+	var self = $(this);
+	$.post(self.attr("action"), self.serialize(), success, "json");
+	return false;
+
+	function success(data) {
+		if (data.status == 1) {
+			layer.open({
+				content: '提交成功，我们会尽快联系您',
+				style: 'background-color:#09C1FF; color:#fff; border:none;',
+				time: 2
+			});
+			$('#job_form')[0].reset();
+		} else {
+			layer.open({
+				content: data.info,
+				style: 'background-color:#09C1FF; color:#fff; border:none;',
+				time: 2
+			});
+		}
+	}
+});
+</script>
+</block>

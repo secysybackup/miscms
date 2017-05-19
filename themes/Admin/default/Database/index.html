@@ -1,0 +1,54 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <style>
+        #js-showtables{display:none;}
+        .checkbox.inline{
+            margin-left: 20px;
+        }
+    </style>
+    <div class="table-toolbar">
+        <a href="{:U('Database/recover')}" class="btn btn-primary">数据还原</a>
+    </div>
+
+    <form id="myform" method="post" action="{:U('Database/backup')}">
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 100px" align="right">备份类型</td>
+                <td>
+                    <label class="radio-inline">
+                        <input type="radio" checked="checked" name="backup_type" value="full" onclick="javascript:$('#js-showtables').hide();">全部备份
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="backup_type" value="custom" onclick="javascript:$('#js-showtables').show();">自定义备份
+                    </label>
+                </td>
+            </tr>
+            <tr id="js-showtables">
+                <td align="right" style="width: 100px; vertical-align:middle;">
+                    <label>
+                        <input type="checkbox" id="check_box" onclick="selectall('tables[]');">全选
+                    </label>
+                </td>
+                <td><volist name="dataList" id="vo">
+                    <label class="checkbox inline w-200">
+                        <input type="checkbox" name="tables[]" value="{$vo.Name}">
+                                {$vo.Name}
+                </label>
+                </volist>
+                </td>
+            </tr>
+        </table>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary"  value="立即开始备份">
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <span style="float:right;color:#FB0000">数据库大小：{$totalSize|byte_format}</span>
+            </div>
+        </div>
+
+     </form>
+
+</block>

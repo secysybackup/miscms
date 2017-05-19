@@ -1,0 +1,61 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<div id="focus" class="banner">
+		<div class="bd">
+			<ul>
+				<gr:slide slideid="2" id="r">
+				<li><a href="{$r.link}"><img src="{$r.pic}" alt=""/></a></li>
+				</gr:slide>
+			</ul>
+		</div>
+		<div class="hd"><ul></ul></div>
+	</div>
+	<script type="text/javascript">
+		TouchSlide({
+			slideCell:"#focus",
+			titCell:".hd ul",
+			mainCell:".bd ul",
+			effect:"leftLoop",
+			autoPlay:true,//自动播放
+			autoPage:true, //自动分页
+		});
+	</script>
+	<!-- 菜单 -->
+	<section class="conMenu">
+		<ul>
+			<li><i class="iconfont icon_nav2"></i><span>楼盘项目</span></li>
+			<li><i class="iconfont icon_nav3"></i><span>工程案例</span></li>
+			<li><i class="iconfont icon_nav4"></i><span>关于我们</span></li>
+			<li><i class="iconfont icon_nav5"></i><span>新闻动态</span></li>
+			<li><i class="iconfont icon_nav6"></i><span>联系我们</span></li>
+			<li><i class="iconfont icon_nav7"></i><span>留言反馈</span></li>
+		</ul>
+	</section>
+	<!-- 案例展示 -->
+	<section class="product">
+		<h2 class="homeTitle"><a class="iconfont more" href="{$Cats[2]['url']}">&#xe62c;</a><span>案例展示</span></h2>
+		<ul class="proMain">
+			<gr:list catid="2" name="product" id="r" field="thumb,url,title" limit="4">
+				<li><a href="{$r.url}"><img src="{$r.thumb}" alt=""><span>{$r.title}</span></a></li>
+			</gr:list>
+		</ul>
+	</section>
+	<!-- 关于我们 -->
+	<section class="about">
+		<h2 class="homeTitle"><a class="iconfont more" href="#">&#xe62c;</a><span>关于我们</span></h2>
+		<div class="font con">
+			{$block[19]}
+		</div>
+	</section>
+	<!-- 新闻资讯 -->
+	<section>
+		<h2 class="homeTitle"><a class="icon iconfont more" href="{$Cats[5]['url']}">&#xe62c;</a><span>新闻资讯</span></h2>
+		<ul class="news">
+			<Gr:list catid="5" id="r" key="i" field="id,catid,title,url" limit="6">
+			<li><a href="{$r.url}">{$r.title}</a></li>
+			</Gr:list>
+		</ul>
+	</section>
+</div>
+</block>

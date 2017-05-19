@@ -1,0 +1,23 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<h1>{$video.title}</h1>
+	<p class="time">{$video.createtime|toDate=###,'Y-m-d'}</p>
+	<div style="padding:0 10px;">
+		<p class="b10" align="center">
+			<iframe height=498 width=510 src="{$video.content}" frameborder=0 allowfullscreen></iframe>
+		</p>
+	</div>
+</div>
+
+</block>

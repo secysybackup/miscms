@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" name="viewport">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="white">
+	<title>{$seo_title}-{$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}" />
+	<link href="__CSS__/foundation.min.css" rel="stylesheet" type="text/css" />
+	<link href="__CSS__/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="__CSS__/style.css" rel="stylesheet" type="text/css" />
+	<link href="__CSS__/common.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+
+	<script type="text/javascript" src="__JS__/foundation.min.js"></script>
+	<script type="text/javascript" src="__JS__/mobile.js"></script>
+
+	<style>
+
+		/*search*/
+		.search{
+			padding:10px 5px 0;
+			clear: both;
+		}
+		.btn-search{
+			width:65px;
+		}
+		.icon_back{
+			position: absolute;
+			line-height: 39px;
+		}
+		.icon_back .iconfont{
+			font-size: 34px;
+			padding: 0 10px;
+		}
+		.search-form{
+			padding-left: 50px;
+		}
+	</style>
+</head>
+
+<body>
+<div id="container">
+
+	<div class="search">
+		<span class="icon_back"><a href="/en.html"><i class="icon iconfont">&#xe610;</i></a></span>
+
+		<form class="search-form" action="{:U('Search/index','l=en')}" method="post">
+			<div class="input-group">
+				<input name="keyword" type="text" class="search-info input-group-field"  placeholder="please enter the keywords" value="{if $keyword}{$keyword}{/if}">
+				<a class="input-group-button button btn-search" onclick="$('.search-form').submit();">Search</a>
+			</div
+		</form>
+	</div>
+
+
+	<div class="position">
+		<a href="/en.html" target="_blank">Home</a>&nbsp;&gt;&nbsp;search
+	</div>
+
+	<div class="row">
+		<div class="medium-12 columns">
+		{if $list}
+			<volist name="list" id="r">
+				<div class="media-object">
+					<div class="media-object-section">
+						<div class="thumbnail">
+							<a href="{$r.url}"><img src="{$r.thumb|thumb=###,'100,100'}"></a>
+						</div>
+					</div>
+					<div class="media-object-section">
+						<h4><a href="{$r.url}">{$r.title}</a></h4>
+						<p>{$r.description|str_cut=###,100}</p>
+					</div>
+				</div>
+			</volist>
+		{else}
+		  sorry，I did not find the results you want.
+		 {/if}
+		</div>
+		<div class="page">
+			{$pages}
+		</div>
+	</div>
+
+<include file="Public:footer"/>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="row table-container">
+    <div class="col-md-12">
+        <form name="myform" action="" method="post">
+            <table class="table table-hover table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th width="50">排序</th>
+                        <th>名称</th>
+                        <th width="w-100px">状态</th>
+                        <th width="w-100px">点击量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr class="table-data-empty">
+                        <td class="text-center empty-info" colspan="8">
+                            <i class="fa fa-database"></i> 暂无数据<br>
+                        </td>
+                    </tr>
+                    <else/>
+                    <volist name="list" id="vo" key="k">
+                    <tr>
+                        <td width="40" align='center'>
+                            <input name='listorders[{$vo.id}]' type='text' size='3' value='{$vo.listorder}' class="form-control input-c"></td>
+                        <td>{$vo['name']}</td>
+                        <td align="center">
+                            {if $vo['status']==1}<font color="green">{:L('isshenhe')}</font>{else}<a href="{:U($module_name.'/status',array(id=>$vo['id'],status=>1))}">
+                            <font color="red">{:L('noshenhe')}</font></a>{/if}
+                        </td>
+                        <td align="center">{$vo['hits']}</td>
+                    </tr>
+                    </volist>
+                    </empty>
+                </tbody>
+            </table>
+        </form>
+
+        <div id="pages">{$page}</div>
+    </div>
+</div>
+</block>

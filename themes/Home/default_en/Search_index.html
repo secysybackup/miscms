@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;url=http://{$Think.SERVER.SERVER_NAME}/Public/browser.html">
+    <script>location.href="http://{$Think.SERVER.SERVER_NAME}/Public/browser.html";</script>
+    <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="generator" content="EditPlus">
+    <meta name="author" content="东莞林泰箱包">
+    <meta name="keywords" content="{$seo_keywords}" />
+    <meta name="description" content="{$seo_description}" />
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/yzh.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.SuperSlide.2.1.1.js"></script>
+
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script src="__STATIC__/yzh.js"></script>
+    <link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+    <title>{$seo_title}-{$site_name}</title>
+</head>
+<body >
+
+<style>
+    .form-search{
+        margin-top: 40px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+        .result {
+            table-layout: fixed;
+        }
+        .f {
+            line-height: 115%;
+            font-size: 100%;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        .c-title {
+            margin-bottom: 3px;
+        }
+        .c-title {
+            font-weight: normal;
+            font-size: 16px;
+        }
+        .c-image {
+            float: left;
+            overflow: hidden;
+        }
+        .s0 .c-image.page-pic {
+            width: 106px;
+            height: 80px;
+        }
+        .s0 .c-abstract-image {
+            margin-left: 5px;
+            width: 420px;
+        }
+        .c-abstract-image {
+            float: left;
+        }
+        br[Attributes Style] {
+            clear: both;
+        }
+    </style>
+
+
+<div class="container">
+    <!-- 内页右侧 -->
+    <div class="form-search">
+        <div class="row">
+            <form class="form-inline" action="__SELF__" method="get">
+                <input type="hidden" name="m" value="search">
+                <input type="hidden" name="a" value="index">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="keyword" placeholder="Search" value="{$Think.get.keyword}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+            <!--<script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=17150686317400943778' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script>-->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">按模块搜索</div>
+                <ul class="nav nav-pills nav-stacked">
+                    <volist name="model_search" id="r">
+                        <li><a href="/?m=search&a=index&modelid={$r.id}&time={$Think.get.time|default='all'}&keyword={$Think.get.keyword|default=''}">{$r.name}</a></li>
+                    </volist>
+                </ul>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">按时间搜索</div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="/?m=search&a=index&time=all&modelid={$Think.get.modelid|default='3'}&keyword={$Think.get.keyword|default=''}">全部时间</a></li>
+                    <li><a href="/?m=search&a=index&time=day&modelid={$Think.get.modelid|default='3'}&keyword={$Think.get.keyword|default=''}">一天内</a></li>
+                    <li><a href="/?m=search&a=index&time=week&modelid={$Think.get.modelid|default='3'}&keyword={$Think.get.keyword|default=''}">一周内</a></li>
+                    <li><a href="/?m=search&a=index&time=month&modelid={$Think.get.modelid|default='3'}&keyword={$Think.get.keyword|default=''}">一月内</a></li>
+                    <li><a href="/?m=search&a=index&time=year&modelid={$Think.get.modelid|default='3'}&keyword={$Think.get.keyword|default=''}">一年内</a></li>
+                </ul>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">搜索历史</div>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧主体内容 -->
+        <div class="col-md-9">
+
+            {if $list}
+            <volist name="list" id="r" >
+                <div class="result f s0" style="margin-bottom:15px;">
+                    <h3 class="c-title">{$r.title}</h3>
+                    <div>
+                        <div class="c-image page-pic">
+                            <a href="{$r.url}"><img src="{$r.thumb}" alt="" width="106"/></a>
+                        </div>
+                        <div class="c-abstract-image">
+                            <span>{$r.title}</span>
+                            <div>
+                                <span class="" style="font-family:Arial,SimSun,sans-serif;font-size:13px;color:#2a8055;">{$Think.config.site_domain}{$r.url} {$r.createtime|toDate=###,'Y-m-d'}</span>
+                            </div>
+                        </div>
+                        <br clear="both">
+                    </div>
+
+
+                </div>
+            </volist>
+            {else}
+            对不起，没有找到您要的结果
+            {/if}
+
+            <div style="text-align:center" class="pagination">{$pages}</div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

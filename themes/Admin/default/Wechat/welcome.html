@@ -1,0 +1,101 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="col-md-12">
+
+    <include file="Wechat:tabs"/>
+
+    <form id="myform" action="" method="post">
+        <div class="alert alert-info" style="margin:5px;">当用户第一次关注您的公众帐号时，自动回复以下消息：</div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">消息类型</label>
+            <div class="col-md-5">
+                <label class="radio-inline">
+                    <input type="radio" name="welcome_type" value="1" <if condition="$welcome_type eq 1">checked</if>> 图文
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="welcome_type" value="2" <if condition="$welcome_type eq 2">checked</if>>文本
+                </label>
+            </div>
+        </div>
+        <div class="form-group row welcome_title">
+            <label class="form-control-label col-md-2">消息标题</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="welcome_title" value="{$welcome_title}"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">消息内容</label>
+            <div class="col-md-5">
+                <textarea class="form-control"  name="welcome_desc" >{$welcome_desc}</textarea>
+            </div>
+        </div>
+        <div class="form-group row welcome_face">
+            <label class="form-control-label col-md-2">消息封面</label>
+            <div class="col-md-5">
+                <div id="welcome_face_aid_box" style="display:none;"></div>
+                <input type="hidden" id="welcome_face" name="welcome_face" value="{$welcome_face}" class="form-control input-sm" />
+                <a class="thumbnail" href="javascript:swfupload('welcome_face','{:get_yzh_auth(1,'1MB',1)}',yesdo)">
+                    <img height="80" src="<notempty name="welcome_face">{$welcome_face}<else/>__IMG__/upload_thumb.png</notempty>" id="welcome_face_pic" >
+                </a>
+                <input type="button" value="取消图片" onclick="javascript:clean_thumb('welcome_face');" class="btn btn-sm btn-info"/>
+                <label>建议图片尺寸宽640像素X高356像素</label>
+            </div>
+        </div>
+        <div class="form-group row welcome_url">
+            <label class="form-control-label col-md-2">微网站链接</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="welcome_url" value="{$welcome_url}"></div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="提交" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+<if condition="$welcome_type eq 2">
+    $('.welcome_title').hide();
+    $('.welcome_face').hide();
+    $('.welcome_url').hide();
+</if>
+$(function(){
+    $('input[name=welcome_type]').click(function(){
+        var value = $(this).attr('value');
+        if (value==1) {
+            $('.welcome_title').show();
+            $('.welcome_face').show();
+            $('.welcome_url').show();
+        } else {
+            $('.welcome_title').hide();
+            $('.welcome_face').hide();
+            $('.welcome_url').hide();
+        }
+    });
+})
+
+</script>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

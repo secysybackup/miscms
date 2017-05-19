@@ -1,0 +1,143 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="card">
+    <div class="card-header">高级设置</div>
+    <div class="card-block">
+        <form id="myform" method='post' action="{:U('Sysconfig/save')}">
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">PC模版主题:</label>
+                <div class="col-md-5">
+                    <input name="DEFAULT_THEME" type="text" class="form-control" value="{$DEFAULT_THEME}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">手机模版主题:</label>
+                <div class="col-md-5">
+                    <input name="DEFAULT_M_THEME" type="text" class="form-control" value="{$DEFAULT_M_THEME}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">前台默认语言:</label>
+                <div class="col-md-5">
+                    <input name="DEFAULT_LANG" type="text" class="form-control" value="{$DEFAULT_LANG}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">允许上传附件大小</label>
+                <div class="col-md-5">
+                    <div class="input-group w-200px">
+                        <input type="text" class="form-control" name="attach_maxsize" value="{$attach_maxsize}"/>
+                        <span class="input-group-addon">bt</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">允许上传附件类型</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="attach_allowext" value="{$attach_allowext}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">模板编译缓存:</label>
+                <div class="col-md-2">
+                    {:Form::select(array('field'=>'TMPL_CACHE_ON','options'=>$openarr),$TMPL_CACHE_ON)}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">模板缓存有效期:</label>
+                <div class="col-md-2">
+                    <input name="TMPL_CACHE_TIME" type="text" class="form-control" value="{$TMPL_CACHE_TIME}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">开启页面Trace显示界面</label>
+                <div class="col-xs-4">
+                    <label class="radio-inline">
+                        <input type="radio" name="SHOW_PAGE_TRACE" value="1" <eq name="SHOW_PAGE_TRACE" value="1">checked="checked"</eq> />启用
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="SHOW_PAGE_TRACE" value="0" <eq name="SHOW_PAGE_TRACE" value="0">checked="checked"</eq> />禁用
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">运行时间显示</label>
+                <div class="col-md-4">
+                    <label class="radio-inline">
+                        <input type="radio" name="SHOW_RUN_TIME" value="1" <eq name="SHOW_RUN_TIME" value="1">checked="checked"</eq> />启用
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="SHOW_RUN_TIME" value="0" <eq name="SHOW_RUN_TIME" value="0">checked="checked"</eq> />禁用
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">静态缓存:</label>
+                <div class="col-md-2">
+                    {:Form::select(array('field'=>'HTML_CACHE_ON','options'=>$openarr),$HTML_CACHE_ON)}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">缓存有效期:</label>
+                <div class="col-md-2">
+                    <input name="HTML_CACHE_TIME" type="text" class="form-control" value="{$HTML_CACHE_TIME}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">缓存读取方式:</label>
+                <div class="col-md-2">
+                    {:Form::select(array('field'=>'HTML_READ_TYPE','options'=>$readtypearr),$HTML_READ_TYPE)}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">网页异常页面:</label>
+                <div class="col-md-5">
+                    {:Form::select(array('field'=>'TMPL_EXCEPTION_FILE','options'=>$excefilearr),$TMPL_EXCEPTION_FILE)}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="保存" class="btn btn-primary" >
+                <input type="reset" value="重置" class="btn btn-primary">
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#myform').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if(data.status==1){
+            layer.msg('保存成功');
+        }else{
+            layer.msg(data.info);
+        }
+    }
+
+    function urlrule(m){
+
+        if(m==1 || m==2){
+            $('#urlrule').show();
+        }else{
+            $('#urlrule').hide();
+        }
+    }
+    urlrule({$URL_MODEL});
+</script>
+
+</block>

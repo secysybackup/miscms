@@ -1,0 +1,20 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="content">
+	<h1>{$catname}</h1>
+	<div style="padding:0 10px; font-size:14px;">
+		<notempty name="content">
+			{$content}
+			<else/>
+			{$catname}
+		</notempty>
+	</div>
+</div>
+</block>

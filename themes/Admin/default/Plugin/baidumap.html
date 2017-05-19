@@ -1,0 +1,143 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<style type="text/css">
+#allmap {
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.star {
+    color: hsl(0, 100%, 50%);
+}
+
+</style>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header ">
+                <span class="title active">电子地图(电子地图不显示吗？点击这里<a href="javascript:;" onClick="window.location.reload();" style="color:#f00; float:none;">刷新</a>)</span>
+                <span class="star">* </span>为必填项
+            </div>
+            <div id="allmap" class="ym-gbox"></div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <form id="myForm" onSubmit="return false">
+            <input type="hidden" id="x" name="bdmap_x" value=""/>
+            <input type="hidden" id="y" name="bdmap_y" value=""/>
+
+            <div class="form-group">
+                <label class="control-label">城市：</label>
+                <input id="cityName" class="form-control" type="text" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">地区：</label>
+                <input id="cityAddress" class="form-control" type="text"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm btn-primary" onClick="theLocation();">搜索</button>
+                <label class="helptips">请先根据您公司所在地区搜索大概位置，<font color="red">右击地图标记位置</font>，然后填写公司资料，最后生成地图。</label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label"><span class="star">* </span>公司名称：</label>
+                <input id="name" class="form-control" name="bdmap_name" value="{$data['bdmap_name']}" />
+            </div>
+            <div class="form-group">
+                <label><span class="star">* </span>公司地址：</label>
+                <input id="addr" class="form-control" name="bdmap_address" value="{$data['bdmap_address']}" />
+            </div>
+            <div class="form-group cui_btns">
+                <label><span class="star">* </span>联系电话：</label>
+                <input id="tel" class="form-control" name="bdmap_tel" value="{$data['bdmap_tel']}" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm btn-primary" onClick="return createMap();">生成地图</button>
+            </div>
+        </form>
+    </div>
+</div>
+</block>
+
+<block name="script">
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=POcNPQVBF1nME1bSo0GIFZ0c"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+
+<script type="text/javascript">
+// 百度地图API功能
+var map = new BMap.Map('allmap');
+var poi = new BMap.Point({if $data['bdmap_x']==""}114.030812{else}{$data['bdmap_x']}{/if},{if $data['bdmap_y']==""}22.671997{else}{$data['bdmap_y']}{/if});
+map.centerAndZoom(poi, 18);
+
+var content = ['地址：{$data['bdmap_address']}电话：{$data['bdmap_tel']}'].join('');
+
+//创建检索信息窗口对象
+var searchInfoWindow = null;
+searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+        title  : "{$data['bdmap_name']}",      //标题
+        width  : 250,             //宽度
+        height : 60,              //高度
+        panel  : "panel",         //检索结果面板
+        enableAutoPan : true,     //自动平移
+        enableSendToPhone : true, //是否启动发送到手机功能
+        searchTypes   :[
+        ]
+    });
+    var marker = new BMap.Marker(poi); //创建marker对象
+    marker.enableDragging(); //marker可拖拽
+    searchInfoWindow.open(marker);
+    marker.addEventListener("click", function(e){
+        searchInfoWindow.open(marker);
+    })
+    map.addOverlay(marker); //在地图中添加marker
+
+    map.addEventListener("rightclick",function(e){   //鼠标点击时获取地理坐标。
+    map.clearOverlays();   //在地图中清除marker
+    $("#x").attr("value",e.point.lng);  //获取地理坐标。
+    $("#y").attr("value",e.point.lat);
+
+    var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));  //在地图中添加新marker
+    map.addOverlay(marker);
+});
+
+
+//鼠标滚轮缩放地图
+map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+//根据城市名定位
+function theLocation(){
+
+    var city = $("#cityName").val();
+    var address = $("#cityAddress").val();
+    if(city != ""&&address!=""){
+        map.centerAndZoom(city);      // 用城市名设置地图中心点
+        var local = new BMap.LocalSearch(city, {
+            renderOptions:{map: map}
+        });
+        local.search(address);//根据关键字本地搜索
+    }
+    return false;
+}
+
+//提交按钮
+function createMap() {
+    var ajaxArgs = {
+        method:"POST",
+        url:"{:U('Plugin/baidumap')}",
+        timeout:10000,
+        data:$("#myForm").serialize()
+    };
+    submitForm(ajaxArgs);
+}
+
+</script>
+
+</block>

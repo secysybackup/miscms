@@ -1,0 +1,41 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-sm btn-primary" onclick="myform.action='{:U('Slide/listorder')}';$('#myform').submit();">排序</a>
+            </div>
+        </div>
+    </div>
+
+    <form name="myform" id="myform" action="" method="post">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th width="48">排序</th>
+                    <th>缩略图</th>
+                    <th width="140" class="center">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="vo" key="k">
+                <tr>
+                    <td width="40" class='center'>
+                        <input name='sort[{$vo.id}]' type='text' size='3' value='{$vo.sort}' class='input-text-c'>
+                    </td>
+                    <td align="left">
+                        <img src="{$vo['pic']}" onload="if(this.width >= 320){this.width = 320}">
+                    </td>
+                    <td class="center">
+                        <a href="{:U('Wap/editslide',array('id'=>$vo['id']))}">修改</a>
+                    </td>
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+    </form>
+
+
+</block>

@@ -1,0 +1,87 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <div id="contactlb"><font color="#da251e">如果您对我司有任何意见和建议，请在此留言。</font><br/>您的留言将给予我司很大的帮助，我们会尽快回复。衷心感谢您的关注和支持！</div>
+            <div class="contactnr">
+                <form id="feedback_form" name="form" action="{:U('form/insert')}" method="post">
+                    <input name="formid" value="1" type="hidden">
+                    <table class="yzh-table-feedback" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td class="input-label">姓名：</td>
+                            <td>
+                                <input name="username" type="text" class="input-text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="input-label">主题：</td>
+                            <td>
+                                <input name="title" type="text" class="input-text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="input-label">电话：</td>
+                            <td><input name="tel" type="text" id="mobile" class="input-text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="input-label">邮箱：</td>
+                            <td><input name="email" type="text" class="input-text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="input-label">内容：</td>
+                            <td>
+                                <textarea name="content" class="input-textarea"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="input-label">验证码：</td>
+                            <td>
+                                <input name="verifyCode" type="text" maxlength="20" class="input-verifycode" />
+                                <img id="verifyImage" class="checkcode reloadverify" align="absmiddle" title="Click the refresh verification code" onclick="javascript:resetVerifyCode(this);" src="/index.php?m=index&a=verify">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input class="yzh-btn" type="submit" value="提 交" id="submit" />
+                                <input class="yzh-btn" type="reset" value="重 置" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+                <script type="text/javascript">
+
+                    $("#feedback_form").submit(function () {
+                        var self = $(this);
+                        $.post(self.attr("action"), self.serialize(), success, "json");
+                        return false;
+
+                        function success(data) {
+                            if (data.status == 1) {
+                                layer.msg(data.info, {
+                                    icon: 1,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    $('#feedback_form')[0].reset();
+                                });
+                            } else {
+                                layer.msg(data.info, {
+                                    icon: 2,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                });
+                                $(".reloadverify").click();
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

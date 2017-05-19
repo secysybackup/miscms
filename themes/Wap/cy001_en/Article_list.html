@@ -1,0 +1,16 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="newsList">
+		    <ul>
+				<volist name="list" id="r">
+					<li><a href="{$r.url}">{$r.title}</a></li>
+				</volist>
+
+		    </ul>
+		</div>
+	</div>
+</block>

@@ -1,0 +1,23 @@
+<div class="table-tabs">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link {if $action_name=='bind'}active{/if}" href="{:U('Wechat/bind')}">绑定公众号</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {if $action_name=='welcome'}active{/if}" href="{:U('Wechat/welcome')}">首次关注欢迎信息设置</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {if $action_name=='robot'}active{/if}" href="{:U('Wechat/robot')}">默认回复设置</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {if $action_name=='selfmenu'}active{/if}" href="{:U('Wechat/selfmenu')}">自定义菜单</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {if $action_name=='smartreply'}active{/if}" href="{:U('Wechat/smartreply')}">自动回复</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

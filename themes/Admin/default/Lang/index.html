@@ -1,0 +1,51 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Lang/add')}">添加语言</a>
+        <input type="button" class="btn btn-primary" name="dosubmit" value="删除" onclick="myform.action='{:U('Lang/deleteall')}';return onfirm_deleteall()"/>
+        <input type="button" class="btn btn-primary" name="dosubmit" value="排序" onclick="myform.action='{:U('Lang/listorder')}';$('#myform').submit();"/>
+    </div>
+
+    <form name="myform" id="myform" action="" method="post">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                <th width="20"><input type="checkbox"  id="check_box"  onclick="selectall('ids[]');" /></th>
+                <th width="30">排序</th>
+                <th width="40">ID</th>
+                <th width="110">语言名称</th>
+                <th>语言标识</th>
+                <th>语言图标</th>
+                <th>状态</th>
+                <th width="180"  >管理操作</th>
+            </tr>
+            </thead>
+            <tbody>
+              <volist name="list" id="vo" key="k">
+              <tr>
+              <td><input type="checkbox" name="ids[]" value="{$vo['id']}" /></td>
+              <td width="40" align='center'><input name='listorders[{$vo.id}]' type='text' size='3' value='{$vo.listorder}' class='input-text-c'></td>
+              <td>{$vo['id']}</td>
+              <td>{$vo['name']}</td>
+              <td>{$vo['mark']}</td>
+              <td><if condition="!empty($vo['flag'])"><img src="__PUBLIC__/images/flag/{$vo['flag']}"></if>&nbsp;</td>
+              <td><eq name="vo['status']" value="1">
+                  是
+                <else />
+                否
+                </eq></td>
+              <td>
+                <a class="btn btn-sm btn-primary" href="{:U('Lang/edit',array(id=>$vo['id']))}">编辑</a>
+                <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Lang/delete',array(id=>$vo['id']))}')">删除</a></td>
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+
+    </form>
+
+    <div id="pages">{$page}</div>
+
+</block>

@@ -1,0 +1,13 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<notempty name="content">
+			{$content}
+			<else/>
+			{$catname}
+		</notempty>
+	</div>
+</block>

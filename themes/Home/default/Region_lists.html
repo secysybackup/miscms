@@ -1,0 +1,84 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <div class="w980 ptb25 oh">
+        <div class="pageSidebar fl">
+            <div class="sidebarOne">
+                <h2>{$Cats[2][catname]}</h2>
+                <ul>
+                    <Gr:cat catid="2" id="r" key="i">
+                    <li><a class="{if $catid==$r['id'] || $parentid==$r['id']}active{/if}"  href="/{$region.letter}/{$r.id}.html" title="{$r.catname}">{$region.name}{$r.catname}</a>
+                            {if $r['child']=="1"}
+                        <ol {if $catid==$r['id'] || $r['id']==$Cats[$catid][parentid] || $r['id']==$Cats[$parentid][parentid]} style="display: block;"
+                            {else}style="display: none;"{/if}>
+                            <Gr:cat catid="$r['id']" id="rr" key='ii'>
+                            <li>
+                                <a class="{if $catid==$rr['id']}active{/if}" href="/{$region.letter}/{$rr.id}.html" title="{$rr.catname}">{$region.name}{$rr.catname}</a>
+                                {if $rr['child']=="1"}
+                                <ul {if $catid==$rr['id']} style="display: block;"{elseif $rr['id']==$Cats[$catid][parentid]}style="display: block;"{else}style="display: none;"{/if}>
+                                <Gr:cat catid="$rr['id']" id="rrr" key='ii'>
+                                    <li><a href="/{$region.letter}/{$rrr.id}.html" {if $catid==$rrr['id']}style="color:red"{/if} >{$region.name}{$rrr.catname}</a></li>
+                                </Gr:cat>
+                                </ul>
+                                {/if}
+                            </li>
+                            </Gr:cat>
+                        </ol>
+                        {/if}
+                    </li>
+                    </Gr:cat>
+                </ul>
+
+            </div>
+            <div class="sidebarTwo">
+                <h2>推荐产品</h2>
+                <div class="bd">
+                    <div class="box">
+                        <ul>
+                            <Gr:list order="listorder asc,id desc" catid="2" key="i" posid="1" field="title,url,thumb" limit="3" id="r">
+                                <li>
+                                    <a href="/{$region.letter}/pro_{$r.id}.html" title="{$r[title]}"><img width="172" height="129" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a>
+                                    <span>{$region.letter}{$r['title']|str_cut=###,25}</span>
+                                </li>
+                            </Gr:list>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarThree">
+                <h2>联系优色</h2>
+                <div class="twoCont">
+                    <h3>全国服务热线：<span>{$site_tel400}</span></h3>
+                    <p>
+                        电话：{$site_telephone}<br/>
+                        传真：{$site_fax}<br/>
+                        地址：{$site_address}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(".sidebarTwo").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:2,interTime:30});
+        </script>
+        <div class="pageContent fr">
+            <include file="Public:title"/>
+            <div class="pageContentBox">
+                <ul class="productList">
+                    {if $list}
+                    <volist name="list" id="r">
+                        <li><a title="{$r['title']}" href="/{$region.letter}/pro_{$r.id}.html">
+                            <img width="230" height="173" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}" ></a>
+                            <h3>{$region.name}{$r['title']|str_cut=###,30}</h3>
+                        </li>
+                    </volist>
+                    {else}
+                    {$catname}
+                    {/if}
+                </ul>
+                <div class="clearfix"></div>
+                <div class="pagination" >{$pages}</div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</block>

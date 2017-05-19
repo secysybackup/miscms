@@ -1,0 +1,21 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="productList">
+		    <ul>
+				<volist name="list" id="r">
+					<li>
+						<a href="{$r.url}" class="pImg">
+							<img src="{$r.thumb}" />
+							<span>{$r.title}</span>
+						</a>
+					</li>
+				</volist>
+		    </ul>
+		</div>
+	</div>
+</block>
+

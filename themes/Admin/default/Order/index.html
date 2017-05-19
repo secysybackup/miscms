@@ -1,0 +1,106 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <div class="table-toolbar">
+        <button class="btn btn-primary" onclick="myform.action='{:U('Order/deleteall')}';return confirm_deleteall()">删除</button>
+        <button class="btn btn-primary" onclick="myform.action='{:U('Order/listorder')}';$('#myform').submit();" >排序</button>
+
+        <div class="pull-right">
+            <form action="{:U('Order/index')}" class="form-inline" method="get">
+                <input type="hidden" name="g" value="{$Think.GROUP_NAME}" />
+                <input type="hidden" name="m" value="{$Think.MODULE_NAME}" />
+                <input type="hidden" name="a" value="{$Think.ACTION_NAME}" />
+
+                <input id="title" type="text" class="form-control" name="keyword" value="{$Think.get.keyword}" />
+                <select name="searchtype" class="form-control">
+                    <option value="sn" <eq  name="searchtype" value='sn'>selected="selected"</eq>>{:L('order_sn')}</option>
+                    <option value="realname" <eq name="searchtype" value='realname'>selected="selected"</eq>>{:L('realname')}</option>
+                    <option value="username" <eq name="searchtype" value="username">selected="selected"</eq>>{:L('username')}</option>
+                    <option value="userid" <eq name="searchtype" value="userid">selected="selected"</eq>>{:L('userid')}</option>
+                    <option value="id" <eq name="searchtype" value='id'>selected="selected"</eq>>ID</option>
+                </select>
+
+
+                <select id="status" name="map[status]" class="form-control">
+                    <option value="">{:L('order_status')}</option>
+                    <option value="0" <if condition="isset($status) && $status ==0">selected="selected"</if>>{:L(order_status_0)}</option>
+                    <option value="1" <if condition="isset($status) && $status ==1">selected="selected"</if>>{:L(order_status_1)}</option>
+                    <option value="2" <if condition="isset($status) && $status ==2">selected="selected"</if>>{:L(order_status_2)}</option>
+                    <option value="3" <if condition="isset($status) && $status ==3">selected="selected"</if>>{:L(order_status_3)}</option>
+                    <option value="4" <if condition="isset($status) && $status ==4">selected="selected"</if>>{:L(order_status_4)}</option>
+                </select>
+
+                <select id="pay_status" name="map[pay_status]" class="form-control">
+                    <option value="">{:L('pay_status')}</option>
+                    <option value="0" <if condition="isset($pay_status) && $pay_status ==0">selected="selected"</if>>{:L(pay_status_0)}</option>
+                    <option value="1" <if condition="isset($pay_status) && $pay_status ==1">selected="selected"</if>>{:L(pay_status_1)}</option>
+                    <option value="2" <if condition="isset($pay_status) && $pay_status ==2">selected="selected"</if>>{:L(pay_status_2)}</option>
+                    <option value="3" <if condition="isset($pay_status) && $pay_status ==3">selected="selected"</if>>{:L(pay_status_3)}</option>
+                    <option value="4" <if condition="isset($pay_status) && $pay_status ==4">selected="selected"</if>>{:L(pay_status_4)}</option>
+                </select>
+
+
+                <select id="shipping_status" name="map[shipping_status]" class="form-control">
+                    <option value="" >{:L('shipping_status')}</option>
+                    <option value="0" <if condition="isset($shipping_status) && $shipping_status ==0">selected="selected"</if>>{:L(shipping_status_0)}</option>
+                    <option value="1" <if condition="isset($shipping_status) && $shipping_status ==1">selected="selected"</if>>{:L(shipping_status_1)}</option>
+                    <option value="2" <if condition="isset($shipping_status) && $shipping_status ==2">selected="selected"</if>>{:L(shipping_status_2)}</option>
+                    <option value="3" <if condition="isset($shipping_status) && $shipping_status ==3">selected="selected"</if>>{:L(shipping_status_3)}</option>
+                    <option value="4" <if condition="isset($shipping_status) && $shipping_status ==4">selected="selected"</if>>{:L(shipping_status_4)}</option>
+                </select>
+
+                <input type="hidden" id="menuid" name="menuid" value="{$_GET['menuid']}"/>
+                <input type="submit" class="btn btn-primary" value="查询" />
+                <input type="reset" class="btn btn-primary" value="重置"  />
+            </form>
+        </div>
+    </div>
+
+
+    <form name="myform" id="myform" action="" method="post">
+
+        <table class="table">
+            <thead>
+              <tr>
+               <th width="20"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                <th >ID</th>
+                <th>{:L('order_sn')}</th>
+                <th>{:L('price')}</th>
+                <th>{:L('realname')}</th>
+                <th>{:L("order_status")}</th>
+                <th>{:L('createtime')}</th>
+                <th>{:L('manage')}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo" key="k">
+            <tr>
+              <td><input class="inputcheckbox " name="ids[]" value="{$vo['id']}" type="checkbox" ></td>
+              <td>{$vo['id']}</td>
+              <td>{$vo.sn}</td>
+              <td><font color="red">{$vo.order_amount|number_format=###,2}</font></td>
+              <td>{$vo['consignee']}</td>
+               <td>{:L("order_status_".$vo['status'])} | {:L("pay_status_".$vo['pay_status'])} | {:L("shipping_status_".$vo['shipping_status'])}</td>
+
+              <td>{$vo['add_time']|toDate=###,'Y-m-d H:i:s'}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{:U('Order/detail',array(id=>$vo['id']))}">修改</a>
+                    <a class="btn btn-danger btn-sm" href="javascript:confirm_delete('{:U('Order/delete',array(id=>$vo['id']))}')">删除</a>
+              </td>
+              </tr>
+        </volist>
+        </tbody>
+      </table>
+    </form>
+
+
+    <div id="pages">{$page}</div>
+
+<script>
+$("#catid").attr("value",'{$catid}');
+function confirm_deleteall(){
+  art.dialog.confirm("{:L('real_delete')}", function(){ $('#myform').submit();});
+}
+</script>
+
+</block>

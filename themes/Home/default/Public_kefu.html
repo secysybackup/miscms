@@ -1,0 +1,53 @@
+<php>
+$map = array();
+$map['lang'] = LANG_ID;
+$map['status'] = 1;
+$kefu = M("Kefu")->where($map)->order('listorder asc,id asc')->select();
+</php>
+<div class="kefuBox" id="kefu">
+    <div class="kefuLeft"></div>
+    <div class="kefuRight">
+        <div class="kefuTop">
+            <div class="kefuClose"></div>
+        </div>
+        <div class="kefuCont">
+            <ul>
+                <li class="pic"><img src="__IMG__/qq/pic1.png"></li>
+                <volist name="kefu" id="r">
+                    <switch name="r.type">
+                        <case value="1">
+                            <li class="qq"><a target="_blank" href="tencent://message/?uin={$r['code']}" rel="nofollow">{$r['name']}</a></li>
+                        </case>
+                        <case value="2">
+                            <li class="wang"><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid={$r['code']}&siteid=cntaobao&status='.$skin.'&charset=utf-8" rel="nofollow">{$r['name']}</a></li>
+                        </case>
+                        <case value="3">
+                            <li class="spk"><a  target="_blank" href="skype:{$r['code']}?chat" rel="nofollow">{$r['name']}</a></li>
+                        </case>
+                        <case value="4">
+                            <li class="bs"></li><li class="tell"><a target="_blank" title="{$r['code']}" rel="nofollow">{$r['name']}</a></li>
+                        </case>
+                        <default />
+
+                    </switch>
+                </volist>
+                <li class="codeer">
+                    <p>扫一扫,关注我们</p>
+                    <span><img src="{$site_wzqrcode}"/></span>
+                </li>
+            </ul>
+        </div>
+        <div class="kefuBottom"></div>
+    </div>
+</div>
+
+<script>
+    $('#kefu .kefuClose').click(function(){
+        $('#kefu .kefuLeft').animate({width:'30px'},500);
+        $('#kefu .kefuRight').animate({width:0},100);
+    });
+    $('.kefuLeft').click(function(){
+        $(this).animate({width:0},100);
+        $('.kefuRight').animate({width:'154px'},100);
+    });
+</script>

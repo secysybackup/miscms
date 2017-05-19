@@ -1,0 +1,77 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <form id="myform" method='post' action="{:U('Config/add')}">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">变量名:</label>
+            <div class="col-md-5">
+              <input type="text" class="form-control"  name="varname">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">变量介绍:</label>
+            <div class="col-md-5">
+              <input type="text" class="form-control"  name="info">
+            </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="form-control-label col-md-2">变量值:</label>
+          <div class="col-md-5">
+              <input type="text"  class="form-control" name="value" value="" size="50" ></div>
+        </div>
+        <div class="form-group row">
+          <label class="form-control-label col-md-2">变量类型:</label>
+          <div class="col-md-5">
+              <input type="radio"  name="type" checked="checked" value="0">文本
+              <input type="radio"  name="type" value="1">图片
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">变量分组:</label>
+            <div class="col-md-5">
+                <select name="groupid" class="form-control">
+                    <!--<option value="1">公共配置</option>-->
+                    <option value="2">自定义配置</option>
+                    <!--<option value="3">会员设置</option>-->
+                    <!--<option value="4">百度地图</option>-->
+                </select>
+            </div>
+        </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+</form>
+</block>
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

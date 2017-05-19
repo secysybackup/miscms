@@ -1,0 +1,17 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="content">
+			<h1>{$picture.title}</h1>
+			<p class="time">{$picture.createtime|toDate=###,'Y-m-d'}</p>
+			<div style="padding:0 10px; font-size:14px;">{$picture.content}</div>
+			<p class="clear h10"></p>
+
+			<p class="t10">上一个：{if $prea!=''} <a href="{$prea.url}">{$prea.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+			<p>下一个：{if $next!=''} <a href="{$next.url}">{$next.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+		</div>
+	</div>
+</block>

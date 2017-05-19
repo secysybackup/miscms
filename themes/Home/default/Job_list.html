@@ -1,0 +1,39 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <div class="w980 ptb25 oh">
+        <include file="Public:left"/>
+        <div class="pageContent fr">
+            <include file="Public:title"/>
+            <div class="pageContentBox">
+                <div class="gr-jobs-list">
+                    <dl>
+                        <notempty name="list">
+                        <volist name="list" id="r">
+                            <dd><em></em>
+                                <span><b>职位：</b>{$r.title}</span>
+                                <span><b>人数：</b>{$r.num}人</span>
+                                <span><b>学历：</b>{$r.education}</span>
+                                <span><b>时间：</b>{$r.createtime|toDate=###,'Y-m-d'}</span>
+                            </dd>
+                            <dt>
+                            <p>
+                                <strong>工作描述：</strong><br/>
+                                {$r.jobdes}
+                                <br/><br/>
+                                <strong>任职要求：</strong><br/>
+                                {$r.requirements}
+                            </p>
+                            <a href="{$r.url}" class="gr-apply">立即申请</a>
+                            </dt>
+                        </volist>
+                        <else/>
+                            {$catname}
+                        </notempty>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</block>

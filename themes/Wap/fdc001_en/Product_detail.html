@@ -1,0 +1,50 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="proShow">
+			<h2 class="title">{$product.title}</h2>
+			<div class="proShow_img" id="proShow">
+				<div class="bd" >
+					<ul>
+						<li><a href="#"><img src="{$product.thumb}" alt="{$product.title}"></a></li>
+						<volist name="product['pics']" id="r">
+							<li><a href="#"><img src="{$r['filepath']}" alt=""/></a></li>
+						</volist>
+
+					</ul>
+				</div>
+				<div class="hd">
+					<span class="prev"><img src="__IMG__/PicLeft.png"/></span>
+					<span class="next"><img src="__IMG__/PicRight.png"/></span>
+				</div>
+			</div>
+			<section id="proShow_tab" class="proShow_tab">
+				<section class="hd">
+					<ul>
+						<li>产品详情</li>
+						<li>产品参数</li>
+					</ul>
+				</section>
+				<section class="bd">
+					<div class="box">
+						{$product.content}
+					</div>
+					<div class="box">
+						产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情产品详情
+					</div>
+				</section>
+			</section>
+			<script type="text/javascript">TouchSlide({ slideCell:"#proShow_tab" });</script>
+
+			<p class="prea pageP">上一个：{if $prea!=''} <a href="{$prea.url}">{$prea.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+			<p class="prea pageN">下一个：{if $next!=''} <a href="{$next.url}">{$next.title|str_cut=###,60}</a>{else}<a>无</a>{/if}</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		TouchSlide({ slideCell:"#proShow", mainCell:".bd ul", effect:"leftLoop" });
+	</script>
+</block>
+

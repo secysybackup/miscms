@@ -1,0 +1,90 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+
+<form id="myform" action="{:U('Form/update')}" method="post">
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>名称</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="name" value="{$vo.name}" size="20" minlength="2" title="{:L(module_tip_title)}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>表名称</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="tablename" disabled="disabled" value="{$vo.tablename}" size="20"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>验证码</label>
+        <div class="col-md-5">
+            <label class="form-check-inline">
+                <input type="radio" class="form-check-input" name="captcha" <eq name="vo.captcha" value="1">checked</eq> value="1"/>开启
+            </label>
+            <label class="form-check-inline">
+                <input type="radio" class="form-check-input" name="captcha" <eq name="vo.captcha" value="0">checked</eq> value="0"/>关闭
+            </label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>是否发送的邮箱</label>
+        <div class="col-md-5">
+            <label class="form-check-inline">
+                <input type="radio" class="form-check-input" name="sendmail" <eq name="vo.sendmail" value="1">checked</eq> value="1"/>是
+            </label>
+            <label class="form-check-inline">
+                <input type="radio" class="form-check-input" name="sendmail" <eq name="vo.sendmail" value="0">checked</eq> value="0"/>否
+            </label>
+            <br/>
+            <label>发送的邮箱配置中的接受邮箱</label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">列表页调用字段</label>
+        <div class="col-md-5">
+            <input type="text" id="listfields" class="form-control" name="listfields"  class="form-control" value="<if condition="empty($vo['listfields'])">*<else />{$vo.listfields}</if>" />例:id,title,url,catid
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">表简介</label>
+        <div class="col-md-5">
+            <textarea id="description" class="form-control" name="description" rows=4"" cols="55">{$vo.description}</textarea>
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="hidden" name="id" value="{$vo.id}">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+</form>
+</block>
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

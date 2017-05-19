@@ -1,0 +1,50 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <div class="newsShow">
+                <h2>{$article['title']}</h2>
+                <h3>
+                    <span>新闻来源：
+                    <notempty name="article.copyfrom">{$article.copyfrom}<else/>{$site_name}</notempty>
+                    </span>
+                    <span>人气：{$hits}</span>
+                    <span>发表时间：{$article['createtime']|toDate=###,'Y-m-d'}</span>
+                    <span class="fontResizer">【<a href="javascript:void(0);" class="smallFont">小</a><a href="javascript:void(0);" class="medFont">中</a><a href="javascript:void(0);" class="largeFont">大</a>】</span></h3>
+                <div class="newsShowBox fontsizebox" style="font-size:14px;">
+                    {$article['content']}
+                </div>
+            </div>
+            <!-- 上下篇 -->
+        <div class="fenyList">
+            <div class="prew">{if $prea}上一篇:<a href="{$prea.url}">{$prea.title}</a>{else}<a>上一篇:无</a>{/if}</div>
+            <div class="nextw">{if $next}下一篇:<a href="{$next.url}">{$next.title}</a>{else}<a>下一篇:无</a>{/if}</div>
+        </div>
+        <!-- 此文关键词 -->
+        <div class="clearfix"></div>
+        <div class="keywordBox"><b>此文关键词：</b>{$article.keywords}</div>
+        <div class="clearfix"></div>
+        <!-- 推荐资讯 -->
+        <div class="recNews">
+            <div class="recTitle">推荐资讯</div>
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="catid" key="i" posid="1" field="title,url,createtime" limit="12" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}">{$r['title']|str_cut=###,45}</a><span>{$r.createtime|toDate=###,'Y-m-d'}</span></li>
+                    </Gr:list>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript" src="__JS__/newsfont.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    fontResizer('12px','14px','16px');
+});
+</script>
+</block>

@@ -1,0 +1,53 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<style type="text/css">
+
+.user_info .avatar img {
+    height: 48px;
+    width: 48px;
+}
+</style>
+<div id="yzh-content" class="col-xs-12">
+    <div class="table-header">
+        <a href="{:U('Weixin/menu')}">微信菜单</a>
+    </div>
+
+    <div class="dataTables_wrapper">
+
+    <form name="myform" action="{:U('user/deleteall')}" method="post">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <table class="table user_info">
+                <tbody>
+                <volist name="userList" id="list" key="k">
+                    <tr><td>
+                        <input type="checkbox" name="ids[]" value="{$list['id']}" />
+                        <a class="avatar"><img src="{$list['headimgurl']}"></a>{$list['nickname']}
+                        </td>
+                    </tr>
+                </volist>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">全部用户</div>
+            <ul>
+                <volist name="groupList['groups']" id="list" key="k">
+                    <li>
+                        <a>{$list['name']}</a>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    </form>
+
+    <div id="pages">{$page}</div>
+</div>
+
+</block>

@@ -1,0 +1,80 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<form name="myform" id="myform" action="<if condition="$action_name=='add'">{:U('Lang/add')}<else />{:U('Lang/edit')}</if>" method="post">
+
+		<div class="form-group row">
+			<label class="form-control-label col-md-2"><font color="red">*</font>语言名称</label>
+			<div class="col-md-6">
+				<input type="text" id="name" name="name" value="{$vo.name}" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="form-control-label col-md-2"><font color="red">*</font>语言标识</label>
+			<div class="col-md-6">
+				<input type="text" id="mark" name="mark" value="{$vo.mark}" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="form-control-label col-md-2">语言图标</label>
+			<div class="col-md-6">
+				<input type="text" id="flag" name="flag" value="{$vo.flag}" class="form-control"/>
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<label class="form-control-label col-md-2">语言目录</label>
+		  	<div class="col-md-6">
+				<input type="text" id="path" name="path" value="{$vo.path}" class="form-control"/>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="form-control-label col-md-2">{:L('LANG_DOMAIN')}</label>
+			<div class="col-md-6">
+				<input type="text" name="domain" value="{$vo.domain}" class="form-control input-sm"/>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="form-control-label col-md-2">{:L('STATUS')}</label>
+			<div class="col-md-6">
+				{:Form::radio(array('field'=>'status','options'=>array('1'=>L('yes'),'0'=>L('no'))),$vo['status'])}
+			</div>
+		</div>
+
+
+		<div class="form-actions">
+			<input type="hidden" name="id" value="{$vo.id}">
+			<button type="submit" class="btn btn-primary">提交</button>
+			<button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+		</div>
+	</form>
+
+</block>
+
+
+<block name="script">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#myform').ajaxForm({
+				success:  complete,  // post-submit callback
+				dataType: 'json'
+			});
+		});
+
+		function complete(data){
+			if (data.status == 1) {
+				layer.msg(data.info, {
+					icon: 1,
+					time: 2000 //2秒关闭（如果不配置，默认是3秒）
+				}, function(){
+					window.location.href = "{$Think.cookie.__forward__}";
+					return true;
+				});
+			} else {
+				layer.msg(data.info, {
+					icon: 2,
+					time: 2000 //2秒关闭（如果不配置，默认是3秒）
+				});
+			}
+		}
+	</script>
+</block>

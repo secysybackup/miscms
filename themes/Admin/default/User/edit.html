@@ -1,0 +1,93 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="yzh-content" class="col-xs-12">
+
+    <form id="myform" action="{:U('User/edit')}" method="post">
+        <input type="hidden" name="question" value="{$info.age}">
+        <input type="hidden" name="answer" value="{$info.address}">
+        <input type="hidden" name="id" value="{$info['id']}" />
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label">用户名</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" name="username" value="{$info.username}" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label">密码</label>
+            <div class="col-xs-4">
+                <input type="password" id="password" name="password" class="form-control" />
+                <em for="password" generated="true" class="info">不修改密码请留空。</em>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label">确认密码</label>
+            <div class="col-xs-4">
+                <input type="password" id="password" name="repassword" class="form-control" />
+                <em for="password" generated="true" class="info">不修改密码请留空。</em>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label">邮箱</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control"  name="email" value="{$info.email}" >
+            </div>
+        </div>
+
+        <if condition="$Think.session.admin.id eq 1">
+        <div class="form-group row env-class">
+            <label class="col-sm-2 form-control-label">所属角色</label>
+            <div class="col-xs-4">
+                <select name="role" class="form-control">
+                <volist name="role" id="r">
+                    <option {if $info['role']==$r['id']}selected="selected"{/if} value="{$r['id']}">{$r['name']}</option>
+                </volist>
+                </select>
+            </div>
+        </div>
+        <else/>
+            <input type="hidden" name="role" value="2">
+        </if>
+
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label">状态</label>
+            <div class="col-xs-4">
+                <input type="radio" name="status" value="1" <eq name="info['status']" value="1">checked="checked"</eq> />启用
+                <input type="radio" name="status" value="0" <eq name="info['status']" value="0">checked="checked"</eq> />禁用
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+</div>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#myform').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if (data.status == 1) {
+            layer.msg(data.info, {
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+                window.location.href = "{$Think.cookie.__forward__}";
+                return true;
+            });
+        } else {
+            layer.msg(data.info, {
+                icon: 2,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            });
+        }
+    }
+</script>
+</block>

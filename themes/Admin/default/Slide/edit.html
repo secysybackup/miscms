@@ -1,0 +1,76 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form id="myform" action="{:U('Slide/edit')}" method="post">
+
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>名称</label>
+        <div class="col-md-6">
+            <input type="text" id="name" name="name" value="{$vo.name}" class="form-control"  validate="required:true,cn_username:true, minlength:2, maxlength:20"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">幻灯片宽</label>
+        <div class="col-md-6">
+            <input type="text" id="width" name="width" value="{$vo.width}" class="form-control" validate="required:true,number:true, minlength:1, maxlength:20"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">幻灯片高</label>
+        <div class="col-md-6">
+            <input type="text" name="height" value="{$vo.height}" class="form-control" validate="required:true,number:true, minlength:1, maxlength:20"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">图片数量</label>
+        <div class="col-md-6">
+            <input type="text" name="num" value="{$vo.num}" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">状态</label>
+        <div class="col-md-6">
+            {:Form::radio(array('field'=>'status','options'=>array('1'=>L('enable'),'0'=>L('disable'))),$vo['status'])}
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <if condition="$vo['id']!=''"><input type="hidden" name="id" value="{$vo.id}"/></if>
+        <input type="submit" value="确认" class="btn btn-primary" />
+        <a href="{:U('Slide/index')}" class="btn btn-primary">返回广告列表</a>
+    </div>
+</form>
+
+</block>
+
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

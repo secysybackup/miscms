@@ -1,0 +1,163 @@
+<!doctype html>
+<html class="w3c">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="__CSS__/elpis.min.css">
+<link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/layout.css">
+
+<script src="__STATIC__/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+<block name="style"></block>
+<title>{$seo_title}-{$site_name}</title>
+</head>
+<body>
+<div class="page-header navbar navbar-fixed-top">
+    <div class="page-logo">
+        <a href="/user">
+            {$site_name}
+        </a>
+        <div class="menu-toggler sidebar-toggler"> </div>
+    </div>
+
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+    <div class="top-menu">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown dropdown-extended dropdown-notification">
+                <a href="/" target="_blank" title="去首页" class="dropdown-toggle">
+                    <i class="fa fa-home"></i>
+                </a>
+                <ul class="dropdown-menu">
+                </ul>
+            </li>
+            <li class="dropdown dropdown-user">
+                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <img class="img-circle" src="{if empty($_SESSION['member']['avatar'])}__PUBLIC__/images/default_avatar.jpg{else}{:ltrim($_SESSION['member']['avatar'], ".")}{/if}">
+                    <span class="username username-hide-on-mobile">{$Think.session.member.username}</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-default">
+                    <li>
+                        <a href="/user/my/baseinfo"><i class="fa fa-user"></i> 我的资料 </a>
+                    </li>
+                    <li>
+                        <a href="/user/my/updatepwd"><i class="fa fa-lock"></i> 修改密码 </a>
+                    </li>
+                    <li>
+                        <a href="/user/my/avatar"><i class="fa fa-file-picture-o"></i> 上传头像</a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="/user/login/logout"><i class="icon-key"></i> 我要退出 </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--侧边导航-->
+<div class="page-sidebar">
+    <ul class="page-sidebar-menu">
+        <li class="nav-item start">
+            <a href="/user">
+                <i class="fa fa-home"></i>
+                <span class="title">后台首页</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-shopping-cart"></i><span class="title">财务管理</span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="/User/Order/index">
+                        <i class="fa fa-shopping-cart"></i><span class="title">订单查询</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle"><i class="fa fa-cogs"></i><span class="title">会员中心</a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="/User/my/baseinfo">
+                        <i class="fa fa-cog"></i><span class="title">基本信息</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/User/my/avatar">
+                        <i class="fa fa-file-picture-o"></i><span class="title">修改头像</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/user/my/updatepwd">
+                        <i class="fa fa-lock"></i><span class="title">修改密码</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/User/Address/index">
+                        <i class="fa fa-map-marker"></i><span class="title">我的收货地址</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <block name="main"></block>
+    </div>
+</div>
+<script>
+
+    function area_change(id,level,province,city,area,provinceid,cityid,areaid){
+        var datas={'level':level,'provinceid':provinceid,'cityid':cityid,'areaid':areaid};
+        $.ajax({
+            type:"POST",
+            url:"/index.php?m=ajax&a=area&id="+id,
+            data: datas,
+            timeout:"4000",
+            dataType:"JSON",
+            success: function(data){
+                if(level==0){
+                    $('#'+province).html(data.province);
+                    $('#'+city).html(data.city);
+                    $('#'+area).html(data.area);
+                }else if(level==1){
+                    $('#'+city).html(data.city);
+                    $('#'+area).html(data.area);
+                }else if(level==2){
+                    $('#'+area).html(data.area);
+                }
+            },
+            error:function(){
+                alert("time out,try it");
+            }
+        });
+    }
+
+    // 确认删除
+    function confirm_delete(url){
+        layer.confirm('确认要删除信息吗?', {icon: 3, title:'提示'}, function(index){
+            //do something
+            $.ajax({
+                url:url,
+                success:function(data){
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.info, {icon: 2});
+                    }
+                }
+            });
+            layer.close(index);
+        });
+    }
+</script>
+</body>
+</html>

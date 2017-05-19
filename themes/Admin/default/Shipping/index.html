@@ -1,0 +1,53 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <a class="btn btn-primary" href="{:U('Shipping/add')}"> 新增</a>
+    <button type="button" class="btn btn-primary" onclick="myform.action='{:U('Shipping/deleteall')}';return confirm_deleteall()">删除</button>
+    <button type="button" class="btn btn-primary" onclick="myform.action='{:U('Shipping/listorder')}';$('#myform').submit();" >排序</button>
+</div>
+
+<form action="" name="myform" id="myform" method="post">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th width="40">
+                <input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');">
+            </th>
+            <th width="50">排序</th>
+            <th width="30">ID</th>
+            <th>名称</th>
+            <th width="50">状态</th>
+            <th width="70">物流保价</th>
+            <th width="70">货到付款</th>
+            <th width="150">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+        <tr>
+            <td width="40" align="center">
+                <input class="inputcheckbox " name="ids[]" value="{$vo['id']}" type="checkbox" >
+            </td>
+            <td width="40" align='center'>
+                <input name='listorders[{$vo.id}]' type='text' size='3' value='{$vo.listorder}' class='input-c'></td>
+            <td width="30" align="center">{$vo['id']}</td>
+            <td>{$vo['name']}</td>
+            <td align="center">
+                {if $vo['status']}{:L(enable)}
+                {else}{:L(disable)}{/if}
+            </td>
+            <td align="center">{if $vo['is_insure']}{:L(yes)}{else}{:L(no)}{/if}</td>
+            <td align="center">{if $vo['type']}{:L(yes)}{else}{:L(no)}{/if}</td>
+            <td align="center">
+                <a class="btn btn-sm btn-primary" href="javascript:openwin('{:U('Shipping/edit',array('id'=>$vo['id'],isajax=>1))}','编辑','600px','450px')">编辑</a>
+                <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Shipping/delete',array(id=>$vo['id']))}')">删除</a>
+            </td>
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+</form>
+<div id="pages" class="page">{$page}</div>
+</block>

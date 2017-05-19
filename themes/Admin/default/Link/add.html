@@ -1,0 +1,85 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form id="myform" action="{:U('Link/add')}" method="post">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">链接类型</label>
+            <div class="col-md-9" id="box_linktype">
+                <label class="radio-inline checkbox_linktype">
+                    <input type="radio" name="linktype" checked value="1"> 文字链接
+                </label>
+                <label class="radio-inline checkbox_linktype">
+                    <input type="radio" name="linktype" value="2"> LOGO链接
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>网站名称  </label>
+        <div class="col-md-9" id="box_name">
+            <input type="text" class="form-control" name="name">
+        </div>
+    </div><div class="form-group row">
+        <label class="form-control-label col-md-2">网站LOGO</label>
+        <div class="col-md-9" id="box_weblogo">
+            <div id="weblogo_aid_box"></div>
+            <input type="text" class="form-control pull-left w-300px" name="weblogo" id="weblogo" value="" size="50" title="">
+            <input type="button" class="btn btn-primary pull-left" value="图片上传" onclick="javascript:swfupload('weblogo','{:get_yzh_auth(1,'200kb',1)}',yesdo)">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>网站地址</label>
+        <div class="col-md-9" id="box_siteurl">
+            <input type="text" class="form-control w-300px" name="siteurl" id="siteurl">
+        </div>
+    </div>
+    <div class="form-group row" style="display: none">
+        <label class="form-control-label col-md-2">状态</label>
+        <div class="col-md-9" id="box_status">
+            <label class="radio-inline checkbox_status">
+                <input type="radio" name="status" id="status_1" checked="" value="1"> 已审核
+            </label>
+            <label class="radio-inline checkbox_status">
+                <input type="radio" class="" name="status" id="status_2" value="0"> 未审核
+            </label>
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="hidden" name="lang" value="1">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+</form>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+
+                layer.confirm(data.info, {
+                    icon:1,
+                    btn: ['继续添加','返回列表'] //按钮
+                }, function(){
+                    window.location.href = "{:U('Link/add')}";
+                    return false;
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+
+        }
+    </script>
+</block>

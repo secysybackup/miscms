@@ -1,0 +1,22 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <notempty name="list">
+            <ul class="downList">
+                <volist name="list" id="r">
+                <li><a href="{$r.filepath}">[点击下载]</a><p>{$r.title}</p></li>
+                </volist>
+            </ul>
+            <else/>
+            {$catname}
+            </notempty>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

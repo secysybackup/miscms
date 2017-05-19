@@ -1,0 +1,53 @@
+<!-- 底部 -->
+<div class="clearfix"></div>
+<div class="footer">
+    <div class="w980">
+                <div class="footMenu fl">
+                    <h2><a href="{$Cats[1][url]}" >{$Cats[1][catname]} </a></h2>
+                        <Gr:subcat catid="1" id="rr" key='ii'>
+                            <p><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></p>
+                        </Gr:subcat>
+                </div>
+                 <div class="footMenu fl">
+                    <h2><a href="{$Cats[2][url]}" >{$Cats[2][catname]} </a></h2>
+                        <Gr:subcat catid="2" id="rr" key='ii'>
+                            <p><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></p>
+                        </Gr:subcat>
+                </div>
+                 <div class="footMenu fl">
+                    <h2><a href="{$Cats[7][url]}" >{$Cats[7][catname]} </a></h2>
+                        <Gr:subcat catid="7" id="rr" key='ii'>
+                            <p><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></p>
+                        </Gr:subcat>
+                </div>
+                 <div class="footMenu fl">
+                    <h2><a href="{$Cats[4][url]}" >{$Cats[4][catname]} </a></h2>
+                        <Gr:subcat catid="4" id="rr" key='ii'>
+                            <p><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></p>
+                        </Gr:subcat>
+                </div>
+        <div class="footCode fl yzh-editable" editable-type="config" editable-id="36"><img src="{$site_wxqrcode}" title="手机快速扫码"><span>手机快速扫码<br/>关注优色微信号</span></div>
+        <div class="footTel fr">
+            <h3>全国服务热线：<span>{$site_tel400}</span></h3>
+            <p>
+                {$site_copyright}<br/>
+                地址：{$site_address}<br/>
+                电话：{$site_telephone}&nbsp;&nbsp;&nbsp;传真：{$site_fax}<br/>              
+                技术支持：<a href="http://www.36099.com" target="_blank">国人在线</a>
+                <a href="/Public/mzsm.html" target="_blank">免责申明</a> &nbsp;&nbsp;           
+                {$site_tongji}
+            </p>
+        </div>
+        <div class="clearfix"></div>
+        {if $current=='/'}
+            <div class="links">
+                <span>友情链接：</span>
+                <Gr:link  typeid="0" key="i">
+                    {if $i!=1}<em>|</em>{/if}
+                    <a href="{$r['siteurl']}" title="{$r['name']}" target="_blank">{$r['name']}</a>
+                </gr:link>
+            </div>
+        {/if}
+    </div>
+</div>
+

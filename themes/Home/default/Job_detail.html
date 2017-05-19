@@ -1,0 +1,142 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <style>
+        .list_box{
+            font-size: 14px;
+        }
+        .list_box h3{
+            line-height:50px;
+        }
+        table {
+            font-size:13px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .list_box table tr td{
+            border: 1px solid #CCCCCC;
+            padding:0 10px;
+            line-height: 30px;
+        }
+        .list_box input[type='text']{
+            border: 1px solid #CCCCCC;
+            height: 24px;
+            line-height: 24px;
+            width: 80%;
+        }
+        .list_box .jobs-textarea{
+            height: 100px;
+            font-size: 12px;
+            line-height: 24px;
+            width: 100%;
+        }
+        .jobs-submit{
+            padding: 5px 10px;
+            background: #9cc2cb;
+        }
+        .jobs-submitb{
+            padding: 5px 10px;
+            background: #9cc2cb;
+        }
+    </style>
+    <div class="w980 ptb25 oh">
+        <include file="Public:left"/>
+        <div class="pageContent fr">
+            <include file="Public:title"/>
+            <div class="pageContentBox list_box">
+                <div class="gr-jobs-show">
+                    <form id="myform" name="myform" action="/form/job.html" method="post">
+                        <h3>基本信息</h3>
+                        <table>
+                            <tr>
+                                <td align="left">姓    名</td>
+                                <td><input type="text" name="username"  class="jobs-input"/><font color="red">&nbsp;*</font>
+                                </td>
+                                <td>性    别</td>
+                                <td>
+                                    <input type="radio" class="input_radio " name="sex" value="1" checked>男&nbsp;&nbsp;
+                                    <input type="radio" class="input_radio " name="sex" value="2" >女<font color="red">&nbsp;*</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>应聘职位 </td>
+                                <td><input type="text" name="position" class="jobs-input"  /><font color="red">&nbsp;*</font></td>
+                                <td>出生年月 </td>
+                                <td><input type="text" name="birthday" class="jobs-input" /> <font color="red">&nbsp;*</font></td>
+                            </tr>
+                            <tr>
+                                <td>身份证号 </td>
+                                <td><input type="text" name="idnum" class="jobs-input" /></td>
+                                <td>现居住地 </td>
+                                <td><input type="text" name="address" class="jobs-input"/></td>
+                            </tr>
+                            <tr>
+                                <td>联系电话 </td>
+                                <td><input type="text" name="phone" id="" class="jobs-input" /><font color="red">&nbsp;*</font></td>
+                                <td>电子邮箱 </td>
+                                <td><input type="text" name="email" id="" class="jobs-input"/></td>
+                            </tr>
+                        </table>
+                        <h3>工作经历</h3>
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="100%" colspan="2">请按照： X年X月 至   X年X月    公司名称    职位 格式填写；<strong>请从最近的写起</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <textarea name="experiences" id="" class="jobs-textarea"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <h3>自我评价</h3>
+                        <table>
+                            <tr>
+                                <td colspan="3">让我们更充分的了解您，建议您从个性、工作态度及未来生涯规划等方面加以描述。</td>
+                            </tr>
+                            <tr>
+                                <td><textarea name="self_assessment" id="" class="jobs-textarea" ></textarea> </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name="" type="submit" class="jobs-submit" value="提 交" />
+                                    <input name="" type="reset" class="jobs-submit" value="重 置" />
+                                    <a href="/zhiweizhaopin.html"><input type="button" class="jobs-submitb" value="返回招聘列表" src="" /></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <script type="text/javascript" src="__STATIC__/jquery.form.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    $('#myform')[0].reset();
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

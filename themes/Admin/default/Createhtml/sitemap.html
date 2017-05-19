@@ -1,0 +1,33 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="row">
+    <div class="col-md-12">
+        <form action="{:u('Createhtml/sitemap')}" method="post" >
+          <input type="hidden" name="iscreatehtml" value="1">
+            <input type="hidden" name="article" size="2" value="100">
+            <input type="hidden" name="product" size="2" value="100">
+            <div class="card" >
+                <label>说明：</label>
+                <div style="margin-right:100px;font-size:14px;margin-left:34px; line-height:19px;">
+                    <p>Sitemap（即站点地图）就是您网站上各网页的列表。创建并提交Sitemap有助于百度发现并了解您网站上的所有网页。您还可以使用Sitemap提供有关您网站的其他信息，如上次更新日期、Sitemap文件的更新频率等，供百度Spider参考。</p>
+                    <p>百度对已提交的数据，不保证一定会抓取及索引所有网址。但是，我们会使用Sitemap中的数据来了解网站的结构等信息，这样可以帮助我们改进抓取策略，并在日后能更好地对网站进行抓取。</p>
+                </div>
+            </div>
+            <table class="table" >
+                <tr>
+                    <th height="25">是否生成XML地图：</th>
+                    <td>
+                        <a target="_blank" href="/sitemap.xml">访问XML地图</a>
+                    </td>
+                </tr>
+            </table>
+            <div class="form-actions">
+                <input type="submit" value="生成地图" class="btn btn-primary"/>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+</block>

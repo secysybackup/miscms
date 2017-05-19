@@ -1,0 +1,80 @@
+<div class="pageSidebar fl">
+    <div class="sidebarOne">
+        {if $max_parent_catid>0 && $max_parent_catid!=2}
+            <h2>{$max_parent_catname}</h2>
+            <ul>
+                <Gr:cat catid="$max_parent_catid" id="r" key="i">
+                    <li><a class="{if $catid==$r['id'] || $max_parent_catid==$r['id']}active{/if}"  href="{$r.url}" title="{$r.catname}">{$r.catname}</a>
+                        {if $r['child']=="1"}
+                        <ol {if $catid==$r['id'] || $r['id']==$Cats[$catid][parentid] || $r['id']==$Cats[$parentid][parentid]} style="display: block;"
+
+            {else}style="display: none;"{/if}>
+                            <Gr:cat catid="$r['id']" id="rr" key='ii'>
+                                <li><a class="{if $catid==$rr['id']}active{/if}" href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a>
+                                {if $rr['child']=="1"}
+                                    <ul {if $catid==$rr['id']} style="display: block;"{elseif $rr['id']==$Cats[$catid][parentid]}style="display: block;"{else}style="display: none;"{/if}>
+                                     <Gr:cat catid="$rr['id']" id="rrr" key='ii'>
+                                       <li><a href="{$rrr.url}">{$rrr.catname}</a></li>
+                                    </Gr:cat>
+                                    </ul>
+                                 {/if}
+                                </li>
+                            </Gr:cat>
+                        </ol>
+                        {/if}
+                    </li>
+                </Gr:cat>
+            </ul>
+        {else}
+            <h2>{$Cats[2][catname]}</h2>
+            <ul>
+                <Gr:cat catid="2" id="r" key="i">
+                    <li><a class="{if $catid==$r['id'] || $parentid==$r['id']}active{/if}"  href="{$r.url}" title="{$r.catname}">{$r.catname}</a>
+                        {if $r['child']=="1"}
+                        <ol {if $catid==$r['id'] || $r['id']==$Cats[$catid][parentid] || $r['id']==$Cats[$parentid][parentid]} style="display: block;"
+            {else}style="display: none;"{/if}>
+                            <Gr:cat catid="$r['id']" id="rr" key='ii'>
+                                <li><a class="{if $catid==$rr['id']}active{/if}" href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a>
+                                    {if $rr['child']=="1"}
+                                    <ul {if $catid==$rr['id']} style="display: block;"{elseif $rr['id']==$Cats[$catid][parentid]}style="display: block;"{else}style="display: none;"{/if}>
+                                     <Gr:cat catid="$rr['id']" id="rrr" key='ii'>
+                                       <li><a href="{$rrr.url}" {if $catid==$rrr['id']}style="color:red"{/if} >{$rrr.catname}</a></li>
+                                    </Gr:cat>
+                                    </ul>
+                                 {/if}
+                                </li>
+                            </Gr:cat>
+                        </ol>
+                        {/if}
+                    </li>
+                </Gr:cat>
+            </ul>
+        {/if}
+    </div>
+    <div class="sidebarTwo">
+        <h2>推荐产品</h2>
+        <div class="bd">
+            <div class="box">
+                <ul>
+                    <Gr:list order="listorder asc,id desc" catid="2" key="i" posid="1" field="title,url,thumb" limit="3" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}"><img width="172" height="129" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a><span>{$r['title']|str_cut=###,25}</span></li>
+                    </Gr:list>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="sidebarThree">
+        <h2>联系优色</h2>
+        <div class="twoCont">
+            <h3>全国服务热线：<span>{$site_tel400}</span></h3>
+            <p>
+            电话：{$site_telephone}<br/>
+            传真：{$site_fax}<br/>
+            地址：{$site_address}
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+jQuery(".sidebarTwo").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:2,interTime:30});
+</script>

@@ -1,0 +1,181 @@
+<extend name="Public:base"/>
+
+<!--侧边导航-->
+<block name="aside">
+    <include file="Public:aside"/>
+</block>
+
+<block name="main">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="tree"></div>
+        </div>
+        <div class="col-md-7">
+            <form id="myform" class="form-horizontal" action="/index.php?g=admin&m=region&a=edit" method="post">
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">名称</label>
+                    <div class="col-md-8">
+                    <input type="text" class="form-control" name="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">拼音</label>
+                    <div class="col-md-8">
+                    <input type="text" class="form-control" name="letter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">热门</label>
+                    <div class="col-md-8">
+                        <label class="radio-inline">
+                            <input type="radio" name="hot" value="0">否
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="hot" value="1">是
+                        </label>
+                    </div>
+
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success" value="">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</block>
+
+
+<block name="script">
+    <link rel="stylesheet" href="__PUBLIC__/jstree/dist/themes/default/style.min.css" />
+    <script src="__PUBLIC__/jstree/dist/jstree.min.js"></script>
+    <script>
+        $(function () {
+
+            $('#tree')
+                .jstree({
+                    'core' : {
+                        'data' : {
+                            'url' : '/index.php?g=admin&m=region&a=node',
+                            'data' : function (node) {
+                                return { 'id' : node.id };
+                            }
+                        },
+                        'check_callback' : true,
+                        'themes' : {
+                            'responsive' : false,
+                            "dots" : false,
+                            "icons" : false
+                        }
+                    },
+                    'force_text' : true,
+                    'plugins': ['state','dnd','contextmenu','wholerow'],
+                    "contextmenu": {
+                        "items": {
+                            "create": {
+                                "label": "添加",
+                                "action": function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                            obj = inst.get_node(data.reference);
+                                    inst.create_node(obj, {}, "last", function (new_node) {
+                                        setTimeout(function () { inst.edit(new_node); },0);
+                                    });
+                                }
+                            },
+                            "rename": {
+                                "label": "重命名",
+                                "action"			: function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                            obj = inst.get_node(data.reference);
+                                    inst.edit(obj);
+                                }
+                            },
+                            "remove": {
+                                "label": "删除",
+                                "action"			: function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                            obj = inst.get_node(data.reference);
+                                    if(inst.is_selected(obj)) {
+                                        inst.delete_node(inst.get_selected());
+                                    }
+                                    else {
+                                        inst.delete_node(obj);
+                                    }
+                                }
+                            },
+                            "ccp": null,
+                        }
+                    }
+                })
+                .on('delete_node.jstree', function (e, data) {
+                    if(confirm("确定要删除吗？删除后不可恢复。")) {
+                        $.get('/index.php?g=admin&m=region&a=delete', {'id': data.node.id})
+                                .fail(function () {
+                                    data.instance.refresh();
+                                });
+                    }
+                })
+                .on('create_node.jstree', function (e, data) {
+                    $.post('/index.php?g=admin&m=region&a=add', { 'parentid' : data.node.parent, 'listorder' : data.position, 'name' : data.node.text })
+                            .done(function (d) {
+                                data.instance.set_id(data.node, d.id);
+                            })
+                            .fail(function () {
+                                data.instance.refresh();
+                            });
+                })
+                .on('rename_node.jstree', function (e, data) {
+                    $.post('/index.php?g=admin&m=region&a=edit', { 'id' : data.node.id, 'name' : data.text })
+                            .fail(function () {
+                                data.instance.refresh();
+                            });
+                })
+                .on('move_node.jstree', function (e, data) {
+                    $.post('/index.php?g=admin&m=region&a=edit', { 'id' : data.node.id, 'parentid' : data.parent, 'listorder' : data.position })
+                            .fail(function () {
+                                data.instance.refresh();
+                            });
+                })
+                .on('changed.jstree', function (e, data) {
+                    if(data && data.selected && data.selected.length) {
+                        $.get('/index.php?g=admin&m=region&a=content&id=' + data.selected.join(':'), function (d) {
+                            $('input[name="id"]').val(d.id);
+                            $('input[name="name"]').val(d.name);
+                            $('input[name="letter"]').val(d.letter);
+                            $('input[name=hot]').attr('checked',false);
+                            if(d.hot==1){
+                                $('input:radio[name=hot]')[1].checked = true;
+                            } else {
+                                $('input:radio[name=hot]')[0].checked = true;
+                            }
+
+                        });
+                    }
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

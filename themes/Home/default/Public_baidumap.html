@@ -1,0 +1,42 @@
+<php>
+    if (F('Baidumap')) {
+        $baidumap = F('Baidumap');
+    } else {
+        $baidumap = M('Plugin')->where("name='Baidumap'")->find();
+        F('Baidumap', $baidumap);
+    }
+    $bdmap = json_decode($baidumap['config'], true);
+</php>
+<div id="dituContent" style="height: 500px;width: 500px"></div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=POcNPQVBF1nME1bSo0GIFZ0c"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map('dituContent');
+    var poi = new BMap.Point({$bdmap['bdmap_x']},{$bdmap['bdmap_y']});
+    map.centerAndZoom(poi, 18);
+    map.enableScrollWheelZoom();
+
+    var content ='<div>' +
+            "地址：{$bdmap['bdmap_address']}<br/>电话：{$bdmap['bdmap_tel']}<br/>" +
+            '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+    searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+        title  : "{$bdmap['bdmap_name']}",      //标题
+        width  : 250,             //宽度
+        height : 60,              //高度
+        //panel  : "panel",         //检索结果面板
+        enableAutoPan : false,     //自动平移
+        searchTypes   :[
+        ]
+    });
+    var marker = new BMap.Marker(poi); //创建marker对象
+    searchInfoWindow.open(marker);
+    marker.addEventListener("click", function(e){
+        searchInfoWindow.open(marker);
+    });
+    map.addOverlay(marker); //在地图中添加marker
+</script>

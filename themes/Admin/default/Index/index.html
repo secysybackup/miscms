@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie8"><![endif]-->
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="w3c"><!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/layout.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- custom scrollbar stylesheet -->
+    <link rel="stylesheet" href="__PUBLIC__/admin/css/jquery.mCustomScrollbar.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="__STATIC__/bootstrap/js/vendor/html5shiv.js"></script>
+    <script src="__STATIC__/bootstrap/js/vendor/respond.min.js"></script>
+    <![endif]-->
+    <title>誉字号V1</title>
+    <block name="style"></block>
+    <script>
+        var APP = '';
+        var ROOT = '';
+        var PUBLIC = '/public';
+        var COOKIE_PREFIX = '{$Think.config.COOKIE_PREFIX}';
+    </script>
+</head>
+<body>
+
+<div id="header">
+    <div class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div id="brand"></div>
+
+            <ul class="nav navbar-nav main-nav">
+                <volist name="topmenu" id="menu" key="i">
+                    <li id="top_{$i}">
+                        <a href="{:U($menu['group'].'/'.$menu['model'].'/'.$menu['action'],$menu['data'])}">
+                            <i class="{$menu['icon']}"></i>
+                            <span>{$menu['name']}</span>
+						</a>
+                    </li>
+                </volist>
+            </ul>
+
+            <div class="navbar-content clearfix">
+                <ul class="nav navbar-top-links navbar-right">
+                    <php>if(count($Lang)>1){</php>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img style="margin:0 5px;height: 20px;" src="__PUBLIC__/images/flag/{$Think.session.lang.flag}"/>{$Think.session.lang.name}
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <volist name="Lang" id="r">
+                                <li><a href="javascript:;" onclick="change_lang(this,'{$r['mark']}')">
+                                    <img style="margin:0 5px;height: 20px;" src="__PUBLIC__/images/flag/{$r['flag']}"/>
+                                    <span>{$r['name']}</span>
+                                    </a>
+                                </li>
+                            </volist>
+                        </ul>
+                    </li>
+                    <php>}</php>
+                    <li><a href="javascript:update_cache();" title="更新缓存"><i class="fa fa-lg fa-refresh"></i></a></li>
+                    <li><a href="/" target="_blank" title="浏览站点"><i class="fa fa-lg fa-globe"></i></a></li>
+                    <li><a href="http://support.yuzihao.com/help" target="_blank" title="使用帮助"><i class="fa fa-lg fa-question-circle"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="<empty name="Think.session.admin.avatar">__PUBLIC__/images/admin_avtar.jpg<else/>{$Think.session.admin.avatar|thumb=###,'30,30'}</empty>" alt="avatar" style="max-width:30px;">
+                            {$Think.session.admin.username}
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="javascript:;" onclick="set_url('{:U('User/index')}');"><i class="fa fa-edit"></i>帐号设置</a>
+                            </li>
+                            <li>
+                                <a id="logout" href="{:U('Login/logout')}"><i class="fa fa-sign-out"></i>安全退出</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--侧边导航-->
+<div id="aside" class="scrollerbar">
+    <div class="navbar">
+        <volist name="all_menu_list" id="side_menu_list" key="ii">
+        <ul class="asidenav" id="aside_{$ii}">
+            <php>if($ii == 1) {</php>
+
+            <li><a><i class="fa fa-folder-open-o"></i><span>快捷操作</span></a>
+                <ul>
+                    <volist name="shortcuts" id="r">
+                        <li>
+                            <a href="javascript:;" onclick="set_url('{$r.url}');">
+                                <i class="fa fa-mail-forward"></i><span>{$r.name}</span>
+                            </a>
+                        </li>
+                    </volist>
+                    <li>
+                        <a href="{:U('Visual/index')}" target="_blank">
+                            <i class="fa fa-eye"></i>
+                            <span>可视化编辑</span>
+                        </a>
+                    </li>
+                    <if condition="$Think.session.admin.id eq 1">
+                        <li>
+                            <a href="javascript:;" onclick="set_url('{:U('Index/shortcuts')}');">
+                                <i class="fa fa-eye"></i>
+                                <span>快捷操作管理</span>
+                            </a>
+                        </li>
+                    </if>
+
+                </ul>
+            </li>
+
+            <php>}else{</php>
+            <volist name="side_menu_list['_child']" id="r">
+                <li><a><i class="fa fa-folder-open-o"></i><span>{$r['name']}</span></a>
+                    <ul>
+                        <volist name="r._child" id="rr">
+                            <li>
+                                <a href="javascript:;" onclick="set_url('{:U($rr['group'].'/'.$rr['model'].'/'.$rr['action'],$rr['data'])}')">
+                                    <i class="{$rr['icon']}"></i><span>{$rr['name']}</span>
+                                </a>
+                            </li>
+                        </volist>
+                    </ul>
+                </li>
+            </volist>
+            <php>}</php>
+        </ul>
+        </volist>
+    </div>
+</div>
+
+<div id="main">
+    <iframe name="main-content" id="iframe_box" src="{:U('index/main')}" frameborder="false" scrolling="auto" allowTransparency="true" style="border:none;height:100%;" width="100%" height="100%">
+    </iframe>
+</div>
+
+<!-- 引入js -->
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+<script type="text/javascript" src="__JS__/admin.js"></script>
+<!-- custom scrollbar plugin -->
+<script src="__JS__/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var id = getcookie('id');
+        var location = getcookie('location');
+        if (id && location) {
+            $('.main-nav li').removeClass('active');
+            $('#top_' + id).addClass('active');
+            $('.asidenav').hide();
+            $('#aside_' + id).show();
+            $('#iframe_box').attr('src', location);
+        } else {
+            $('.main-nav li').removeClass('active');
+            $('#top_1').addClass('active');
+            $('.asidenav').hide();
+            $('#aside_1').show();
+            $("#iframe_box").attr("src", '/index.php?g=admin&m=index&a=main');
+        }
+    });
+    window.onload = function (){
+        if(!+"\v1" && !document.querySelector) { // for IE6 IE7
+            document.body.onresize = init;
+        } else {
+            window.onresize = init;
+        }
+    }
+
+    //返回浏览器可见区高度
+    function getWindowHeight(){
+        return window['innerHeight']|| document.compatMode === "CSS1Compat" && document.documentElement['clientHeight'] || document.body['clientHeight'];
+    }
+    //打开浏览器就执行自定义初始函数
+    function init(){
+        var heights = getWindowHeight()-54;
+        if($('#aside').height()>heights){
+            var width = $('#aside').width();
+            $('#aside').width(width);
+        }
+        //设置右主体内容高度
+    }
+    init();
+
+    function set_url(url){
+        $('#iframe_box').attr('src',url);
+        setcookie('location', url);
+        return false;
+    };
+
+    function change_lang(obj,lang){
+        var url = getcookie('location') + '&l='+lang;
+        var flag = $(obj).find('img').attr('src');
+        var text = $(obj).find('span').text();
+        $('#lang_flag img').attr('src', flag);
+        $('#lang_flag span').text(text);
+        $('#iframe_box').attr('src',url);
+        return false;
+    }
+
+    $('.main-nav a').click(function(){
+        var id = $(this).parent().attr('id').split('_');
+        $('.main-nav li').removeClass('active');
+        $(this).parent().addClass('active');
+        $('.asidenav').hide();
+        $('#aside_'+id[1]).show();
+        var url = '/'+$(this).attr('href');
+        $('#iframe_box').attr('src',url);
+        setcookie("id", id[1]);
+        setcookie('location', url);
+        return false;
+    });
+
+    $(".scrollerbar").mCustomScrollbar({theme:"minimal"});
+
+    //登出
+    window.onload = function (){
+
+        $('#logout').click(function(){
+            setcookie("id", '');
+            setcookie('location', '');
+            var url = $('#logout').attr('href');
+            $.ajax({
+                url: url,
+                success:function(data){
+                    layer.msg(data.info);
+                    window.location.href = "{:U('Login/index')}";
+                }
+            });
+            return false;
+        })
+    }
+
+    //更新缓存
+    function update_cache(){
+        $.ajax({
+            url:"{:U('Public/cache')}",
+            beforeSend:function(){
+                layer.msg('正在更新缓存');
+            },
+            success:function(data){
+                window.location.reload();
+            }
+        });
+    }
+
+    $("#top_1").addClass('active');
+    $("#aside_1").show();
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <include file="Public:banner"/>
+    <include file="Public:position"/>
+    <div class="listWrapper">
+        {if $list}
+        <volist name="list" id="r">
+            <dd><em></em>
+                <span><b>position：</b>{$r.title}</span>
+                <span><b>Number：</b>{$r.num}人</span>
+                <span><b>Education：</b>{$r.education}</span>
+                <span><b>time：</b>{$r.createtime|toDate=###,'Y-m-d'}</span>
+            </dd>
+            <dt>
+            <p>
+                <strong>description of job：</strong><br/>
+                {$r.jobdes}
+                <br/><br/>
+                <strong>Job Requirements：</strong><br/>
+                {$r.requirements}
+            </p>
+            <a href="{$r.url}" class="button">apply immediately</a>
+            </dt>
+            <hr>
+        </volist>
+        {else}
+        {$catname}
+        {/if}
+        <p class="clear h15"></p>
+    </div>
+</block>

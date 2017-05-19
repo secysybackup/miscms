@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{$poster.appname}</title>
+    <meta name="keywords" content="{$poster.appname}">
+    <meta name="description" content="当前微名片为“{$poster.appname}”">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        //如果是手机浏览，则跳转到实际页面
+        var ua = navigator.userAgent;
+        var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+                isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+                isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+                isMobile = isIphone || isAndroid;
+        if(isMobile) {
+            location.href = 'http://www.weikecj.cn/mobile/146336734/206914';
+        }
+    </script>
+    <style type="text/css">
+        html{
+            height:100%;
+            min-height:100%;
+        }
+        body{
+            margin:0px;
+            padding:0px;
+            font-family: 'Microsoft Yahei', 微软雅黑, 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'Segoe UI', Tahoma, Arial, STHeiti, sans-serif;
+            height:100%;
+            min-height:100%;
+            background: url('/poster/images/previewbg.jpg');
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+        .main{
+            width:820px;
+            height:624px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-top:-317px;
+            margin-left:-400px;
+        }
+        .main .mobile{
+            position:relative;
+            width:322px;
+            float:left;
+        }
+        .main .guide{
+            float:right;
+            padding-top:70px;
+        }
+        .main .top{
+            background: url('/poster/images/yulan_phone_top.png');
+            width:322px;
+            height:42px;
+        }
+        .main .bar{
+            background: url('/poster/images/menu_bar.jpg');
+            width:322px;
+            height:20px;
+        }
+        .main .title{
+            background: black;
+            width:284px;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            color:white;
+            font-size:16px;
+            border:1px white solid;
+            border-top:none;
+            border-bottom:none;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 0 18px;
+        }
+        .main .bottom{
+            background: url('/poster/images/yulan_phone_bottom.png');
+            width:322px;
+            height:47px;
+            margin-top: -4px;
+        }
+        .main .previewWrap{
+            text-align: center;
+            overflow: hidden;
+            font-size: 14px;
+            color: #4a4a4a;
+            font-weight: bold;
+        }
+        .main iframe,.main .previewWrap{
+            width: 320px;
+            height: 475px;
+            border:1px white solid;
+            border-top:none;
+            border-bottom:none;
+
+            background: white;
+
+        }
+        .main .ctrl_panel{
+            position: absolute;
+            top: 102px;
+            right: -35px;
+            width: 25px;
+            background: #71b643;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            font-size: 14px;
+            color: white;
+            padding: 10px 0;
+            padding-left: 10px;
+            line-height: 17px;
+        }
+        .main #code .txt{
+            color: white;
+            border-radius: 5px;
+            font-weight:bold;
+        }
+        .main #code #view_reg {
+            font-size: 15px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            background: rgb(255,255,255,2)
+        }
+        .main #code div {
+            color: #fff;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+        .main .link{
+            color:rgb(104, 187, 48);
+            font-weight:bold;
+        }
+        #support{
+            position: absolute;
+            bottom:10px;
+            right:10px;
+            font-size:14px;
+            color:white;
+        }
+        #support .linktoindex{
+            color:white;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="main">
+    <div class="mobile">
+        <div class="top"></div>
+        <div class="bar"></div>
+        <div class="title">{$poster.appname}</div>
+
+        <iframe src="http://{$SITE_DOMAIN}/poster/{$poster.id}.html" frameborder="0" scrolling="no"></iframe>
+
+        <div class="bottom"></div>
+        <div class="ctrl_panel"><a id="change_page" type="button" class="next_btn btn" onclick="nextPage()">请按下鼠标 ， 并拖动</a></div>
+    </div>
+    <div class="guide">
+        <div id="code">
+            <div class="txt">扫一扫，手机体验效果更真实准确！</div>
+            <img id="codeImg" src="/vcard/api.php?size=7&text=http://{$SITE_DOMAIN}/poster/{$poster['id']}.html" width="240" alt="">
+        </div>
+    </div>
+</div>
+
+<div id="support">技术支持 BY <a class="linktoindex" href="/">国人伟业</a></div>
+
+</body>
+</html>

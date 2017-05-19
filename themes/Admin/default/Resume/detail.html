@@ -1,0 +1,84 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="card">
+        <div class="card-header">查看简历</div>
+        <form>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">姓名</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.username}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">性别</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">
+                        <eq name="user['sex']" value="1">男<else/>女</eq>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">出生年月</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.birthday}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">联系电话</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.phone}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">身份证号</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.idnum}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">现居住地</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.address}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">邮箱</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.email}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">应聘职位</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.position}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">工作经历</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.experiences}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">自我评价</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user.self_assessment}</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">提交时间</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{$user['createtime']|toDate=###,'Y-m-d'}</p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-actions">
+        <a class="btn btn-primary" href="javascript:window.history.go(-1);">返回</a>
+    </div>
+</div>
+</block>

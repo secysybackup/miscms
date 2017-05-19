@@ -1,0 +1,43 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <div class="gr-web1000 pt20">
+        <div class="yzh-map-main">
+            <div class="sitemap_con">
+                <div class="map_top">
+                    <div class="site_r_link">
+                        <a href="{:U('Sitemap/index')}">HTM地图</a> |
+                        <a href="/sitemap.xml">XML地图</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="site_plc"> 您的位置：首页 &gt; 网站地图</div>
+                <volist name="sitemap" id="vo">
+                    <h4>
+                        <a href="{$vo['url']}" target="_blank">{$vo['catname']}</a>
+                    </h4>
+                    <notempty name="vo['subcat']">
+                        <div class="b4">
+                            <ul>
+                                <volist name="vo['subcat']" id="sub">
+                                    <li><a href="{$sub['url']}" target="_blank">{$sub['catname']}</a></li>
+                                </volist>
+
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </notempty>
+
+                </volist>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+</block>

@@ -1,0 +1,410 @@
+#content {
+    width: 1000px;
+    margin: 15px auto;
+    border: 1px solid #c0c0c0;
+}
+
+.col-sub{
+    width: 200px;
+    position: absolute;
+    min-height: 400px;
+}
+.col-sub .mt-avatar{
+    margin: 5px;
+}
+.col-main{
+    margin-left: 200px;
+    min-height: 400px;
+    padding: 10px;
+    border-left: 1px solid #c0c0c0;
+    background-color: #fff;
+}
+
+.mtab-wrap {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D4D4D4;
+}
+.member-tabnav {
+    float: left;
+    margin-bottom: -1px;
+}
+.member-tabnav li {
+    float: left;
+    margin-right: 5px;
+}
+.member-tabnav .current a {
+    font-weight: bold;
+    color: #363;
+}
+.member-tabnav li a {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #EEE;
+    border-bottom-color: #D4D4D4;
+    border-radius: 3px 3px 0 0;
+    background-color: #FBFBFB;
+}
+
+.member-tabnav li a:hover, .member-tabnav .current a {
+    border: 1px solid #D4D4D4;
+    border-bottom-color: #FFF;
+    background-color: #FFF;
+    text-decoration: none;
+}
+.ua-tab li a {
+    width: 110px;
+}
+
+.cf:before,.cf:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+.cf:after {
+    clear: both;
+}
+.cf {
+    *zoom: 1;
+}
+.upload-area {
+    position: relative;
+    float: left;
+    margin-right: 30px;
+    width: 200px;
+    height: 200px;
+    background-color: #F5F5F5;
+    border: 2px solid #E1E1E1;
+}
+.upload-area .file-tips {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    padding: 0 15px;
+    width: 170px;
+    line-height: 1.4;
+    font-size: 12px;
+    color: #A8A8A3;
+    text-align: center;
+}
+.userup-icon {
+    display: inline-block;
+    margin-right: 3px;
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+    background: url("../images/userup_icon.png") no-repeat;
+}
+.uploadify-button {
+    line-height: 120px!important;
+    text-align: center;
+}
+.preview-area {
+    float: left;
+}
+.tcrop {
+    clear: right;
+    font-size: 14px;
+}
+
+.update-pic .crop {
+    background: url("../images/mystery.png") no-repeat scroll center center #EEEEEE;
+    float: left;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.crop100 {
+    height: 100px;
+    width: 100px;
+}
+.crop60 {
+    height: 60px;
+    margin-left: 20px;
+    width: 60px;
+}
+.update-pic .save-pic {
+    clear: left;
+    margin-right: 20px;
+}
+.update-pic .uppic-btn {
+    background-color: #348FD4;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 89px;
+}
+.preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background:#fff;
+    display: none;
+}
+
+
+.preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background:#fff;
+    display: none;
+}
+
+.user-box{
+    width:1200px;
+    margin:0 auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding:40px 0;
+    overflow:hidden;
+    clear:both;
+}
+
+.user-form-item{
+    width:1000px;
+    height:45px;
+    margin-bottom:10px;
+    clear:both;
+}
+
+.user-form-left{
+    width:80px;
+    height:35px;
+    float:left;
+    line-height:35px;
+    text-align:right;
+}
+
+.user-form-wrap{
+    width:300px;
+    height:35px;
+    float:left;
+    border:1px solid #ccc;
+    margin-left:20px;
+    position:relative;
+}
+
+.user-form-select{
+    border:none;
+}
+
+.user-form-select select{
+    position:absolute;
+    top:10px;
+    left:0;
+}
+
+.user-form-wrap .input-style{
+    width:290px;
+    height:33px;
+    position:absolute;
+    border:1px solid #fff;
+    top:0;
+    left:4px;
+    line-height:33px;
+    font-size:16px;
+}
+
+.user-form-wrap .captcha-style{
+    width:150px;
+}
+
+.user-form-wrap label.error{
+    width:200px;
+    height:33px;
+    position:absolute;
+    top:0;
+    left:320px;
+    line-height:33px;
+    color:#F00;
+}
+
+.user-form-wrap label.valid{
+    color:#27ae60;
+}
+
+.user-form-img{
+    display:block;
+    width:120px;
+    float:left;
+    margin-left:100px;
+    margin-top:5px;
+}
+
+#main{margin-top: 20px;}
+
+
+#footer{
+    background-color: #2C3E50;
+    color: #efefef;
+    height: 180px;
+    margin-top: 50px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+#footer a {
+    color: #ccc;
+}
+
+
+.user-box-right-bb{
+    width:940px;
+    height:380px;
+    float:right;
+    border:1px solid #dfdfdf;
+    margin-bottom:20px;
+}
+
+.user-menu{
+    display:block;
+    width:240px;
+    background:#fafafa;
+    padding:10px 0;
+    color:#8c8c8c;
+}
+
+/*表单*/
+.update-form .item {
+    margin-bottom: 10px;
+}
+.update-form .item .labs {
+    display: inline-block;
+    margin-right: 10px;
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    color: #2D622C;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.update-form .item input {
+    padding: 0 3px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #CCC;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+
+/*登录表单*/
+#loginform .item {
+    margin-bottom: 10px;
+}
+#loginform .item .labs {
+    display: inline-block;
+    margin-right: 10px;
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    color: #2D622C;
+    text-align: right;
+    vertical-align: middle;
+}
+
+#loginform input.submit {
+    background: #2065D8;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.44;
+    width: 75px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+
+/*注册表单*/
+#regform .item {
+    margin-bottom: 10px;
+}
+#regform .item .labs {
+    display: inline-block;
+    margin-right: 10px;
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    color: #2D622C;
+    text-align: right;
+    vertical-align: middle;
+}
+
+#regform .item input {
+    padding: 0 3px;
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #CCC;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    vertical-align: middle;
+    width: 300px;
+}
+#regform input.submit {
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 75px;
+    transition: all 0.3s ease-out 0s;
+}
+
+.card-footer{
+    margin: 0 -40px -30px;
+    padding: 15px 0 17px;
+    text-align: center;
+    background-color: #6c7a8d;
+    -webkit-border-radius: 0 0 7px 7px;
+    -moz-border-radius: 0 0 7px 7px;
+    -ms-border-radius: 0 0 7px 7px;
+    -o-border-radius: 0 0 7px 7px;
+    border-radius: 0 0 7px 7px;
+}
+.card-footer a{
+    font-weight: 600;
+    font-size: 14px;
+    color: #c3cedd;
+}
+
+.login .content h3 {
+    color: #4db3a5;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400!important;
+}
+
+.login-div{
+    display: none;
+    position: absolute;
+    background: #ccc;
+    width: 100px;
+}
+.login-div li {
+    padding: 0 10px;
+    line-height: 35px;
+    height: 35px;
+}
+

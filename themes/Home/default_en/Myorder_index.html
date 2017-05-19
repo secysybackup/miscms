@@ -1,0 +1,69 @@
+<extend name="User:common"/>
+
+<block name="main">
+<div id="content">
+    <include file="User:menu"/>
+
+    <div class="col-main">
+        <div class="panel panel-default">
+            <div class="panel-heading">订单查询</div>
+            <div class="panel-body">
+                <table  class="search_table">
+                    <tr>
+                        <td class="search">
+                            <form action="{:URL('Myorder/index')}" class="pure-form" method="get">
+                                <input type="hidden" name="g" value="User" />
+                                <input type="hidden" name="m" value="{$Think.MODULE_NAME}" />
+                                <input type="hidden" name="a" value="{$Think.ACTION_NAME}" />
+
+                                <input id="title" type="text" class="input-text" name="sn" value="{$Think.get.sn}" />
+                                <input type="hidden" id="searchtype" name="searchtype" value="sn"/>
+                                <input type="submit" class="pure-button pure-button-primary" value="查询" />
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+
+                <form name="myform" id="myform" action="" method="post">
+                    <table class="pure-table">
+                        <thead>
+                        <tr>
+                            <th width="140" align="left">订单编号</th>
+                            <th width="70" align="left">价格</th>
+                            <th>下单时间</th>
+                            <th>支付方式</th>
+                            <th width="160" align="center">订单状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="list" id="vo" key="k">
+                            <tr>
+                                <td><a target="_blank" href="{:U('Myorder/detail',array(id=>$vo['id']))}">{$vo.sn} </a> </td>
+                                <td><font color="red">{$vo.order_amount|number_format=###,2}{:L(RMB)}</font></td>
+                                <td>{$vo['add_time']|toDate=###,'Y-m-d H:i:s'}</td>
+                                <td>{$vo['pay_name']}</td>
+                                <td align="center">
+                                    {:L("order_status_".$vo[status])} |
+                                    {:L("pay_status_".$vo[pay_status])} |
+                                    {:L("shipping_status_".$vo[shipping_status])}
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+
+                </form>
+                <div id="pages" class="page">{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#catid").attr("value",'{$catid}');
+    function confirm_deleteall(){
+        art.dialog.confirm("{:L('real_delete')}", function(){ $('#myform').submit();});
+    }
+</script>
+</block>
+

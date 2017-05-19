@@ -1,0 +1,94 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form id="myform" action="{:U('Attachment/edit')}" method="post">
+    <input type="hidden" class="form-control" name="aid" value="{$vo.aid}">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                <label class="form-control-label">名称:</label>
+                <input type="text" class="form-control" name="filename" value="{$vo.filename}">
+            </div>
+            
+            <div class="form-group" style="overflow-x: auto">
+                {if $vo['isimage']}
+                <div class="card">
+                    <img class="card-img" src="{$vo.filepath}">
+                </div>
+                {/if}
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">保存</div>
+                <div class="card-block">
+                    <p>上传于：{$vo.createtime|toDate=###,'Y年m月d日'}</p>
+                    <p>文件URL：
+                        {$vo.filepath}</p>
+                    <p>文件名： {$vo.filename}</p>
+                    <p>文件类型： {$vo.fileext}</p>
+                    <p>文件大小： {$vo.filesize}</p>
+                    <!--<p>分辨率： 980 × 498</p>-->
+                </div>
+                <div class="card-footer">
+                    <input type="hidden" name="id" value="{$vo.id}"/>
+                    <input type="submit" value="更新" class="btn btn-primary" />
+                    {if $vo['isimage']&&$watermark_enable}
+                    <button class="btn btn-primary" onclick="addwater('{$vo.filepath}');return false;">添加水印</button>
+                    {/if}
+                    <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+
+        function addwater(file) {
+            $.get('/index.php?g=admin&m=attachment&a=addwater&filepath='+file,function(data){
+                if (data.status == 1) {
+                    layer.msg(data.info, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        window.location.reload();
+                    });
+                } else {
+                    layer.msg(data.info, {
+                        icon: 2,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+            })
+        }
+    </script>
+</block>

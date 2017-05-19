@@ -1,0 +1,73 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<div class="box">
+		<div id="tagContent">
+			<div class="tagContent selectTag">
+				<ul class="guest">
+					<form method="post" action="/?m=post&a=insert" id="frm">
+						<input type="hidden" id="catid" name="moduleid" value="23" />
+						<input type="hidden"  name="lang" value="1" />
+						<li><label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label><input name="title" type="text" class="guest_a" id="inp_name"></li>
+						<li><label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><input type="radio"  name="sex" id="sex_1" value="男">男&nbsp;&nbsp;
+						<input type="radio"  name="sex" id="sex_2" value="女">女<font color="red">&nbsp;*</font>
+                            </li>
+                        <li><label>应聘职位：</label><input name="tel" type="text" class="guest_a" id="inp_tel"></li>
+                        <li><label>出生年月：</label><input name="theYear" type="text" class="guest_a" id="inp_tel"></li>
+                        <li><label>身份证号：</label><input name="IDNum" type="text" class="guest_a" id="inp_name"></li>
+                        <li><label>现居住地：</label><input name="address" type="text" class="guest_a" id="inp_name"></li>
+                        <li><label>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</label><input name="LinkPhone" type="text" class="guest_a" id="inp_name"></li>
+                        <li><label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label><input name="Email" type="text" class="guest_a" id="inp_name"></li>
+                        <li><label>教育经历：</label><textarea name="ComSkill" cols="" rows="" class="guest_b"></textarea></li>
+                        <li><label>自我评价：</label><textarea name="Grade" cols="" rows="" class="guest_b"></textarea></li> 
+						<li><label>验&nbsp;&nbsp;证&nbsp;&nbsp;码：</label><input name="verifyCode" type="text" class="guest_d" style="width:100px;"><img src="{:U('home/index/verify')}" onClick="this.src='{:U('home/index/verify')}&'+Math.random();" class="fl l10"></li>
+						<p class="clear"></p>
+						<li><input name="dosubmit" type="submit" value="提  交" class="guest_c" onClick="chkForm(); return false;" id="submit"></li>
+					</form>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<script>
+function chkForm() {
+	/*	var obj = document.getElementById("frm");
+	if(obj.content.value == '') {
+		alert('请填写联系信息及留言内容');
+		return false;
+	}
+	if(obj.code.value == '') {
+		alert('请输入验证码');
+		return false;
+	}
+	subForm();
+}
+function subForm() {
+	$.ajax({
+		type:"POST",
+		url:"/index.php?m=content&c=index&a=guest&submit=1",
+		data: $("#frm").serialize(),
+		success:function(msg){
+			if(msg=='succ') {
+				alert("感谢您的留言，我们会尽快联系您！");
+				window.location.reload();
+			}else if(msg == 'error') {
+				alert('验证码错误');
+			}
+		}
+	});
+}*/
+</script>
+</body>
+</html>

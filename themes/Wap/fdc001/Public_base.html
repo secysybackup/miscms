@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="__CSS__/style.css">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/TouchSlide.1.1.js"></script>
+<script src="__JS__/index.js"></script>
+<title>{$seo_title}-{$site_name}</title>
+<meta name="keywords" content="{$seo_keywords}" />
+<meta name="description" content="{$seo_description}" />
+</head>
+
+<body>
+<div class="wrapper">
+<nav class="navbar">
+    <ul>
+        <li><a href="/" class="current">首页</a></li>
+            <Gr:wapcat catid="0" id="r" key="i">
+                <li><a href="{$r.url}">{$r.catname}</a></li>
+            </Gr:wapcat>
+
+    </ul>
+    <div class="floatmask"></div>
+</nav>
+<header class="header">
+    <div class="headMain">
+        <h1 class="logo"><a href="/"><img src="{$wap_logo}" alt="" title="" ></a></h1>
+        <span class="navMenu_icon iconfont" ></span>
+    </div>
+</header>
+
+<div class="mainBox">
+    <block name="main"></block>
+
+<!-- 底部 -->
+<footer class="footer">
+    <div class="backtop">Top<i class="icon iconfont">&#xe622;</i></div>
+    <div class="footCopy">
+        © 2016 国人伟业 版权所有<br/>
+        本站使用 国人伟业 搭建
+    </div>
+</footer>
+<section class="footMenu">
+    <ul>
+        <li><i class="icon_kf iconfont"></i><span>QQ客服</span></li>
+        <li><i class="icon_dh iconfont"></i><span>电话咨询</span></li>
+        <li><i class="icon_ly iconfont"></i><span>在线留言</span></li>
+        <li><i class="icon_xx iconfont"></i><span>信息咨询</span></li>
+    </ul>
+</section>
+    </div><!-- mainBox -->
+</div><!-- wrapper -->
+</body>
+</html>

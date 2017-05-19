@@ -1,0 +1,52 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <a title="新增" class="btn btn-primary" href="{:U('Menu/add')}">新增</a>&nbsp;
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="myform" name="myform" action="{:U('menu/listorder')}" method="post">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="w-50">ID</th>
+                    <th>菜单名称</th>
+                    <th>图标</th>
+                    <th>排序</th>
+                    <th>状态</th>
+                    <th class="w-200">管理操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="menu_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.title_prefix}<a href="{:U('Menu/index','pid='.$vo['id'])}">{$vo.name}</a></td>
+                        <td><notempty name="vo.icon"><i class="{$vo.icon}"></i></notempty></td>
+                        <td>{$vo.listorder}</td>
+                        <td>
+                            <eq name="vo.status" value="1">
+                                <a href=""><i class="fa fa-check text-success"></i></a>
+
+                                <else/>
+                                <a href="javascript:;"><i class="fa fa-ban text-danger"></i></a>
+                            </eq>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('menu/add',array( 'parentid' => $vo['id']))}">添加子菜单</a>
+                            <a class="btn btn-sm btn-info" href="{:U('menu/edit',array('id' => $vo['id']))}">修改</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Menu/delete',array( 'id' => $vo['id']))}')">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+</div>
+
+</block>

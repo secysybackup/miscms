@@ -1,0 +1,73 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <include file="Wechat:tabs"/>
+
+<div class="col-md-12">
+
+    <form id="myform" action="{:U('Wechat/selfmenu')}" method="post">
+        <input type="hidden" name="action" value="insert">
+        <if condition="$pid neq 0">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">上级菜单</label>
+            <div class="col-md-5">
+                <input type="hidden" name="pid" value="{$topMenu['id']}" >
+                <input type="text"  value="{$topMenu['name']}" class="form-control" disabled>
+            </div>
+        </div>
+        </if>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">菜单名称</label>
+            <div class="col-md-5">
+            <input type="text" class="form-control"  name="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">类型</label>
+            <div class="col-md-5" id="type">
+                <label class="form-check-inline">
+                    <input type="radio" class="form-check-input" name="type" value="click" />发送信息
+                </label>
+                <label class="form-check-inline">
+                    <input type="radio" class="form-check-input" name="type" checked value="view" />跳转到网页
+                </label>
+            </div>
+        </div>
+        <div class="form-group row" id="type-content">
+
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+</div>
+
+    <div id="type-view" style="display: none;">
+        <label class="form-control-label col-md-2">网页链接</label>
+        <div class="col-md-5">
+            <input type="text" name="code" class="form-control" value="{$wxMenu['code']}" />
+        </div>
+    </div>
+    <div id="type-click" style="display: none;">
+        <label class="form-control-label col-md-2">菜单KEY值</label>
+        <div class="col-md-5">
+            <input type="text" name="code" class="form-control" value="{$wxMenu['code']}" />
+            KEY值可以设置为自动回复中的关键字。
+        </div>
+    </div>
+
+    <script>
+        $('#type .form-check-input').on('click',function(){
+            var type = $(this).val();
+            if (type == 'click') {
+                $('#type-content').html($('#type-click').html());
+            } else {
+                $('#type-content').html($('#type-view').html());
+            }
+        })
+
+        $('#type-content').html($('#type-view').html());
+    </script>
+</block>

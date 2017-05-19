@@ -1,0 +1,12 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="infobox" >
+
+    1、在系统设置 > 系统参数 > 开启生成html的功能后 , 才可以生成HTML首页<br>
+    2、生成栏目列表页和内容页前请确定之前添加的栏目和文章的地址已经更新成为静态页URL<br>
+
+    <br>
+    <a href="{:U($module_name.'/docreateindex?iscreatehtml=1')}" class="">{:L(Createindex)}</a>
+</div>
+</block>

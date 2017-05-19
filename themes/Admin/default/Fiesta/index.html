@@ -1,0 +1,66 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="table-toolbar">
+    <a href="{:U('Fiesta/add')}" class="btn btn-primary">添加</a>
+</div>
+
+<div class="row table-container">
+    <div class="col-md-12">
+        <form name="myform" id="myform" action="" method="post">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>时间</th>
+                    <th class="w-200">管理操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr class="table-data-empty">
+                        <td class="text-center empty-info" colspan="8">
+                            <i class="fa fa-database"></i> 暂时没有数据<br>
+                            <span class="small">本系统由 {$Think.config.product_name} 强力驱动</span>
+                        </td>
+                    </tr>
+                    <else/>
+                <volist name="list" id="vo" key="k">
+                    <tr>
+                        <td>{$vo['title']}</td>
+                        <td>{$vo['createtime']|toDate=###,'Y-m-d'}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('Fiesta/edit',array('id'=>$vo['id']))}">编辑</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Fiesta/delete',array('id'=>$vo['id']))}')">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                </empty>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="pull-right pagination">{$page}</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#qr_form').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if(data.status==1){
+            layer.msg('修改成功');
+        }else{
+            layer.msg(data.info);
+        }
+
+    }
+</script>
+</block>

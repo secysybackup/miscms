@@ -1,0 +1,55 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Role/add')}"> 新增</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr class="list_head ct">
+                <th width="70">ID</th>
+                <th width="350">角色名称</th>
+                <th>角色描述</th>
+                <th width="70">状态</th>
+                <th class="w-300">管理操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+            <tr class='<eq name="mod" value="1">tr<else/>ji</eq>'>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.remark}</td>
+                <td>
+                    <eq name="vo.status" value="1"><font color="red">√</font><else/><font color="blue">×</font></eq>
+                </td>
+                <td>
+                    <if condition="$vo['id'] != 1">
+                        <a class="btn btn-sm btn-primary" href="{:U('Role/access','roleid='.$vo['id'])}">权限设置</a>
+                    <else/>
+                        <a class="btn btn-sm btn-primary" disabled="disabled">权限设置</a>
+                    </if>
+                    <a class="btn btn-sm btn-primary" href="{:U('User/index',array('roleid'=>$vo['id']))}">成员管理</a>
+                    <if condition="$vo['id'] != 1">
+                        <a class="btn btn-sm btn-primary" href="{:U('Role/edit/',array('id'=>$vo['id']))}">修改</a>
+                        <else/>
+                        <a class="btn btn-sm btn-primary" disabled="disabled">修改</a>
+                    </if>
+                    <if condition="$vo['id'] != 1">
+                        <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Role/delete',array(id=>$vo['id']))}')">删除</a>
+                    <else/>
+                        <a class="btn btn-sm btn-danger" disabled="disabled">删除</a>
+                    </if>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+
+</block>
+
+<block name="script">
+
+</block>

@@ -1,0 +1,139 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form id="myform" action="{:U('FormField/update')}" method="post">
+        <input type="hidden" name="formid" value="{$vo.formid}"/>
+        <input type="hidden" name="type" value="{$vo.type}" />
+        <input type="hidden" name="oldfield" value="{$vo.field}" />
+        <input type="hidden" name="id" value="{$vo.id}">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2"><font color="red">*</font>字段类型</label>
+            <div class="col-md-5">
+                <select id="type" name="type" class="form-control" id="type" minlength="1" onchange="javascript:field_setting(this.value);" disabled>
+                    <option value='' >请选择字段类型</option>
+                    <option value="text">单行文本</option>
+                    <option value="textarea">多行文本</option>
+                    <option value="select">下拉列表</option>
+                    <option value="radio">单选按钮</option>
+                    <option value="checkbox">复选框</option>
+                    <option value="number">数字</option>
+                    <option value="datetime">日期和时间</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group row" id="field_tr">
+            <label class="form-control-label col-md-2"><font color="red">*</font>字段名</label>
+            <div class="col-md-5">
+                <input type="text" id="field" name="field" value="{$vo.field}" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2"><font color="red">*</font>别名 </label>
+            <div class="col-md-5">
+                <input type="text" id="name" name="name" value="{$vo.name}" class="form-control required" minlength="2" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">字段相关设置</label>
+            <div id="field_setup" class="col-md-8">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">必填</label>
+            <div class="col-md-5">
+                <input type="radio" name="required" value="1" <if condition="$vo['required']==1">checked</if>>是
+                <input type="radio" name="required" value="0" <if condition="$vo['required']==0">checked</if>>否
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">验证规则</label>
+            <div class="col-md-5">
+                {:Form::select(array('field'=>'pattern','options'=>$field_pattern),$vo['pattern'])}
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+
+
+</block>
+
+<block name="script">
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        dataType: 'json'
+    });
+});
+
+function complete(data){
+    if (data.status == 1) {
+        layer.msg(data.info, {
+            icon: 1,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        }, function(){
+            window.location.href = "{$Think.cookie.__forward__}";
+            return true;
+        });
+    } else {
+        layer.msg(data.info, {
+            icon: 2,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        });
+    }
+}
+</script>
+<script>
+$('#nav ul a ').removeClass('on');
+$('#nav ul').append('<a href="/?g=admin&m=FormField&a=index&formid={$_GET['formid']}" class="edit">{:L('field_manage')}</a> | <a href="/?g=admin&m=FormField&a=add&formid={$_GET['formid']}" class="add">{:L('field_add')}</a> |');
+
+$('#nav ul a.edit ').addClass('on');
+
+$.ajaxSetup ({ cache: false });
+function field_setting(type){
+    if(type=='verify'){
+        $('#field_tr').hide();
+        $('#field').val('verifyCode');
+        $('#name').val('验证码');
+        $('#pattern').val('en_num');
+        $('#minlength').val('4');
+        $('#maxlength').val('4');
+
+        $('#required').attr("checked",true);
+        $('#ispost_1').attr("checked",true);
+
+    }else{
+        $('#field_tr').show();
+    }
+    var data =  {$vo["setup"]|json_encode};
+    var url =  "/?g=admin&m=FormField&a=add&isajax=1&formid={$vo.formid}&type="+type;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        beforeSend:function(){
+            $('#field_setup').html('<img src="./public/images/msg_loading.gif">');
+        },
+        success: function(msg){
+            $('#field_setup').html(msg);
+        },
+        complete:function(){
+        },
+        error:function(){
+        }
+    });
+}
+</script>
+<script>
+$('#type').val('{$vo.type}');
+field_setting('{$vo.type}');
+</script>
+</block>

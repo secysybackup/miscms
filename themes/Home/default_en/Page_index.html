@@ -1,0 +1,14 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            {if $content}{$content}{else}{$catname}{/if}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

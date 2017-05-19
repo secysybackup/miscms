@@ -1,0 +1,26 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+
+<div class="row small-up-2 medium-up-3 large-up-4">
+	<volist name="list" id="r">
+	<div class="column">
+		<a href="{$r.url}"><img class="thumbnail" src="{$r['thumb']|thumb=###,'200'}"></a>
+	</div>
+	</volist>
+</div>
+
+<div class="page">
+	{$pages}
+</div>
+
+</block>

@@ -1,0 +1,129 @@
+body,
+html
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    font-family: Microsoft YaHei;
+    font-size: 13px;
+    line-height: 1.4em;
+
+    min-width: 0;
+
+    color: #444;
+    background: #1b1b29;
+}
+
+
+.login .wrapper
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 400px;
+    height: 500px;
+    margin: -200px -200px;
+}
+.login .wrapper h1 > a
+{
+    font-size: 48px;
+    font-weight: 300;
+
+    display: block;
+
+    padding: 2px 0;
+
+    text-align: center;
+    text-decoration: none;
+}
+.login .wrapper h1 > a img
+{
+    margin-top: -8px;
+    margin-right: 10px;
+}
+.login .wrapper .login-body
+{
+    margin-top: 20px;
+
+    background: #fff;
+}
+
+.login .wrapper .login-body form
+{
+    padding: 0 30px;
+}
+
+.login .wrapper .login-body h2
+{
+    font-size: 24px;
+    font-weight: 300;
+
+    padding: 30px 30px 15px 30px;
+
+    color: #333;
+}
+
+.login .wrapper .login-body .email input,
+.login .wrapper .login-body .pw input
+{
+    height: 35px;
+    padding: 8px 12px;
+}
+.login .wrapper .login-body .submit
+{
+    margin-top: 15px;
+
+    *zoom: 1;
+}
+.login .wrapper .login-body .submit .remember
+{
+    float: left;
+
+    margin-top: 5px;
+    margin-left: 1px;
+}
+.login .wrapper .login-body .submit input
+{
+    float: right;
+
+    padding: 5px 18px;
+
+    color: #fff;
+    background: #155abb;
+}
+
+.login .wrapper .login-body .forget
+{
+    margin-top: 50px;
+}
+.login .wrapper .login-body .forget a
+{
+    display: block;
+
+    padding: 10px 0;
+
+    text-align: center;
+    text-decoration: none;
+
+    color: #555;
+    background: #eee;
+}
+.login .wrapper .login-body .forget a span
+{
+    line-height: 30px;
+
+    position: relative;
+
+    margin-bottom: 10px;
+}
+
+.login label
+{
+    font-weight: inherit;
+
+    color: #8a8a8a;
+}

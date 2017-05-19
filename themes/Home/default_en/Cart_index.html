@@ -1,0 +1,185 @@
+<extend name="Public:base"/>
+
+<block name="head">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="__CSS__/cart.css">
+</block>
+
+<block name="main">
+
+<div id="content">
+
+    <div class="form-bootstrapWizard">
+        <ul class="bootstrapWizard form-wizard">
+            <li class="active">
+                <a href="#tab1"> <span class="step">1</span> <span class="title">查看购物车</span> </a>
+            </li>
+            <li>
+                <a href="#tab2"> <span class="step">2</span> <span class="title">填写订单</span> </a>
+            </li>
+            <li>
+                <a href="#tab3"> <span class="step">3</span> <span class="title">付款，完成购买</span> </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cart_list">
+
+        <div class="pure-u-1">
+            <h3>购物车</h3>
+            <table class="cart_info">
+                <thead>
+                <tr class="cart_info_top">
+                    <th class="name_choose"><input type="checkbox" /></th>
+                    <th>商品信息</th>
+                    <th>单价(元)</th>
+                    <th>数量</th>
+                    <th>小计(元)</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="list" item="product">
+                    <tr class="cart_info_list" id="tr_{$product.id}">
+                        <td class="cii_name_choose">
+                            <a class="nc_left"><input type="checkbox" /></a>
+                        </td>
+                        <td class="goods">
+                            <a class="nc_right"><img src="{$product.product_thumb}" style="width:65px;height:95px;"/></a><a>{$product.title}</a></td>
+                        <td class="pro_shop_price"  id="price_{$product.id}">{$product.product_price}</td>
+                        <td class="count">
+                            <span class="reduce ">-</span>
+                            <input class="count-input" product_id="{$product.id}" type="text" value="{$product.number}" size="4" />
+                            <span class="add">+</span>
+                        </td>
+                        <td class="cart_total">
+                            <a class="subtotal_{$product.id}"><php>echo $product['product_price']*$product['number'];</php></a>
+                        </td>
+                        <td class="cart_ctr">
+                            <a class="btn btn-xs btn-default" href="javascript:del({$product.id})">删除</a>
+                            <a class="btn btn-xs btn-default">收藏</a>
+                        </td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <div class="fr">
+                    <a class="jisuan2">您实际需要支付金额：</a>
+                    <a class="jisuan3"><span id="product_total">{$total}</span></a>
+                    <a class="jisuan4">元</a>
+                </div>
+            </div>
+            <div class="pure-u-1">
+                <div class="fr">
+                    <a href="{:U('Index/index')}" class="pure-button pure-button-primary">继续购物</a>
+                    <a href="{:U('Order/checkout')}" class="pure-button pure-button-primary">立即结算</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <script>
+        function del(id){
+            if(confirm("确定要删除吗？")){
+                var price=$('#price_'+id).text();
+                var aPro=$('.cart_info');
+
+                $.ajax({
+                    type:'post',
+                    url:"{:U('Cart/del')}",
+                    data:'&id='+id,
+                    success:function(msg){
+                        $('#tr_'+id).remove();
+                        var tmp_total=0;
+                        for(var i=0;i<aPro.length;i++){
+                            var pid=aPro.eq(i).attr("id").substr(3);
+
+                            tmp_total+=Number($('.subtotal_'+pid).text());
+                        }
+
+                        $('#product_total').text(tmp_total);
+
+                    }
+                });
+            }
+        }
+        $(function(){
+            $('.cart_info :input').change(function(){
+                var num=$(this).val();
+                var id=$(this).attr('product_id');
+                var price=$('#price_'+id).text();
+                var aPro=$('.cart_info');
+
+                $.ajax({
+                    type:'post',
+                    url:"{:U('Cart/edit')}",
+                    data:{
+                        'id':id,
+                        'num':num
+                    },
+                    success:function(msg){
+
+                        $(this).attr('value',num)
+                        var subtotal=num*price;
+                        $('.subtotal_'+id).text(subtotal);
+                        var tmp_total=0;
+                        for(var i=0;i<aPro.length;i++){
+                            var pid=aPro.eq(i).attr("id").substr(3);
+
+                            tmp_total+=Number($('.subtotal_'+pid).text());
+                        }
+                        $('#product_total').text(tmp_total);
+                    }
+                });
+            });
+            $('.reduce').click(function(){
+                var obj = $(this).next().children()[0];
+                var num = $(obj).val();
+                num==1?1:num--;
+                $(obj).val(num);
+                changePrice(num,obj);
+            });
+            $('.add').click(function(){
+                var obj = $(this).prev().children()[0];
+                var num = $(obj).val();
+                num++;
+                $(obj).val(num);
+                changePrice(num,obj);
+            });
+            function changePrice(num,obj){
+                var id=$(obj).attr('product_id');
+                var price=$('#price_'+id).text();
+                var aPro=$('.cart_info_list');
+
+                $.ajax({
+                    type:'post',
+                    url:"{:U('Cart/edit')}",
+                    data:{
+                        'id':id,
+                        'num':num
+                    },
+                    success:function(msg){
+
+                        $(obj).attr('value',num)
+                        var subtotal=num*price;
+                        $('.subtotal_'+id).text(subtotal);
+                        var tmp_total=0;
+                        for(var i=0;i<aPro.length;i++){
+                            var pid=aPro.eq(i).attr("id").substr(3);
+
+                            tmp_total+=Number($('.subtotal_'+pid).text());
+                        }
+
+                        $('#product_total').text(tmp_total);
+                    }
+                });
+            }
+        });
+    </script>
+</block>

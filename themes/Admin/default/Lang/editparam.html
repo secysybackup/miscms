@@ -1,0 +1,62 @@
+<extend name="Public:base"/>
+
+<block name="main">
+  <div class="table-toolbar">
+      <a class="btn btn-primary" href="{:U('Lang/add')}">添加语言</a>
+      <a class="btn btn-primary" href="{:U('Lang/param')}">设置语言包</a>
+  </div>
+
+  <form name="myform" id="myform" action="{:U($module_name.'/updateparam?file='.$file)}" method="post">
+  <table id="param" class="form-table">
+    <tr>
+      <td width="120">参数名</td>
+      <td>参数值</td>
+    </tr>
+    <volist name="list" id="vo" key="k">
+    <tr>
+      <td width="120">{$key}</td>
+      <td>
+        <input type="text" id="{$key}" name="{$key}" value="{$vo|htmlspecialchars}" class="form-control" />
+      </td>
+    </tr>
+    </volist>
+  </table>
+  <div class="form-actions">
+    <input type="submit"  value="提交" class="btn btn-primary" >
+    <input type="button" value="添加语音参数" class="btn btn-primary" onclick="addparam();"/>
+    <input type="reset"  value="重置" class="btn btn-primary">
+  </div>
+  </form>
+</div>
+
+<script>
+function addparam(){
+  var dialog = art.dialog({
+    title: '{:L(Lang_add_param)}',
+    content:'<p>{:L(param_name)}：<input id="key"  style="width:15em; padding:4px" /></p><p>{:L(param_value)}：<input id="value"  style="width:15em; padding:4px" /></p>',
+    fixed: true,
+    ok: function () {
+      var key = document.getElementById('key');
+      var value = document.getElementById('value');
+        var topWin = art.dialog.top;
+      if (key.value  !== '' && value.value  !== '' ) {
+
+        $('#param').append('<tr>  <td width="120">'+key.value+'</td> <td><input type="text"   name="'+key.value+'" value="'+value.value+'" class="input-text" /></td></tr>');
+        art.dialog({
+          time: 1,
+          content: '{:L(add_ok)}'
+        });
+      } else {
+        art.dialog({
+          time: 1,
+          content: '{:L(value_empty)}'
+        });
+         return false;
+
+      };
+    },
+    cancel: true
+  });
+}
+</script>
+</block>

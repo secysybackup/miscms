@@ -1,0 +1,18 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<!--搜索-->
+	<include file="Public:search"/>
+
+	<!--广告-->
+	<include file="Public:slide"/>
+
+	<!--当前位置-->
+	<include file="Public:position"/>
+
+	<div class="cont">
+		<h1>{$catname}</h1>
+		<div style="padding:0 10px; font-size:14px;">{if $content}{$content}{else}{$catname}{/if}</div>
+	</div>
+	<include file="Public:footer"/>
+</block>

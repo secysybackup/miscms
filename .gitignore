@@ -1,0 +1,9 @@
+/uploads
+/runtime
+public/data/
+poster/*.html
+install.lock
+.DS_Store
+.access_token
+.idea
+*.css.map

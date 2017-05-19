@@ -1,0 +1,89 @@
+<style type="text/css">
+.yzh-dialog-form {
+  min-height: 200px;
+  width: 830px;
+  padding: 15px;
+}
+</style>
+<div class="yzh-dialog-form">
+    <form name="myform" id="myform" action="{:U('Visual/update')}" method="post">
+        <input type="hidden" name="editableType" value="block">
+        <volist name="blockInfo" id="vo">
+        <switch name="vo.type" >
+            <case value="url">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-2">链接地址：</label>
+                    <div class="col-md-10">
+                        <input type="hidden" name="block_id_list[]" value="{$vo.id}">
+                        <input type="text" name="block_value_list[]" value="{$vo.content}" class="form-control">
+                    </div>
+                </div>
+            </case>
+            <case value="img">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-2">图片：</label>
+                    <div class="col-md-10">
+                        <input type="hidden" name="block_id_list[]" value="{$vo.id}">
+                        <input type="hidden" id="file" name="block_value_list[]" value="{$vo.content}" size="40" />
+                        <a href="javascript:swfupload('file','{:get_yzh_auth(1,'200kb',1)}',yesdo);">
+                            <img height="80" src="<if condition="!empty($vo['content'])">{$vo.content}<else/>./public/images/upload_thumb.png</if>" id="file_pic" >
+                        </a>
+                    </div>
+                </div>
+            </case>
+            <case value="text">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-2">纯文本：</label>
+                    <div class="col-md-10">
+                        <input type="hidden" name="block_id_list[]" value="{$vo.id}">
+                        <textarea type="text" name="block_value_list[]" rows="3" class="form-control">{$vo.content}</textarea>
+                    </div>
+                </div>
+            </case>
+            <case value="rtf">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-2">富文本：</label>
+                    <div class="col-md-10">
+                        <input type="hidden" name="block_id_list[]" value="{$vo.id}">
+                        {:W('Kindeditor',array('name'=>'block_value_list[]','value'=>$vo['content'],'ajax'=>1,'editid'=>'blockcontent'))}
+                    </div>
+                </div>
+            </case>
+            <default />
+        </switch>
+    </volist>
+        <div class="form-group row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" value="提交" class="btn btn-primary" >
+                <input type="reset" value="重置" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__JS__/jquery.form.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        dataType: 'json'
+    });
+});
+
+
+function complete(data){
+    if (data.status == 1) {
+        layer.msg(data.info, {
+            icon: 1,
+            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        }, function(){
+            window.location.reload();
+            return true;
+        });
+    } else {
+        layer.msg(data.info, {
+            icon: 2,
+            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+    }
+}
+</script>

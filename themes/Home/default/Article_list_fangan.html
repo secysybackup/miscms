@@ -1,0 +1,26 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox" style="padding-top:0;">
+            <ul class="caseList">
+                {if $list}
+                    <volist name="list" id="r">
+                        <li><img height="150" alt="{$r['title']}" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}">
+                            <h3>{$r['title']|str_cut=###,50}</h3>
+                        </li>
+                    </volist>
+                {else}
+                {$catname}
+                {/if}
+            </ul>
+            <div class="clearfix"></div>
+            <div class="pagination">{$pages}</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

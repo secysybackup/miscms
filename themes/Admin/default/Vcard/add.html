@@ -1,0 +1,126 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form id="myform" action="{:U('Vcard/add')}" method="post" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">姓名</label>
+        <div class="col-md-5">
+            <input type="text" name="name" class="form-control" value="{$data['name']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">人物照片</label>
+        <div class="col-md-5">
+            {:W('Uploadimg',array('data'=>array('name'=>photo,'value'=>'')))}
+            <span>(为获得良好显示效果，建议头像图片宽768像素，高1024像素)</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">职称</label>
+        <div class="col-md-5">
+            <input type="text" name="position" class="form-control" value="{$data['position']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">公司名称</label>
+        <div class="col-md-5">
+            <input type="text" name="company" class="form-control" value="{$data['company']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">手机</label>
+        <div class="col-md-5">
+            <input type="text" name="phone" class="form-control" value="{$data['phone']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">微信</label>
+        <div class="col-md-5">
+            <input type="text" name="wechat" class="form-control" value="{$data['wechat']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">邮箱</label>
+        <div class="col-md-5">
+            <input type="text" name="email" class="form-control" value="{$data['email']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">QQ</label>
+        <div class="col-md-5">
+            <input type="text" name="qq" class="form-control" value="{$data['qq']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">电话</label>
+        <div class="col-md-5">
+            <input type="text" name="tel" class="form-control" value="{$data['tel']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">传真</label>
+        <div class="col-md-5">
+            <input type="text" name="fax" class="form-control" value="{$data['fax']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">官网</label>
+        <div class="col-md-5">
+            <input type="text" name="website" class="form-control" value="{$data['website']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">地址</label>
+        <div class="col-md-5">
+            <input type="text" name="address" class="form-control" value="{$data['address']}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">个人介绍</label>
+        <div class="col-md-8">
+            {:W('Kindeditor',array('name'=>"userinfo",'value'=>''))}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">公司信息</label>
+        <div class="col-md-8">
+            {:W('Kindeditor',array('name'=>'companyinfo','value'=>$data['companyinfo']))}
+            <span>(为获得良好显示效果，建议头像图片宽768像素，高1024像素,格式为png格式)</span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+</form>
+</block>
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

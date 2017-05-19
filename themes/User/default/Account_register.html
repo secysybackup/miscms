@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="w3c">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="__CSS__/layout.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/yzh.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__STATIC__/yzh.js"></script>
+
+    <title>{$seo_title}-{$site_name}</title>
+</head>
+<body class="login">
+<div class="logo">
+    <a href="/" title="{$stie_name}">
+        <img src="{$site_logo}" alt="{$stie_name}" title="{$stie_name}" />
+    </a>
+</div>
+
+<div class="content" style="margin-top: 10px">
+
+    <h3 class="form-title font-green">创建帐号</h3>
+
+    <form id="regform" method="post" action="/user/register" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-3">用户名</label>
+            <div class="col-md-8">
+                <input type="text" name="username" placeholder="您的账户名和登录名" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">设置密码</label>
+            <div class="col-md-8">
+                <input type="password" name="password" placeholder="建议至少使用两种字符组合" class="form-control"/>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">确认密码</label>
+            <div class="col-md-8">
+                <input type="password" name="repassword" placeholder="请再次输入密码" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">邮箱</label>
+            <div class="col-md-8">
+                <input type="text" name="email" placeholder="建议使用常用邮箱" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">验证码</label>
+            <div class="col-md-8">
+                <input type="text" name="verifyCode" placeholder="验证码" class="form-control">
+                <img id="verifyImage" title="点击刷新验证码" onclick="javascript:resetVerifyCode();" src="{:U('Home/Index/verify')}">
+             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-8">
+                <input type="submit" class="btn btn-primary" value="确定注册">
+            </div>
+
+        </div>
+    </form>
+
+    <div class="card-footer">
+        如果您已有账户？<a href="/user/login">立即登录</a>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $("#regform").submit(function (event) {
+            var self = $(this);
+            $.post(self.attr("action"), self.serialize(), success, "json");
+
+            return false;
+
+            function success(data) {
+                if (data.status) {
+                    layer.msg(data.info);
+                    setTimeout(function () {
+                        window.location.href = data.url;
+                    }, 1500);
+                } else {
+                    layer.msg(data.info);
+                    //刷新验证码
+                    $(".reloadverify").click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

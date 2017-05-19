@@ -1,0 +1,29 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="yzh-content" class="col-xs-12">
+    <div class="table-actions">
+        <a class="btn btn-sm btn-primary" href="{:U('Lang/index')}">语言列表</a>
+        <a class="btn btn-sm btn-primary" href="{:U('Lang/param')}">设置语言包</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th align="left">{:L(LANG_NAME)}</th>
+                <th width="180">管理操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="files" id="vo" key="k">
+            <tr>
+                <td>{$vo['filename']} ({$vo['name']})</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="{:U('Lang/editparam',array(id=>$id,file=>$vo['filename']))}">{:L('edit')}</a>
+                </td>
+            </tr>
+            </volist>
+        </tbody>
+    </table>
+</div>
+</block>

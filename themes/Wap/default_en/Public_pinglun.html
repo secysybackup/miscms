@@ -1,0 +1,96 @@
+<div class="section">
+	<ul id="tags">
+		<li class="selectTag"><a onClick="selectTag('tagContent0',this)" href="javascript:void(0)">Contact Us</a></li>
+		<li><a onClick="selectTag('tagContent1',this)" href="javascript:void(0)">Feedback</a></li>
+		<li><a onClick="selectTag('tagContent2',this)" href="javascript:void(0)">Comment</a></li>
+	</ul>
+	<div id="tagContent">
+		<div class="tagContent selectTag" id="tagContent0">
+			<ul class="contact">
+				<li><a href="tel:{$site_telephone}"><div><img src="__IMG__/c_tel.jpg"/><br/>phone</div></a></li>
+				<li><a href="sms:+86 {$site_phone}"><div><img src="__IMG__/c_sms.jpg"/><br/>message</div></a></li>
+				<li>
+					<a href="{$wap_bdaddress}" target="_blank">
+						<div><img src="__IMG__/c_map.jpg"/><br/>map</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="tagContent" id="tagContent1">
+			<form id="frm" method="post" action="{:U('Form/insert')}">
+				<input type="hidden" name="formid" value="1" />
+				<input type="hidden" name="title" value="手机端留言" />
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="username" type="text" placeholder="username">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="tel" type="text" placeholder="phone">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="email" type="text" placeholder="email">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<textarea name="content" cols="10" rows="4" placeholder="message"></textarea></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<div class="input-group">
+								<input name="verifyCode" type="text" class="input-group-field" placeholder="">
+								<span class="input-group-field"><img src="{:U('Wap/Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();"></span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="small-12 columns">
+					<input type="submit" value="submit" class="expanded button" id="submit">
+				</div>
+			</form>
+		</div>
+		<div class="tagContent" id="tagContent2">
+			<!-- UY BEGIN -->
+			<div id="uyan_frame"></div>
+			<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js"></script>
+			<!-- UY END -->
+		</div>
+	</div>
+</div>
+<script>
+	$("#frm").submit(function () {
+		var self = $(this);
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+
+		function success(data) {
+			if (data.status == 1) {
+				layer.open({
+					content: 'Thank you for your message, we will contact you as soon as possible',
+					style: 'background-color:#09C1FF; color:#fff; border:none;',
+					time: 2
+				});
+				$('#frm')[0].reset();
+			} else {
+				layer.open({
+					content: data.info,
+					style: 'background-color:#09C1FF; color:#fff; border:none;',
+					time: 2
+				});
+			}
+		}
+	});
+</script>

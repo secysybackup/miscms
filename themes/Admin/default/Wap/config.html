@@ -1,0 +1,81 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form id="myform" method="post" action="{:U('wap/config')}">
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">网站名称:</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="wap_company" value="{$wap_config['wap_company']}" >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">网站logo:</label>
+            <div class="col-md-5">
+                <input type="hidden" id="wap_logo" name="wap_logo"  value="{$wap_config['wap_logo']}" />
+                <div class="thumb_box">
+                    <div id="image_aid_box"></div>
+                    <a class="thumbnail" href="javascript:swfupload('wap_logo','{:get_yzh_auth(1,'200kb',-1)}',yesdo);">
+                        <img height="68" src="<if condition="!empty($wap_config['wap_logo'])">{$wap_config['wap_logo']}<else/>__IMG__/web_logo.jpg</if>" id="wap_logo_pic" >
+                    </a>
+                    <input type="button" value="取消缩略图" onclick="javascript:clean_thumb('wap_logo');" class="btn btn-sm btn-info" />
+                </div>
+                <label for="">(建议logo高度：34px)</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">百度地图地址:</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="wap_bdaddress" value="{$wap_config['wap_bdaddress']}" >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">首页二维码:</label>
+            <div class="col-md-5">
+                <input type="hidden" id="wap_qrcode" name="wap_qrcode"  value="{$wap_config['wap_qrcode']}" />
+                <div class="thumb_box">
+                    <div id="image_aid_box"></div>
+                    <a href="javascript:swfupload('wap_qrcode','{:get_yzh_auth(1,'200kb',1)}',yesdo);">
+                    <img style="width:50px;height: 50px;" width="50" height="50" src="<if condition="!empty($wap_config['wap_qrcode'])">{$wap_config['wap_qrcode']}<else/>__IMG__/upload_thumb.png</if>" id="wap_qrcode_pic" ></a><br>
+                    <input type="button" value="取消缩略图" onclick="javascript:clean_thumb('wap_qrcode');" class="btn btn-sm btn-info" />
+                </div>(建议尺寸：100px*100px)
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">服务电话:</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="wap_tel400" value="{$wap_config['wap_tel400']}" >
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="保存" class="btn btn-primary" >
+            <input type="reset" value="重置" class="btn btn-primary">
+        </div>
+
+    </form>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#myform').ajaxForm({
+    success:  complete,  // post-submit callback
+    dataType: 'json'
+  });
+});
+
+function complete(data){
+  if(data.status==1){
+    layer.msg('修改成功');
+
+  }else{
+    layer.msg(data.info);
+  }
+
+}
+</script>
+</block>

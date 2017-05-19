@@ -1,0 +1,47 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <a class="btn btn-primary" href="{:U('form/index','id='.$_GET['formid'])}"><i class="fa fa-reply"></i>返回模型管理</a>
+    <a class="btn btn-primary" href="{:U('FormField/add',array('formid'=>$_GET['formid']))}">添加</a>
+    <a class="btn btn-primary" onclick="myform.action='{:U('FormField/listorder')}';$('#myform').submit();" >排序</a>
+</div>
+
+<form id="myform" name="myform" action="{:U('FormField/listorder')}" method="post">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>排序</th>
+                <th width="80">字段名</th>
+                <th>别名</th>
+                <th>字段类型</th>
+                <th>系统字段</th>
+                <th>必填</th>
+                <th>管理操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="vo" key="k">
+            <tr>
+                <td><input name='listorders[{$vo.id}]' type='text' size='3' value='{$vo.listorder}' class='input-text-c'></td>
+                <td>{$vo['field']}</td>
+                <td>{$vo['name']}</td>
+                <td>{$vo['type']}</td>
+                <td><if condition="in_array($vo['field'],$sysfield)"><font color="green">√</font><else /><font color="red"">×</font></if></td>
+                <td><if condition="$vo['required']==1"><font color="green">√</font><else /><font color="red"">×</font></if></td>
+                <td>
+                <a class="btn btn-sm btn-primary" href="{:U('FormField/edit',array('formid'=>$vo['formid'],'id'=>$vo['id']))}" >修改</a>
+               <if condition="in_array($vo['field'],$sysfield)">
+                <a class="btn btn-sm btn-default" disabled>删除</a>
+                <else />
+                <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('FormField/delete',array('id'=>$vo['id']))}')">删除</a>
+             </if>
+            </td>
+            </tr>
+            </volist>
+        </tbody>
+    </table>
+
+</form>
+</block>

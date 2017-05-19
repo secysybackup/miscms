@@ -1,0 +1,249 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <link rel='stylesheet' type='text/css' href='__CSS__/elpis.min.css'>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script src="__STATIC__/laydate/laydate.js"></script>
+
+    <script type="text/javascript" src="__JS__/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="__JS__/swfupload/swfupload.css" />
+
+
+    <style>
+        html {
+            _overflow-y: scroll;
+        }
+
+        body {
+            font-size: 12px;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        .tab-content {
+            padding: 10px 8px 0;
+        }
+        #divStatus {
+            height: 25px;
+            line-height: 25px;
+            padding: 0 0 10px;
+        }
+        .attachment-list .img p a {
+            height: 10px;
+        }
+        .max-upload{
+            color:#454545;clear:both;line-height:24px;height:24px;
+        }
+        .water-select{
+            color: #959595;
+            line-height: 24px;
+            height: 24px;
+            width: 100px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <div id="tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" href="#upload_1" role="tab" data-toggle="tab">上传附件</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#upload_2" role="tab" data-toggle="tab">网络地址</a>
+            </li>
+            <if condition="$Think.session.admin.id eq 1">
+            <li class="nav-item">
+                <a class="nav-link" href="#upload_3" role="tab" data-toggle="tab" onclick="ajaxload(1,1,'filelist',0,'<?php echo date("Y-m-d H:i:s",time()); ?>',this);">图库</a>
+            </li>
+            </if>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="upload_1">
+                <div id="divMovieContainer">
+                    <if condition="$watermark_enable==1">
+                        <div class="water-select">
+                            <input type="checkbox" id="addwater" name="addwater" value="1" onclick="addwater_enable();" />
+                            <span class="text-info">是否添加水印</span>
+                        </div>
+                    </if>
+                    <div class="selectbut">
+                        <span id="spanButtonPlaceHolder"></span>
+                    </div>
+                    <!--<input type="button" value="开始上传" id="uploadbut" onclick="swfu.startUpload();"/>-->
+
+                    <div class="max-upload">
+                        支持<span class="text-danger">{$attach['file_types']}</span> 格式。
+                        最多上传<span class="text-danger">{$small_upfile_limit}</span> 个附件,单文件最大<span class="text-danger">{$attach['file_size']}</span>
+                    </div>
+                </div>
+
+                <div id="divStatus">
+                    共选择了<span id="tdFilesQueued">0</span>个附件,上传失败<span id="tdErrors">0</span> 个,成功上传<span id="tdFilesUploaded">0</span> 个
+                </div>
+                <input type="hidden" value="test" id="btnCancel" />
+                <div  id="swfupload-box">
+                    <ul id="fsUploadProgress"></ul>
+                    <ul class="attachment-list" id="thumbnails">
+                    </ul>
+                </div>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="upload_2">
+                请输入网络地址: <input type="text" id="fileurl" name="fileurl" class="form-control" value=""  style="width:350px;"  onblur="addfileurl(this)">
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="upload_3">
+                <div id="filelist"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myuploadform" style="display:none;"></div>
+<script>
+    laydate.skin('molv');
+
+    function addfileurl(obj) {
+        var strs = $(obj).val() ? $(obj).val() : '';
+
+        if(strs){
+            var datas='<div id="uplist_1"><input type="hidden" id="aids" name="aids" value="0" /><input type="text" id="filedata" name="filedata" value="'+strs+'"  /><input type="text"  id="namedata" name="namedata" value=""  /> &nbsp;<a href="javascript:remove_this(\'uplist_1\');">{:L('remove')}</a> </div>';
+            $('#myuploadform').html(datas);
+            $('#thumbnails a').removeClass("on");
+            $('.img a').removeClass("on");
+        }else{
+
+            $('#myuploadform').html('');
+        }
+    }
+
+    var insert2Xheditor = insert2Xheditor || function(){
+        <if condition="$Think.get.immediate == 1">var immediate='!';</if>
+        var arrMsg=[],img = '',data = '',i=0;
+        var num = $('#myuploadform > div').length;
+        if (num) {
+            $('#myuploadform div').each(function(){
+                var status =  $(this).find('#status').val();
+                var aid = $(this).find('#aids').val();
+                var src = $(this).find('#filedata').val();
+                var name = $(this).find('#namedata').val();
+                if(status!=0) aid=0;
+                arrMsg[i]= {
+                    "url":immediate+src,
+                    "localfile":name,
+                    "id":aid,
+                    "editorid":"{$_GET[editorid]}"
+                };
+                i++;
+            });
+        }
+        callback(arrMsg);
+    }
+</script>
+<if condition="!empty($_GET['editorid'])">
+    <div id="bootline"></div>
+    <div id="btnbox" class="btn" style="padding-left:450px;">
+        <input type="submit" onclick="insert2Xheditor();" value="{:L(dosubmit)}" class="btn btn-sm btn-primary" />
+        <input type="reset" onclick="unloadme();" value="{:L(cancel)}" class="btn btn-sm btn-primary" />
+    </div>
+</if>
+
+<script type="text/javascript" src="__JS__/swfupload/swfupload.js?v=1.0"></script>
+<script type="text/javascript" src="__JS__/swfupload/fileprogress.js?v=1.0"></script>
+<script type="text/javascript" src="__JS__/swfupload/handlers.js?v=1.0"></script>
+<script type="text/javascript">
+    $.ajaxSetup ({ cache: false });
+
+    var file_limit = {$attach['file_limit']};
+    var swfu;
+    $(function(){
+        var settings = {
+            flash_url : "__PUBLIC__/admin/js/swfupload/swfupload.swf?"+Math.random(),
+            upload_url: "/?g=admin&m=attachment&a=upload",
+            file_post_name : "filedata",
+            post_params: {
+                "session_id" : "<?php echo session_id(); ?>",
+                "userid":"{$userid}",
+                "swf_auth_key": "{$swf_auth_key}",
+                "isthumb" : "{$attach['isthumb']}",
+                "modelid" : "{$attach['modelid']}",
+                "addwater": "0",
+            },
+            file_size_limit : "{$attach['file_size']}",
+            file_types : "{$attach['file_types']}",
+            file_types_description : "All Files",
+            file_upload_limit : "{$attach['file_limit']}",
+            file_queue_limit : 0,
+            custom_settings : {
+                progressTarget : "fsUploadProgress",
+                cancelButtonId : "btnCancel",
+                tdFilesQueued : document.getElementById("tdFilesQueued"),
+                tdFilesUploaded : document.getElementById("tdFilesUploaded"),
+                tdErrors : document.getElementById("tdErrors")
+            },
+            debug: false,
+            prevent_swf_caching : false,
+
+            button_image_url : "",
+            button_placeholder_id: "spanButtonPlaceHolder",
+            button_width: 75,
+            button_height: 29,
+            button_text : '',
+            button_text_style : '',
+            button_text_top_padding: 0,
+            button_text_left_padding: 0,
+            button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+            button_cursor: SWFUpload.CURSOR.HAND,
+            swfupload_preload_handler : preLoad,
+            swfupload_load_failed_handler : loadFailed,
+
+            file_queued_handler : fileQueued,
+            file_queue_error_handler : fileQueueError,
+            upload_start_handler : uploadStart,
+            upload_progress_handler : uploadProgress,
+            upload_error_handler : uploadError,
+            upload_success_handler : uploadSuccess,
+            upload_complete_handler : uploadComplete,
+            file_dialog_complete_handler:fileDialogComplete
+        };
+
+        swfu = new SWFUpload(settings);
+    });
+
+
+    // 加载图片库
+    function ajaxload(typeid,page,inputid,start_time,end_time,obj){
+
+        var num = $(obj).parent().index();
+        var data = {start_time:start_time,end_time:end_time};
+        var url =  "{:U('Attachment/filelist')}&typeid="+typeid+"&p="+page+"&inputid="+inputid;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(msg){
+                $('#'+inputid).html(msg);
+
+            }
+        });
+    }
+
+    function addwater_enable(){
+        if($('#addwater').is(':checked')) {
+            swfu.addPostParam('addwater', '1');
+        } else {
+            swfu.removePostParam('addwater');
+        }
+    }
+</script>
+</body>
+</html>

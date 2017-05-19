@@ -1,0 +1,50 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Model/add')}">添加模型</a>
+    </div>
+
+    <form name="myform" action="{:U('Model/listorder')}" method="post">
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th width="40">ID</th>
+                    <th>模型名称</th>
+                    <th>模型表名</th>
+                    <th>描述</th>
+                    <th>状态</th>
+                    <th class="manage w-200">操作管理</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="vo" key="k">
+                <tr>
+                    <td align="center">{$vo['id']}</td>
+                    <td>{$vo['name']}</td>
+                    <td>{$vo['tablename']}</td>
+                    <td>{$vo['description']}</td>
+                    <td><if condition="$vo[status]==1">
+                        <a class="btn btn-sm btn-success" href="{:U('Model/status',array(id=>$vo['id'],status=>0))}">已启用</a>
+                        <else />
+                        <a class="btn btn-sm btn-danger" href="{:U('Model/status',array(id=>$vo['id'],status=>1))}">已禁用</a>
+                        </if></td>
+                    <td class="manage w-200">
+                        <a class="btn btn-sm btn-primary" href="{:U('Field/index',array(modelid=>$vo['id']))}">模型字段</a>
+                        <a class="btn btn-sm btn-primary" href="{:U('Model/edit',array(id=>$vo['id']))}">编辑</a>
+
+                        <if condition="$vo['issystem']">
+                            <a class="btn btn-sm btn-default" disabled>删除</a>
+                        <else />
+                            <a class="btn btn-sm btn-primary" href="{:U('Model/delete',array(id=>$vo['id']))}"  onclick="return confirm('您确定要卸载吗？')">删除</a>
+                        </if>
+                    </td>
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+    </form>
+
+
+</block>

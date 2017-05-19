@@ -1,0 +1,21 @@
+<div id="focus" class="banner">
+  <div class="bd">
+    <ul>
+      <gr:slide slideid="2" id="r">
+        <li><a href="{$r.link}"><img src="{$r.pic}" alt="{$r.title}"/></a></li>
+      </gr:slide>
+
+    </ul>
+  </div>
+  <div class="hd"><ul></ul></div>
+</div>
+<script type="text/javascript">
+  TouchSlide({
+    slideCell:"#focus",
+    titCell:".hd ul",
+    mainCell:".bd ul",
+    effect:"leftLoop",
+    autoPlay:true,//自动播放
+    autoPage:true, //自动分页
+  });
+</script>

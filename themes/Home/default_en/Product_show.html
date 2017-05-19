@@ -1,0 +1,219 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<style>
+    .shop_price,.p_count{
+        height: 30px;
+        line-height: 30px;
+    }
+    .shop_price dt{
+        float: left;
+        width: 80px;
+    }
+    .p_count dt{
+        float: left;
+        width: 80px;
+    }
+    #product_num{
+        width: 20px;
+        border:1px solid #ccc;
+        float: left;
+        height: 24px;
+        line-height:24px;
+        text-align: center;
+    }
+    .p_button{
+        display: block;
+        width: 20px;
+        float: left;
+        cursor: pointer;
+        background: #ccc;
+        line-height: 24px;
+        text-align: center;
+    }
+    .product-order{
+        margin-top: 20px;
+    }
+</style>
+<script type="text/javascript" src="__JS__/imagezoom.min.js"></script>
+<script type="text/javascript" src="__JS__/base.js"></script>
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <div class="productShowPic fl">
+                <div class="box">
+                    <div class="tb-booth tb-pic tb-s310">
+                        <a href="{$product.thumb}"><img src="{$product.thumb}" alt="{$product.title}" rel="{$product.thumb}" class="jqzoom" /></a>
+                    </div>
+                    <div class="tb-picList">
+                        <a class="prev"></a><a class="next"></a>
+                        <div class="tb-thumb">
+                            <ul id="thumblist">
+                                <li><a class="tb-selected" href="javascript:;"><img alt="{$product.title}" src="{$product.thumb}" mid="{$product.thumb}" big="{$product.thumb}"></a></li>
+                                <volist name="product.pics" id="r">
+                                    <li><a class="" href="javascript:;" title="{$r.filename}"><img alt="{$r.filename}" src="{$r[filepath]}" mid="{$r[filepath]}" big="{$r[filepath]}"></a></li>
+                                </volist>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 右侧标题简介 -->
+            <div class="productShowTitle fl">
+                <form action="{:U('Cart/cartnow')}" method="post" id="shop_cart">
+
+                <h2>{$product.title}</h2>
+                <div class="descriptionBox">
+                    产品分类：{$product.catname}<br/>
+                    产品说明：{$product.description}
+                </div>
+                <dl class="shop_price">
+                    <dt class="sp_name">售价：</dt>
+                    <dd class="price1">￥<span id="price">{$product.price}</span></dd>
+                </dl>
+                <dl class="shop_price">
+                    <dt class="sp_name">总价：</dt>
+                    <dd class="price2">￥<span id="total_price">{$product.price}</span></dd>
+                </dl>
+                <dl class="p_count">
+                    <dt class="p_count_topic">选数量：</dt>
+                    <dd>
+                        <span class="p_button" id="button_minus">-</span>
+                        <a class="p_c_no">
+                            <input id="product_num" type="text" onblur="changeprice()" name="num" value="1" class="num"/>
+                        </a>
+                        <span class="p_button" id="button_add">+</span>
+                    </dd>
+
+                </dl>
+                <div class="productOrder"><a id="submit" class="btn btn-default" href="javascript:;">加入购物车</a></div>
+            </div>
+            <input type="hidden" value="{$product.title}" name="title" />
+            <input type="hidden" value="{$product.price}" name="price" />
+            <input type="hidden" class="product_total" value="{$product.price}" name="subtotal" />
+            <input type="hidden" value="{$product.thumb}" name="thumb" />
+            <input type="hidden" value="{$product.id}" name="id" />
+            <input type="hidden" value="{$modelid}" name="modelid" />
+        </form>
+        <script>
+            $(function(){
+                $('#submit').click(function(){
+                    $('#shop_cart').submit();
+                });
+                $('#button_minus').click(function(){
+                    var obj = $('#product_num');
+                    var num = $(obj).val();
+                    num==1?1:num--;
+                    $(obj).val(num);
+                    changePrice(num,obj);
+                });
+                $('#button_add').click(function(){
+                    var obj = $('#product_num');
+                    var num = $(obj).val();
+                    num++;
+                    $(obj).val(num);
+                    changePrice(num,obj);
+                });
+                function changePrice(num,obj){
+                    var price = {$product.price};
+
+                    $(obj).attr('value',num)
+                    var subtotal = num*price;
+                    $('#total_price').text(subtotal.toFixed(2));
+
+                }
+            })
+        </script>
+            </div>
+            <div class="clearfix"></div>
+            <!-- 产品说明标签切换 -->
+            <div class="tabListBox">
+                <div class="tabList">
+                    <ul>
+                        <li>产品描述</li>
+                    </ul>
+                </div>
+                <div class="tabBox" style="background:#fff;overflow:hidden;">
+                    <div class="tabBoxC">{$product.content}</div>
+                </div>
+            </div>
+            <!-- 产品定购 -->
+            <div class="orderBox" id="order">
+                <div class="recTitle" style=" overflow: hidden;">采购：{$product.title}</div>
+                <div class="orderTable">
+                    <form id="orderform" action="/?m=form&a=insert" method="post">
+                        <input type="hidden" name="formid" value="2"/>
+                        <input name="product_name" type="hidden" value="{$product.title}"/>
+                        <input name="product_url" type="hidden" value="{$product.url}"/>
+                        <div class="tableRow"><span>联 系 人</span><input name="username" class="rowInput" type="text" placeholder="请填写您的真实姓名" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="tableRow"><span>手机号码</span><input name="phone" class="rowInput" type="text" placeholder="请填写您的联系电话" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="tableRow"><span>电子邮件</span><input name="email" class="rowInput" type="text" placeholder="请填写您的电子邮件" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="clearfix"></div>
+                        <div class="tableRowA">
+                            <span>采购意<br/>向描述</span>
+                            <textarea name="content" onfocus="this.value=''" onkeydown="this.style.color='#666'" class="rowTextarea" placeholder="请填写订购的产品数量和产品描述，方便我们进行统一备货"></textarea>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="tableRow grCode pt15">
+                            <input class="subtA" type="submit" name="submit" value="提 交" id="submit">
+                            <input class="subtB" type="reset" value="重 置">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 相关产品 -->
+            <div class="relatedProduct">
+                <div class="recTitle">相关产品</div>
+                <ul>
+                    <volist name="relation" limit="3" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}"><img width="230" height="173" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a><h3>{$r['title']|str_cut=###,30}</h3></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+jQuery(".tabListBox").slide({ titCell:".tabList li", mainCell:".tabBox",delayTime:0 });
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".jqzoom").imagezoom();
+    $("#thumblist li a").click(function(){
+        $(this).addClass("tb-selected");
+        $(this).parents().siblings().children("a").removeClass("tb-selected");
+        $(".jqzoom").attr('src',$(this).find("img").attr("mid"));
+        $(".jqzoom").attr('rel',$(this).find("img").attr("big"));
+    });
+});
+
+$("#orderform").submit(function () {
+    var self = $(this);
+    $.post(self.attr("action"), self.serialize(), success, "json");
+    return false;
+
+    function success(data) {
+        if (data.status) {
+            layer.msg('提交成功！');
+            $('#orderform')[0].reset();
+            $.ajax({
+                url: '/form/send',
+                type: 'post',
+                data:{
+                    message:data.msg
+                }
+            });
+        } else {
+            layer.msg(data.info);
+        }
+    }
+});
+
+
+</script>
+
+
+</block>

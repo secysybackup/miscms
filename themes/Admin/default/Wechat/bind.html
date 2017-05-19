@@ -1,0 +1,57 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <include file="Wechat:tabs"/>
+
+    <div class="col-md-8">
+    <form id="myform" class="form-horizontal" action="" method="post">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">Token</label>
+            <div class="col-md-5"><input type="text" class="form-control" name="WEIXIN_TOKEN" value="{$WEIXIN_TOKEN}"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">EncodingAESKey</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="WEIXIN_ENCODINGAESKEY" value="{$WEIXIN_ENCODINGAESKEY}"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">appID</label>
+            <div class="col-md-5"><input type="text" class="form-control" name="WEIXIN_APPID" value="{$WEIXIN_APPID}"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">appsecret</label>
+            <div class="col-md-5"><input type="text" class="form-control" name="WEIXIN_APPSECRET" value="{$WEIXIN_APPSECRET}"></div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="提交" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

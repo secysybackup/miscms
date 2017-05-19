@@ -1,0 +1,27 @@
+<include file="Public:header"/>
+<!-- 内页布局 -->
+<div id="main" class="container">
+  <div class="gr-page-banner pt20"><img src="__TMPL__/public/images/pbanner.jpg"/></div>
+  <div class="gr-web1000 pt20">
+      <include file="Home:pro"/>
+        <!-- 右侧内容 -->
+        <div class="gr-content gr-right">
+
+            <div class="gr-content-box">
+                <div class="gr-product-list">
+                  <ul>
+                    {if $list}
+                    <volist name="list" id="r">
+                       <li><a title="{$r['title']}" href="{$r['url']}"><img alt="{$r['title']}" src="{$r['thumb']}"><span>{$r['title']}</span></a></li>
+                    </volist>
+                    {else}
+                        {$catname}
+                    {/if}
+                  </ul>
+                </div>
+                <div style="text-align:center;">{$pages}</div>
+            </div>
+      </div>
+  </div>
+</div>
+<include file="Public:footer"/>

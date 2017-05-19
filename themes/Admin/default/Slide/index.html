@@ -1,0 +1,51 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <?php if($_SESSION['admin']['role'] == 1):?>
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Slide/add')}">新增</a>
+    </div>
+    <?php endif;?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form name="myform" action="" method="post">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th width="40">ID</th>
+                        <th align="left">名称</th>
+                        <th width="100" align="left">幻灯片宽</th>
+                        <th width="100" align="left">幻灯片高</th>
+                        <th width="100" class="center">状态</th>
+                        <th width="220" class="center">管理操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="list" id="vo" key="k">
+                        <tr>
+                            <td class="center">{$vo['id']}</td>
+                            <td align="left">{$vo['name']}</td>
+                            <td align="left">{$vo['width']}</td>
+                            <td align="left">{$vo['height']}</td>
+                            <td class="center"><eq name="vo['status']" value="1">
+                                启用
+                                <else />
+                                禁用
+                            </eq></td>
+                            <td class="center">
+                                <a class="btn btn-primary btn-sm" href="{:U('Slide/picmanage',array('fid'=>$vo['id']))}">图片管理</a>
+                                <?php if($_SESSION['admin']['role'] == 1):?>
+                                <a class="btn btn-info btn-sm" href="{:U('Slide/edit',array('id'=>$vo['id']))}">编辑</a>
+                                <a class="btn btn-danger btn-sm" href="javascript:confirm_delete('{:U('Slide/delete',array('id'=>$vo['id']))}')">删除</a>
+                                <?php endif;?>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </div>
+</block>

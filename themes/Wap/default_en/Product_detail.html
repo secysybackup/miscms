@@ -1,0 +1,85 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<h1>{$product.title}</h1>
+	<div id="slide_box" class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<img src="{$product.thumb}" />
+			</div>
+			<volist name="product.pics" id="r">
+				<div class="swiper-slide">
+					<img src="{$r['filepath']}" />
+				</div>
+			</volist>
+		</div>
+		<div class="pagination2"></div>
+	</div>
+
+	<h2 class="b10">
+         <i class="icon-circle-arrow-right"></i>content
+	</h2>
+	<div style="padding:0 10px; overflow-x:hidden; font-size:14px;">
+		{$product.content}
+	</div>
+	<p class="clear h10"></p>
+	<include file="Public:share"/>
+
+	<p class="t10">prev：
+		{if $prea!=''}
+		<a href="{$prea.url}">
+			{$prea.title|str_cut=###,60}</a>
+		{else}<a>none</a>
+		{/if}
+	</p>
+	<p>next：
+		{if $next!=''}
+	<a href="{$next.url}">{$next.title|str_cut=###,60}</a>
+	{else}<a>none</a>
+		{/if}
+	</p>
+
+</div>
+
+<div class="section">
+	<div class="section-title">
+		<h2>relation product</h2>
+	</div>
+	<ul class="relevant">
+		<Gr:list catid="catid" limit="3" id="r" field="id,catid,title,url,thumb">
+			<li>
+				<a href="{$r.url}">
+					<img class="thumbnail" src="{$r.thumb}" alt="{$r.title}" title="{$r.title}" onload="reset_pic(this, '90,90')"/>
+				</a>
+			</li>
+		</Gr:list>
+	</ul>
+</div>
+
+<include file="Public:pinglun"/>
+
+<script type="text/javascript">
+
+var mySwiper2 = new Swiper('#slide_box',{
+	autoplay:5000,
+	visibilityFullFit : false,
+	loop:true,
+	pagination : '.pagination2',
+});
+
+</script>
+</block>
+
+<block name="footer">
+	<include file="Public:footer"/>
+</block>

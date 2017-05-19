@@ -1,0 +1,69 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <form id="myform" action="{:U('Fiesta/edit')}" method="post">
+
+        <div class="form-group row">
+            <label class="control-label col-md-2"><font color="red">*</font>名称</label>
+            <div class="col-md-6">
+                <input type="text" name="title" value="{$vo.title}" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2"><font color="red">*</font>时间</label>
+            <div class="col-md-4">
+                <input type="text" name="createtime" value="{$vo.createtime|toDate=###,'Y-m-d'}" placeholder="请输入日期" onclick="laydate()" class="form-control laydate-icon" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">图片</label>
+            <div class="col-md-6">
+                <div class="thumb_image">
+                    <div id="image_aid_box"></div>
+                    <a class="thumbnail" href="javascript:swfupload('image','{:get_yzh_auth(1,'1MB',1)}',yesdo);">
+                        <img id="image_pic" height="68" src="<if condition="!empty($vo['image'])">{$vo['image']}<else/>__IMG__/upload_thumb.png</if>"></a>
+                    <input type="button" value="取消图片" onclick="javascript:clean_thumb('image');" class="btn btn-sm btn-primary"/>
+                    <input type="hidden" id="image" name="image" value="{$vo['image']}"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">{:L('STATUS')}</label>
+            <div class="col-md-6">
+                {:Form::radio(array('field'=>'status','options'=>array('1'=>L('yes'),'0'=>L('no'))),$vo['status'])}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="hidden" name="id" value="{$vo.id}">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

@@ -1,0 +1,49 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="col-md-12">
+    <div class="main-title">
+        <h2>新建群发消息</h2>
+    </div>
+
+    <form id="myform" class="form-horizontal" action="" method="post">
+        <div class="form-group">
+            <label class="control-label col-md-2">标题</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="title"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">作者</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="author"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">摘要</label>
+            <div class="col-md-5">
+                <textarea type="text" class="form-control" name="digest"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">正文</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="name"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">原文链接</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="content_source_url"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">是否设置为封面</label>
+            <div class="col-md-5">
+                <label class="radio-inline">
+                    <input type="radio" value="1" name="show_cover_pic">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" value="0" name="show_cover_pic">否
+                </label>
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" value="提交" class="btn btn-default">
+        </div>
+    </form>
+</div>
+
+</block>

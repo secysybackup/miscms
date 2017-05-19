@@ -1,0 +1,29 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+        <!-- ËÑË÷ -->
+        <section class="search">
+            <form action="/?m=search" method="post">
+                <input type="hidden" name="modelid" value="3">
+                <input type="text" class="sear_text"  name="keyword" placeholder="ÇëÊäÈëËÑË÷¹Ø¼ü´Ê" value="{$keyword}"/>
+                <input type="submit" class="sear_btn" value=" "/>
+            </form>
+        </section>
+		<div class="productList">
+		    <ul>
+				<volist name="list" id="r">
+					<li>
+						<a href="{$r.url}" class="pImg">
+							<img src="{$r.thumb}" />
+							<span>{$r.title}</span>
+						</a>
+					</li>
+				</volist>
+		    </ul>
+		</div>
+	</div>
+</block>
+

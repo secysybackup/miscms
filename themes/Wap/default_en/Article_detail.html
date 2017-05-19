@@ -1,0 +1,39 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<h1>{$article.title}</h1>
+	<p class="time">{$article.createtime|toDate=###,'Y-m-d'}</p>
+	<div style="padding:0 10px; font-size:14px;">{$article.content}</div>
+	<p class="clear h10"></p>
+
+	<p class="t10">prev：{if $prea!=''} <a href="{$prea.url}">{$prea.title|str_cut=###,60}</a>{else}<a>none</a>{/if}</p>
+
+	<p>next：{if $next!=''} <a href="{$next.url}">{$next.title|str_cut=###,60}</a>{else}<a>none</a>{/if}</p>
+
+</div>
+
+<div class="section">
+	<div class="section-title">
+		<h2>relation news</h2>
+	</div>
+	<ul class="xgxw">
+		<Gr:list catid="catid" limit="3" field="id,catid,title,url,thumb">
+			<li>
+				<a href="{$r.url}" title="{$r['title']}"><i class="icon iconfont">&#xe60f;</i>{$r['title']}</a>
+			</li>
+		</Gr:list>
+	</ul>
+</div>
+
+<include file="Public:footer"/>
+</block>

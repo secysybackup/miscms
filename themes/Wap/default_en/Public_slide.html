@@ -1,0 +1,22 @@
+<!-- 动画 -->
+<div id="banner">
+    <div class="swiper-wrapper">
+        <gr:slide slideid="2" id="r">
+            <div class="swiper-slide">
+                <img src="{$r['pic']}" />
+            </div>
+        </gr:slide>
+    </div>
+    <div class="swiper-pagination pagination1"></div>
+</div>
+
+<script>
+    window.onload = function() {
+        var mySwiper1 = new Swiper('#banner',{
+            autoplay:5000,
+            visibilityFullFit : true,
+            loop:true,
+            pagination : '.pagination1',
+        });
+    }
+</script>

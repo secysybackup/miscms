@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html class="w3c">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="__CSS__/elpis.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/layout.css">
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <title>{$seo_title}-{$site_name}</title>
+    <style>
+        .login .logo {
+            margin: 60px auto 0;
+            padding: 15px;
+            text-align: center;
+        }
+        .login .content {
+            background-color: #eceef1;
+            -webkit-border-radius: 7px;
+            -moz-border-radius: 7px;
+            -ms-border-radius: 7px;
+            -o-border-radius: 7px;
+            border-radius: 7px;
+            width: 400px;
+            margin: 40px auto 10px;
+            padding: 10px 30px 30px;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="login">
+
+    <div class="logo">
+        <a href="/" title="{$site_name}">
+            <img src="{$site_logo}" alt="{$site_name}" title="{$site_name}" />
+        </a>
+    </div>
+    <div class="content" style="margin-top: 10px">
+        <form id="loginform" method="post" action="/user/login">
+            <h3 class="form-title font-green">用户登录</h3>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-3">用户名</label>
+                <div class="col-md-8">
+                    <input type="text" name="username" class="form-control" placeholder="用户名">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-3">用户名</label>
+                <div class="col-md-8">
+                    <input type="password" name="password" class="form-control" placeholder="密码">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-3">验证码</label>
+                <div class="col-md-8">
+                    <input type="text" name="verifyCode" class="form-control" placeholder="验证码" class="form-control" />
+                    <img src="{:U('verify')}" onclick="javascript:resetVerifyCode();"  title="点击刷新验证码" id="verifyImage"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-offset-3 col-md-8">
+                 <input type="submit" class="btn btn-primary" value="确定"/>
+                </div>
+            </div>
+        </form>
+
+        <div class="card-footer">
+            <a href="/user/register">现在注册</a>
+            <a href="/user/forgetpwd">忘记密码</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$("#loginform").submit(function () {
+    var self = $(this);
+    $.post(self.attr("action"), self.serialize(), success, "json");
+    return false;
+
+    function success(data) {
+      if (data.status) {
+          layer.msg('欢迎回来，页面正在跳转，请稍候。');
+          setTimeout(function () {
+              window.location.href = data.url;
+          }, 1500);
+      } else {
+          layer.msg(data.info);
+          //self.find(".Validform_checktip").text(data.info);
+          //刷新验证码
+          $(".reloadverify").click();
+      }
+    }
+});
+
+</script>
+</body>

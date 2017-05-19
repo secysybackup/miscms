@@ -1,0 +1,66 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="focus" class="banner">
+	<div class="bd">
+		<ul>
+				<gr:slide slideid="2" id="r">
+				<li><a href="{$r.link}"><img src="{$r.pic}" alt=""/></a></li>
+				</gr:slide>
+
+		</ul>
+	</div>
+	<div class="hd"><ul></ul></div>
+</div>
+<script type="text/javascript">
+	TouchSlide({
+		slideCell:"#focus",
+		titCell:".hd ul",
+		mainCell:".bd ul",
+		effect:"leftLoop",
+		autoPlay:true,//自动播放
+		autoPage:true, //自动分页
+	});
+</script>
+<!-- 菜单 -->
+<section class="conMenu">
+	<ul>
+		<li class="c1"><a href="http://sbcx.saic.gov.cn:9080/tmois/wscxsy_getIndex.xhtml" target="_blank"><i class="icon_nav1 iconfont"></i><p>品牌介绍<span>about us</span></p></a></li>
+		<li class="c2"><a href="http://www.cnpatent.com/zljs.asp" target="_blank"><i class="icon_nav2 iconfont"></i><p>婚庆策划<span>plan</span></p></a></li>
+		<li class="c3"><a href="about.php"><i class="icon_nav3 iconfont"></i><p>优惠套餐<span>Package</span></p></a></li>
+		<li class="c4"><a href="contact.php"><i class="icon_nav4 iconfont"></i><p>婚庆资讯<span>news</span></p></a></li>
+		<li class="c5"><a href="about.php"><i class="icon_nav5 iconfont"></i><p>联系我们<span>contact us</span></p></a></li>
+		<li class="c6"><a href="contact.php"><i class="icon_nav6 iconfont"></i><p>留言反馈<span>feedback</span></p></a></li>
+	</ul>
+</section>
+<!-- 精彩回放 -->
+<section class="product">
+	<h2 class="homeTitle"><a class="icon iconfont more" href="#">&#xe62c;</a><span>精彩回放</span></h2>
+	<ul class="proMain">
+			<gr:list catid="2" name="product" id="r" field="thumb,url,title" limit="4">
+				<li><a href="{$r.url}"><img src="{$r.thumb}" alt=""><span>{$r.title}</span></a></li>
+			</gr:list>
+
+	</ul>
+</section>
+<!-- 关于我们 -->
+<section class="about">
+	<h2 class="homeTitle"><a class="iconfont more" href="#">&#xe62c;</a><span>关于我们</span></h2>
+	<div class="font con">
+			{$block[19]}
+
+	</div>
+</section>
+<!-- 新闻资讯 -->
+<section class="news">
+	<h2 class="homeTitle"><a class="icon iconfont more" href="{$Cats[5]['url']}">&#xe62c;</a><span>优惠活动</span></h2>
+	<ul >
+		<gr:list catid="5" name="article" id="r" listorder="createtime desc,id desc" field="url,thumb,title" limit="3">
+			<li>
+				<h4><a href="{$r.url}">{$r.title}</a></h4>
+				<a class="fr" href="{$r.url}"><img src="{$r.thumb}" alt=""></a>
+			</li>
+		</gr:list>
+	</ul>
+</section>
+</block>

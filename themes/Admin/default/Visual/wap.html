@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="w3c">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="__CSS__/elpis.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='__CSS__/style.css'>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__JS__/admin.js"></script>
+    <title>誉字号v1</title>
+</head>
+
+<body>
+<style>
+    body{
+        padding-top: 50px;
+        font-size: 16px;
+    }
+    .section-edit{
+        width: 100%;
+        border-bottom: 2px solid #666;
+    }
+    .navbar-brand{
+        background:url(__IMG__/logo.png);
+        background-size: 28%;
+        background-repeat: no-repeat;
+        padding-left: 37px;
+    }
+    .yzh-sk {
+        display: block;
+        width: 340px;
+        padding: 50px 10px;
+        margin: 10px 30px 50px 10px;
+        border-radius: 10px;
+        background: rgba(0,0,0,.2);
+    }
+    .yzh-sk iframe {
+        display: block;
+        width: 100%;
+        height: 520px;
+        border: 0;
+    }
+</style>
+
+<nav class=" navbar navbar-light bg-faded navbar-fixed-top section-edit">
+
+    <a class="navbar-brand" href="{:U("Admin/Index/index")}">外观设置</a>
+
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/?g=admin&m=visual&a=index">桌面</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/?g=admin&m=visual&a=index&client=wap">移动</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav pull-sm-right">
+        <li class="nav-item"><a class="nav-link" href="javascript:update_cache();">刷新</a></li>
+        <li class="nav-item"><a class="nav-link" href="/" target="_blank" data-toggle="tooltip" >预览</a></li>
+        <li class="nav-item"><a class="nav-link" href="{:U("Admin/Index/index")}">后台</a></li>
+    </ul>
+</nav>
+
+<div class="">
+    <div class="col-md-4">
+        <div class="yzh-sk">
+            <iframe id="frontend" src="{$client_url}" frameborder="0" scrolling="yes" width="100%"></iframe>
+        </div>
+    </div>
+
+    <div class="col-md-8" style="margin-top: 10px">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>名称</td>
+                        <td>操作</td>
+                    </tr>
+                    <volist name="block_list" id="r">
+                        <tr>
+                            <td>{$r.name}</td>
+                            <td><a class="btn btn-sm btn-primary" href="javascript:;" onclick="edit_block('block',{$r.id})">编辑</a></td>
+                        </tr>
+                    </volist>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">二维码</div>
+                    <div class="card-block">
+                        <div id="qrpng"></div>
+                        <p>
+                            电脑浏览器与手机浏览器部分效果渲染不同，因此在电脑上浏览手机版可能会出现细节不兼容现象。
+                        </p>
+                        <p>一切效果应以手机终端浏览为标准。</p>
+                        <p>如需完整体验手机版，请用手机访问网站网址或扫描二维码浏览。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<load href="__JS__/jquery.qrcode.min.js"/>
+
+<script type="text/javascript">
+
+//初始
+jQuery('#qrpng').qrcode({
+    text  : '{$client_url}',
+    width :150,
+    height:150
+});
+
+function edit_block(editableType, editableId) {
+    $.ajax({
+        url: "{:U('Visual/edit')}",
+        type: 'get',
+        // dataType: '',
+        data: {
+            'editableType': editableType,
+            'editableId': editableId
+        },
+        success: function(data){
+            layer.open({
+                type: 1,
+                zIndex: 10000,
+                shadeClose: true,
+                area: '830px',
+                title: '编辑', //不显示标题
+                content:data, //捕获的元素
+            });
+        }
+    })
+}
+
+var APP = '';
+var ROOT = '';
+var PUBLIC = '/Public';
+
+//更新缓存
+function update_cache(){
+    $.ajax({
+        url:"{:U('Public/cache')}",
+        beforeSend:function(){
+            layer.msg('正在更新缓存');
+        },
+        success:function(data){
+            window.location.reload();
+        }
+    });
+}
+</script>
+</body>
+</html>

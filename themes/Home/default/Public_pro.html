@@ -1,0 +1,22 @@
+<!-- 左侧栏目 -->
+<div class="col-sm-3">
+    <div class="gr-sidebar-one">
+        <h2>{$catname}</h2>
+        <ul class="nav nav-pills nav-stacked">
+            <Gr:cat catid="2">
+                <li><a {if $catid==$r['id']}class="current"{/if} href="{$r.url}">{$r.catname}</a></li>
+            </Gr:cat>
+        </ul>
+    </div>
+
+    <div class="gr-sidebar-two mt15">
+        <h2>推荐产品</h2>
+        <div class="bd">
+            <ul>
+                <Gr:list catid="2" id="r" field="title,url,thumb" posid="1">
+                <li><a title="{$r['title']}" href="{$r['url']}" class="thumbnail"><img alt="{$r['title']}" src="{$r['thumb']}"><span>{$r['title']}</span></a></li>
+                </Gr:list>
+            </ul>
+        </div>
+    </div>
+</div>

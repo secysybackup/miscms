@@ -1,0 +1,237 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-header">绑定域名</div>
+			<div class="card-block">
+				<form class="myform" method="post" action="{:U('sysconfig/save')}">
+
+					<div class="form-group row">
+						<label class="form-control-label col-md-2">网站域名(主域名):</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<input type="text" class="form-control" name="SITE_DOMAIN" value="{$sysconf['SITE_DOMAIN']}">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="form-control-label col-md-2">其他域名:</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<textarea type="text" class="form-control" name="SITE_DOMAINS" cols="3" rows="8">{$sysconf['SITE_DOMAINS']}</textarea>
+								<label>当前站点支持绑定多个域名，它们将会301到主域名，域名之间以回车符分隔（请勿与其主域名重复）</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="form-control-label col-md-2">自动识别:</label>
+						<div class="col-md-5">
+							<input id="sub_domain" type="checkbox" data-off-text="关闭" data-on-text="开启" data-handle-width="50">
+							<input type="hidden" name="SUB_DOMAIN" value="{$sysconf['SUB_DOMAIN']}">
+						</div>
+						<div class="offset-md-2">
+							<label>开启后将自动识别移动端并强制定向到此域名</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="form-control-label col-md-2">移动端域名:</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="SITE_WAP_DOMAIN" value="{$sysconf['SITE_WAP_DOMAIN']}">
+						</div>
+					</div>
+
+					<div class="form-actions">
+						<input type="submit" value="保存" class="btn btn-primary" />
+						<input type="reset" value="重置" class="btn btn-primary"/>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">搜索引擎抓取设置(robots.txt设置)</div>
+			<div class="card-block">
+				<form class="myform" method="post" action="{:U('sysconfig/robots')}">
+                    <input type="hidden" id="robots_txt_1" value="{$robots_txt1}">
+                    <input type="hidden" id="robots_txt_2" value="{$robots_txt2}">
+                <div class="form-group row">
+					<div class="col-md-12">
+						<textarea name="robots" class="form-control" cols="30" rows="10">{$robots}</textarea>
+                        <a class="btn btn-sm btn-info" href="javascript:robots_set(1);">禁止搜索引擎抓取</a>
+                        <a class="btn btn-sm btn-info" href="javascript:robots_set(2);">默认robots.txt设置</a>
+                    </div>
+				</div>
+				<div class="form-actions">
+					<input type="submit" value="保存" class="btn btn-primary" />
+					<input type="reset" value="重置" class="btn btn-primary"/>
+				</div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-header">水印设置</div>
+			<div class="card-block">
+					<form class="myform" method="post" action="{:U('sysconfig/save')}">
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">是否开启图片水印</label>
+							<div class="col-md-10">
+								<label class="radio-inline">
+									<input name="watermark_enable" value="1" <if condition="$sysconf.watermark_enable == 1">checked</if> type="radio"> 开启
+								</label>
+								<label class="radio-inline">
+									<input name="watermark_enable" value="0" <if condition="$sysconf.watermark_enable == 0">checked</if> type="radio">关闭
+								</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">水印添加条件</label>
+							<div class="col-md-10">
+								<input type="text" name="watermark_minwidth" value="{$sysconf.watermark_minwidth}" /> PX 宽
+								<input type="text" name="watermark_minheight" value="{$sysconf.watermark_minheight}" /> PX 高
+								<label for="">提示：大于该尺寸则水印生效</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">水印图片</label>
+							<div class="col-md-10">
+								<input type="hidden" name="watermark_img" id="watermark_img" value="{$sysconf.watermark_img}"/>
+								<div class="thumb_box">
+									<div id="image_aid_box"></div>
+									<a href="javascript:swfupload('watermark_img','{:get_yzh_auth(1,'200kb',1)}',yesdo)">
+										<img width="50" height="50" src="<if condition="!empty($sysconf['watermark_img'])">{$sysconf.watermark_img}<else/>__IMG__/upload_thumb.png</if>" id="watermark_img_pic" ></a><br>
+									<input type="button" value="取消图片" onclick="javascript:clean_thumb('watermark_img');" class="btn btn-sm btn-info" />
+									<label for="">提示：要求PNG透明格式，建议文件大小＜50KB，水印图片尺寸宽高＜100像素</label>
+								</div>
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">水印透明度</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control w-100px" name="watermark_pct" value="{$sysconf.watermark_pct}" />
+								<label for="">提示：0-100，值越大透明度越低</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">JPEG 水印质量</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control w-100px" name="watermark_quality" value="{$sysconf.watermark_quality}" />
+								<label for="">提示：0-100，值越大质量越高</label>
+							</div>
+						</div>
+
+						<!--<div class="form-group">
+							<label class="control-label col-md-2">水印边距</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="watermark_pospadding" value="{$sysconf.watermark_pospadding}" />
+							</div>
+						</div>-->
+
+						<div class="form-group row">
+							<label class="form-control-label col-md-2">水印位置</label>
+							<div class="col-md-10">
+								<table class="table table-bordered">
+									<tr>
+										<td rowspan="3">
+											<input name="watermark_pos" value="10" type="radio" <if condition="$sysconf.watermark_pos == 10">  checked</if> > 随机位置
+										</td>
+										<td>
+											<input name="watermark_pos" value="1" type="radio" <if condition="$sysconf.watermark_pos == 1">checked</if>> 顶部居左
+										</td>
+										<td>
+											<input name="watermark_pos" value="2" type="radio" <if condition="$sysconf.watermark_pos == 2">checked</if> > 顶部居中
+										</td>
+										<td>
+											<input name="watermark_pos" value="3" type="radio" <if condition="$sysconf.watermark_pos == 3">checked</if>>顶部居右
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input name="watermark_pos" value="4" type="radio" <if condition="$sysconf.watermark_pos == 4">checked</if>>中部居左
+										</td>
+										<td>
+											<input name="watermark_pos" value="5" type="radio" <if condition="$sysconf.watermark_pos == 5">checked</if>>垂直居中
+										</td>
+										<td>
+											<input name="watermark_pos" value="6" type="radio" <if condition="$sysconf.watermark_pos == 6">checked</if>>中部居右
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input name="watermark_pos" value="7" type="radio" <if condition="$sysconf.watermark_pos == 7">checked</if>>底部居左
+										</td>
+										<td>
+											<input name="watermark_pos" value="8" type="radio" <if condition="$sysconf.watermark_pos == 8">checked</if>>底部居中
+										</td>
+										<td>
+											<input name="watermark_pos" value="9" type="radio" <if condition="$sysconf.watermark_pos == 9">checked</if>>底部居右
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="form-actions">
+							<input type="submit" value="保存" class="btn btn-primary" />
+							<input type="reset" value="重置" class="btn btn-primary"/>
+						</div>
+					</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</block>
+
+<block name="script">
+
+	<link href="__STATIC__/bootstrap-switch/css/bootstrap-switch.css" rel="stylesheet">
+	<script src="__STATIC__/bootstrap-switch/js/bootstrap-switch.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#sub_domain").bootstrapSwitch('state',{$sysconf['SUB_DOMAIN']});
+			$("#sub_domain").on('switchChange.bootstrapSwitch', function (e, state) {
+				if (state) { //on
+					$('input[name="SUB_DOMAIN"]').val('1');
+				} else { //0FF
+					$('input[name="SUB_DOMAIN"]').val('0');
+				}
+			});
+
+			$('.myform').ajaxForm({
+				success:  complete,  // post-submit callback
+				dataType: 'json'
+			});
+		});
+
+		function complete(data){
+			if(data.status==1){
+				layer.msg('修改成功');
+				setTimeout(function(){
+					window.location.href = "{$Think.cookie.__forward__}";
+				},1000);
+			}else{
+				layer.msg(data.info);
+			}
+		}
+
+        function robots_set(id){
+
+            var robots_txt = $('#robots_txt_'+id).val();
+            $("[name='robots']").html(robots_txt);
+
+
+        }
+	</script>
+</block>

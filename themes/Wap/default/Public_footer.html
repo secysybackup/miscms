@@ -1,0 +1,27 @@
+<footer>
+    <div class="scroll_top">
+        <a href="#container">
+            <span><i class="icon iconfont">&#xe609;</i>TOP</span>
+        </a>
+    </div>
+
+    <nav class="b-nav">
+        <ul>
+            <Gr:cat catid="0" id="r">
+                <li><a href="{$r.url}">{$r.catname}</a></li>
+            </Gr:cat>
+        </ul>
+    </nav>
+
+    <p class="copy">{$site_copyright}<br/>{$site_approve}</p>
+    <p class="code"><img src="{$wap_qrcode}" alt="微信二维码"><br/>扫一扫，访问网站</p>
+</footer>
+
+
+<div class="footer_fixed" id="btn">
+    <ul>
+        <li><a class="btn_3" href="tel:{$wap_tel400}">打电话</a></li>
+        <li><a class="btn_2" href="sms:{$site_phone}">发短信</a></li>
+        <li><a class="btn_1" href="mailto:{$site_email}">发邮件</a></li>
+    </ul>
+</div>

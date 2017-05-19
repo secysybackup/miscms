@@ -1,0 +1,67 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <include file="Wechat:tabs"/>
+
+    <form id="myform" action="" method="post">
+        <div class="alert alert-info" style="margin:5px;">当用户输入的触发关键字无法匹配时自动回复此消息：</div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">回复内容</label>
+            <div class="col-md-5">
+                <textarea name="robot_content" class="form-control" rows="8">{$robot_content}</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="提交" class="btn btn-primary">
+        </div>
+    </form>
+
+<script type="text/javascript">
+<if condition="$welcome_type eq 2">
+    $('.welcome_title').hide();
+    $('.welcome_face').hide();
+    $('.welcome_url').hide();
+</if>
+$(function(){
+    $('input[name=welcome_type]').click(function(){
+        var value = $(this).attr('value');
+        if (value==1) {
+            $('.welcome_title').show();
+            $('.welcome_face').show();
+            $('.welcome_url').show();
+        } else {
+            $('.welcome_title').hide();
+            $('.welcome_face').hide();
+            $('.welcome_url').hide();
+        }
+    });
+})
+
+</script>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

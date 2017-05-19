@@ -1,0 +1,93 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form id="myform" action="{:U('Slide/addpic')}" method="post">
+        <input type="hidden" name="description" value="">
+        <input type="hidden" name="content" value="">
+        <input type="hidden" name="fid" value="{$fid}"/>
+        <table class="form-table">
+            <div class="form-group row">
+                <label class="form-control-label col-md-2"><b color="red">*</b>标题</label>
+                <div class="col-md-5">
+                    <input type="text" id="title" name="title" value="{$vo.title}" class="form-control" validate="required:true,cn_username:true, minlength:2, maxlength:20"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">链接</label>
+                <div class="col-md-5">
+                    <input type="text" id="link" name="link" value="{$vo.link}" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">小图</label>
+                <div class="col-md-5">
+                    <div id="small_aid_box" style="display:none;"></div>
+                    <input type="hidden" id="small" name="small" value="{$vo['small']}" class="form-control input-sm" />
+                    <a class="thumbnail" href="javascript:swfupload('small','{:get_yzh_auth(1,'1MB',1)}',yesdo)">
+                        <img height="80" src="<notempty name="vo.small">{$vo.small}<else/>__IMG__/upload_thumb.png</notempty>" id="small_pic" >
+                    </a>
+                    <input type="button" value="取消图片" onclick="javascript:clean_thumb('small');" class="btn btn-sm btn-info"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-control-label col-md-2">大图</label>
+                <div class="col-md-5" class="pic_box">
+                    <div id="pic_aid_box"></div>
+                    <input type="hidden" id="pic" name="pic" value="{$vo['pic']}" class="form-control input-sm" />
+                    <a class="thumbnail" href="javascript:swfupload('pic','{:get_yzh_auth(1,'1MB',1)}',yesdo)">
+                        <img height="80" src="<notempty name="vo.pic">{$vo.pic}<else/>__IMG__/upload_thumb.png</notempty>" id="pic_pic" >
+                    </a>
+                    <input type="button" value="取消图片" onclick="javascript:clean_thumb('pic');" class="btn btn-sm btn-info"/>
+                    (建议尺寸:{$slide.width}px*{$slide.height}px)
+                </div>
+            </div>
+            <div class="form-group row" style="display: none">
+                <label class="form-control-label col-md-2">状态</label>
+                <div class="col-md-9">
+                    <label class="radio-inline checkbox_status">
+                        <input type="radio" name="status" <eq name="vo.status" value="1">checked</eq> value="1"> 已审核
+                    </label>
+                    <label class="radio-inline checkbox_status">
+                        <input type="radio" name="status" <eq name="vo.status" value="0">checked</eq> value="0"> 未审核
+                    </label>
+                </div>
+            </div>
+            <div class="form-actions">
+                <input type="submit" value="提交" class="btn btn-primary"/>
+                <a class="btn btn-primary" href="javascript:window.history.go(-1);">返回</a>
+            </div>
+    </form>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

@@ -1,0 +1,64 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="row table-container">
+        <div class="col-md-12">
+            <form name="myform" id="myform" method="post">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="30"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                            <th width="40">ID</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>应聘职位</th>
+                            <th>联系电话</th>
+                            <if condition="$fields['status']"><th width="60">{:L('status')}</th> </if>
+                            <if condition="$fields['hits']"><th width="40">{:L('hits')}</th> </if>
+                            <th class="w-200 center">{:L('manage')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <empty name="list">
+                        <tr class="table-data-empty">
+                            <td class="text-center empty-info" colspan="8">
+                                <i class="fa fa-database"></i> 暂无数据<br>
+                            </td>
+                        </tr>
+                        <else/>
+                        <volist name="list" id="vo" key="k">
+                        <tr>
+                            <td  width="30" align="center"><input class="inputcheckbox " name="ids[]" value="{$vo['id']}" type="checkbox" ></td>
+                            <td align="center">{$vo['id']}</td>
+                            <td>{$vo['username']}</td>
+                            <td>
+                                <eq name="vo['sex']" value="1">男<else/>女</eq>
+                            </td>
+                            <td>{$vo['position']}</td>
+                            <td>{$vo['phone']}</td>
+                            <if condition="$fields['status']">
+                            <td align="center">
+                                {if $vo['status']==1}<font color="green">已查看</font>
+                                {else}<a href="{:U($module_name.'/status',array(id=>$vo['id'],status=>1))}"><font color="red">未查看</font></a>{/if}</td>
+                            </if>
+                            <if condition="$fields['hits']"> <td align="center">{$vo['hits']}</td></if>
+                            <td align="center">
+                                <a class="btn btn-info btn-sm" href="{:U('Resume/detail',array(id=>$vo['id']))}">查看简历</a>
+                                <a class="btn btn-danger btn-sm" href="javascript:confirm_delete('{:U('Resume/delete',array(id=>$vo['id']))}')">{:L('delete')}</a>
+                            </td>
+                        </tr>
+                        </volist>
+                    </empty>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="pull-right" id="pages">{$page}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</block>

@@ -1,0 +1,149 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<style>
+    .list-dot{ padding-bottom:10px}
+    .list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+    .list-dot li span,.list-dot-othors li span{color:#004499}
+    .list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+    .list-dot li a.close,.list-dot-othors li a.close{ background: url("/public/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+    .list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+    .list-dot-othors li{float:left;width:24%;overflow:hidden;}
+</style>
+<load href="__JS__/jquery.colorpicker.js"/>
+<script src="__JS__/Sortable.min.js"></script>
+
+<form id="myform" action="{:U($model_name.'/edit')}" method="post">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">基本内容</div>
+                <div class="card-block">
+            <volist name="fields" id="r">
+                <if condition="!empty($r['status']) && $r['isbase']==1">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <if condition="$r['required']"><span class="text-daner">*</span></if>{$r.name}
+                        </label>
+                        <div id="box_{$r['field']}">
+                            {if $r['type'] == 'images'}
+<?php
+$parseData = $form->images($r,'');
+
+$file_list = json_decode($vo[$r['field']], true);
+?>
+                            <div class="card">
+                                <div class="card-header">最多同时可以上传{$r['setup']['upload_maxnum']}张
+                                    <div class="pull-sm-right">
+                                        <a class="btn btn-sm btn-info" href="javascript:swfupload('{$r['field']}', '{$parseData['yzh_auth']}', up_images);">图片上传</a>
+                                    </div>
+                                </div>
+                                <div class="card-block" style="padding: 0;">
+                                    <div id="{$r['field']}_images" class="imagesList">
+                                        <notempty name="file_list">
+                                            <volist name="file_list" id="v">
+                                                <div id="uplistd_{$i}">
+                                                    <img src="{$v['filepath']}"/>
+                                                    <input type="hidden" name="{$r['field']}[]" value="{$v['filepath']}" />
+                                                    <div class="image_title">
+                                                        <input type="text" class="form-control" placeholder="注释" name="{$r['field']}_name[]" value="{$v['filename']}" />
+                                                    </div>
+                                                    <button type="button" onclick="remove_this('uplistd_{$i}');" class="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </volist>
+                                            <else/>
+                                        </notempty>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                Sortable.create(pics_images, {
+                                    handle: "img",
+                                    animation: 150
+                                });
+                            </script>
+                            {else}
+                                {$r|getform=$form,###}
+                            {/if}
+                        </div>
+                    </div>
+                        </if>
+                    </volist>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">缩略图</div>
+                <div class="card-block">
+                    <div class="thumb_box" id="thumb_box">
+                        <div id="thumb_aid_box"></div>
+                        <a class="thumbnail uploadimg" href="javascript:swfupload('thumb','{:get_yzh_auth(1,'200kb',1)}',yesdo);">
+                            <img src="<empty name='vo.thumb'>__IMG__/upload_thumb.png<else/>{$vo['thumb']}</empty>" id="thumb_pic" width="135" height="113">
+                        </a>
+                        <input type="button" value="取消缩略图" onclick="javascript:clean_thumb('thumb');" class="btn btn-sm btn-primary" />
+                        <input type="hidden" id="thumb" name="thumb" value="{$vo['thumb']}" />
+                    </div>
+                </div>
+            </div>
+
+
+            <volist name="fields" id="r">
+                <if condition="!empty($r['status']) && $r['isbase']==0">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <if condition="$r['required']"><font color="red">*</font></if>{$r.name}
+                        </div>
+                        <div class="card-block">
+                            {$r|getform=$form,###}
+                        </div>
+                    </div>
+                </if>
+            </volist>
+
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="hidden" name="id" value="{$vo.id}">
+        <input type="hidden" name="forward" value="{$_SERVER['HTTP_REFERER']}"/>
+        <input type="submit" value="提交" class="btn btn-primary" />
+        <input type="reset" value="重置" class="btn btn-primary"/>
+    </div>
+</form>
+
+</block>
+
+<block name="script">
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        dataType: 'json'
+    });
+});
+
+function complete(data){
+    if (data.status == 1) {
+        layer.msg(data.info, {
+            icon: 1,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        }, function(){
+            window.location.href = "{$Think.cookie.__forward__}";
+            return true;
+        });
+    } else {
+        layer.msg(data.info, {
+            icon: 2,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        });
+    }
+}
+</script>
+
+</block>

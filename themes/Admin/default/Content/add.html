@@ -1,0 +1,117 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<load href="__JS__/jquery.colorpicker.js"/>
+<script src="__JS__/Sortable.min.js"></script>
+
+<form id="myform" action="{:U($model_name.'/add')}" method="post">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">基本内容</div>
+                <div class="card-block">
+                <volist name="fields" id="r">
+                <if condition="!empty($r['status']) && $r['isbase']==1">
+                <div class="form-group">
+                    <label class="control-label">
+                        <if condition="$r['required']"><font color="red">*</font></if>{$r.name}
+                    </label>
+                    <div id="box_{$r['field']}">
+                        {if $r['type'] == 'images'}
+            <?php
+            $parseData = $form->images($r);
+            ?>
+                <div class="card">
+                    <div class="card-header">最多同时可以上传<span class="text-danger">{$r['setup']['upload_maxnum']}</span>张
+                    <div class="pull-right">
+                        <a class="btn btn-sm btn-info" href="javascript:swfupload('{$r['field']}', '{$parseData['yzh_auth']}', up_images);">图片上传</a></div>
+                    </div>
+                    <div id="{$r['field']}_images" class="card-block imagesList">
+                     </div>
+                </div>
+            <script>
+            Sortable.create({$r['field']}_images, { handle: "img", animation: 150});
+            </script>
+
+                        {else}
+                            {$r|getform=$form,###}
+                        {/if}
+                        </div>
+                    </div>
+                </if>
+                </volist>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">缩略图</div>
+                <div class="card-block">
+                    <div class="thumb_box" id="thumb_box" style="text-align: center">
+                        <div id="thumb_aid_box"></div>
+                        <a class="thumbnail uploadimg" href="javascript:swfupload('thumb','{:get_yzh_auth(1,'200kb',1)}',yesdo);">
+                            <img src="__IMG__/upload_thumb.png" id="thumb_pic" width="135" height="113">
+                        </a>
+                        <input type="button" value="取消缩略图" onclick="javascript:clean_thumb('thumb');" class="btn btn-xs btn-primary" />
+                        <input type="hidden" id="thumb" name="thumb" value="" />
+                    </div>
+                </div>
+            </div>
+
+    <volist name="fields" id="r">
+        <if condition="!empty($r['status']) && $r['isbase']==0">
+            <div class="card">
+                <div class="card-header">
+                    <if condition="$r['required']"><font color="red">*</font></if>{$r.name}
+                </div>
+                <div class="card-block">
+                    {$r|getform=$form,###}
+                </div>
+            </div>
+        </if>
+    </volist>
+
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="submit" value="提交" class="btn btn-primary" />
+        <input type="reset" value="重置" class="btn btn-primary"/>
+    </div>
+</form>
+
+</block>
+
+
+<block name="script">
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#myform').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if (data.status == 1) {
+
+            layer.confirm(data.info, {
+                icon:1,
+                btn: ['继续发布内容','返回列表'] //按钮
+            }, function(){
+                window.location.href = "{:U($model_name.'/add')}";
+                return false;
+            }, function(){
+                window.location.href = "{$Think.cookie.__forward__}";
+                return true;
+            });
+
+        } else {
+            layer.msg(data.info, {icon: 2});
+        }
+
+    }
+
+</script>
+</block>

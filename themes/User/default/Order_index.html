@@ -1,0 +1,48 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <h1 class="title">订单查询</h1>
+
+    <div class="search">
+        <form action="{:URL('order/index')}" class="form-inline" method="get">
+            <input type="hidden" name="g" value="User" />
+            <input type="hidden" name="m" value="{$Think.MODULE_NAME}" />
+            <input type="hidden" name="a" value="{$Think.ACTION_NAME}" />
+
+            <input type="text" class="form-control" name="sn" value="{$Think.get.sn}" />
+            <input type="hidden" id="searchtype" name="searchtype" value="sn"/>
+            <input type="submit" class="btn btn-primary" value="查询" />
+        </form>
+    </div>
+
+
+    <form name="myform" id="myform" action="" method="post">
+
+        <volist name="list" id="vo" key="k">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <i class="fa fa-calendar"></i>{$vo['add_time']|toDate=###,'Y-m-d H:i:s'}
+                    订单号：{$vo.sn}
+                </div>
+                <table class="table">
+                    <tr>
+                        <td><font color="red">{$vo.order_amount|number_format=###,2}{:L(RMB)}</font></td>
+                        <td>{$vo.image}</td>
+                        <td>{$vo['pay_name']}</td>
+                        <td align="center">
+                            {:L("order_status_".$vo[status])} |
+                            {:L("pay_status_".$vo[pay_status])} |
+                            {:L("shipping_status_".$vo[shipping_status])}
+                        </td>
+                        <td><a target="_blank" href="{:U('order/detail',array(id=>$vo['id']))}">订单详情</a> </td>
+                    </tr>
+                </table>
+            </div>
+        </volist>
+
+    </form>
+    <div id="pages" class="page">{$page}</div>
+
+</block>
+

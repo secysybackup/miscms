@@ -1,0 +1,85 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<include file="Wechat:tabs"/>
+
+<div class="table-toolbar">
+    <a href="javascript:add_menu('{:U('Wechat/selfmenu','action=add&pid=0')}');" class="btn btn-primary">添加一级菜单</a>
+    <button type="button" class="btn btn-primary" onclick="$('#myform').submit();" >排序</button>
+    <a href="{:U('Wechat/setMenu')}" class="btn btn-primary">应用到微信</a>
+</div>
+
+<form name="myform" id="myform" method="post">
+    <input type="hidden" name="action" value="sort">
+    <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th align="left">名称</th>
+            <th style="width:200px;">操作</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <volist name="menuList" id="list" key="k">
+            <tr>
+                <td width="30">
+                    <input name='listorders[{$list.id}]' type='text' size='3' value='{$list.listorder}' class="form-control input-c">
+                </td>
+                <td>{$list['name']}</td>
+                <td>
+                <a class="btn btn-sm btn-primary" href="{:U('Wechat/selfmenu','action=edit&id='.$list['id'])}">编辑</a>
+                <a class="btn btn-sm btn-primary" href="javascript:add_menu('{:U('Wechat/selfmenu','action=add&pid='.$list['id'])}')">添加子菜单</a>
+                <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Wechat/selfmenu',array('action'=>'delete','id'=>$list['id']))}')">删除</a></td>
+            </tr>
+            <if condition="!empty($list['sub_button'])">
+            <volist name="list['sub_button']" id="list2">
+            <tr>
+                <td width="30">
+                    <input name='listorders[{$list.id}]' type='text' size='3' value='{$list.listorder}' class="form-control input-c">
+                </td>
+                <td> &nbsp;&nbsp;&nbsp;&nbsp;└─&nbsp;{$list2['name']}</td>
+                <td>
+                <a class="btn btn-sm btn-primary" href="{:U('Wechat/selfmenu','action=edit&id='.$list2['id'])}">编辑</a>
+                <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Wechat/selfmenu',array('action'=>'delete','id'=>$list2['id']))}')">删除</a></td>
+            </tr>
+          </volist>
+          </if>
+        </volist>
+
+        </tbody>
+    </table>
+</form>
+
+<script>
+// 添加菜单
+function add_menu(url){
+
+    $.ajax({
+        url: url,
+        success:function(data){
+            if(data.status==1){
+                layer.msg(data.info, {icon: 2});
+            } else if (data['status']==2) {
+                var jump_url = url;
+                layer.confirm(data.info, {
+                    icon:3,
+                    btn: ['确定'] //按钮
+                }, function(){
+                    $.ajax({
+                        url:jump_url+'&clearTopMenu=1',
+                        success:function(data){
+                            window.location = jump_url;
+                        }
+                    });
+                });
+            } else {
+                window.location = url;
+            }
+        }
+    });
+
+}
+</script>
+</block>

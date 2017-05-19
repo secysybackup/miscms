@@ -1,0 +1,89 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <h1 class="title">基本信息</h1>
+
+<form method="post" id="myform" action="{:U('Account/baseinfo')}">
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">当前头像</label>
+        <div class="col-md-5">
+            <img src="{if empty($user['avatar'])}__PUBLIC__/images/default_avatar.jpg{else}{:ltrim($user['avatar'], '.')}{/if}" width="100"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">用户名</label>
+        <div class="col-md-5">
+            <p class="form-control-static">{$user.username}</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">真实姓名</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="realname" value="{$user.realname}">
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">邮箱</label>
+        <div class="col-md-5">
+            <p class="form-control-static">{$user.email}</p>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">性别</label>
+        <div class="col-md-5">
+            <input type="radio" name="sex" value=1 <eq name='user.sex' value='1'>checked </eq> />男&nbsp;
+            <input type="radio" name="sex" value=2 <eq name='user.sex' value='2'>checked </eq> />女 &nbsp;
+            <input type="radio" name="sex" value=1 <eq name='user.sex' value='0'>checked </eq> />保密
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">电话</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control"  name="tel" value="{$user.tel}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">手机号码</label>
+        <div class="col-md-5">
+        <input type="text"  class="form-control" name="mobile" value="{$user.mobile}">
+    </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">地址</label>
+        <div class="col-md-5">
+        <input type="text" class="form-control" name="address" value="{$user.address}">
+    </div>
+    </div>
+    <div class="form-actions">
+        <input type="submit" value="提交" class="btn btn-primary">
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $("#myform").submit(function () {
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                $(".reloadverify").click();
+            }
+        }
+    });
+
+</script>
+</block>

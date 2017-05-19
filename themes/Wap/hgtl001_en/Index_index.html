@@ -1,0 +1,62 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<div id="focus" class="banner">
+		<div class="bd">
+			<ul>
+				<gr:slide slideid="2" id="r">
+				<li><a href="{$r.link}"><img src="{$r.pic}" alt=""/></a></li>
+				</gr:slide>
+
+			</ul>
+		</div>
+		<div class="hd"><ul></ul></div>
+	</div>
+	<script type="text/javascript">
+		TouchSlide({
+			slideCell:"#focus",
+			titCell:".hd ul",
+			mainCell:".bd ul",
+			effect:"leftLoop",
+			autoPlay:true,//自动播放
+			autoPage:true, //自动分页
+		});
+	</script>
+	<!-- 便捷菜单 -->
+	<section class="conMenu">
+		<ul>
+			<li><a href="product.php"><i class="icon_nav3 iconfont"></i><span>关于我们</span></a></li>
+			<li><a href="news.php"><i class="icon_nav2 iconfont"></i><span>新闻动态</span></a></li>
+			<li><a href="about.php"><span>留言反馈</span><i class="icon_nav5 iconfont"></i></a></li>
+			<li><a href="contact.php"><i class="icon_nav1 iconfont"></i><span>产品展示</span></a></li>
+			<li><a href="about.php"><span>联系方式</span><i class="icon_nav4 iconfont"></i></a></li>
+		</ul>
+	</section>
+	<!-- 推荐产品 -->
+	<section class="product">
+		<h2 class="homeTitle"><a class="icon iconfont more" href="#">&#xe62c;</a><span>推荐产品</span></h2>
+		<ul class="proMain">
+			<gr:list catid="2" name="product" id="r" field="thumb,url,title" limit="4">
+				<li><a href="{$r.url}"><img src="{$r.thumb}" alt=""><span>{$r.title}</span></a></li>
+			</gr:list>
+		</ul>
+	</section>
+	</section>
+	<!-- 新闻资讯 -->
+	<section>
+		<h2 class="homeTitle"><a class="icon iconfont more" href="{$Cats[5]['url']}">&#xe62c;</a><span>新闻资讯</span></h2>
+		<ul class="news">
+			<Gr:list catid="5" id="r" key="i" field="id,catid,title,url" limit="6">
+			<li><a href="{$r.url}">{$r.title}</a></li>
+			</Gr:list>
+		</ul>
+	</section>
+	<!-- 搜索 -->
+	<section class="search">
+		<form action="/?m=search" method="post">
+		    <input type="text" class="sear_text"  name="keyword" placeholder="请输入搜索关键词"/>
+		    <input type="submit" class="sear_btn" value=" "/>
+		</form>
+	</section>
+</block>
+

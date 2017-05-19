@@ -1,0 +1,66 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="col-md-12">
+
+    <form id="myform" action="{:U('MemberGroup/add')}" method="post">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">会员组名</label>
+            <div class="col-md-5"><input type="text" name="name" class="form-control" class="input-text" /></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">是否激活</label>
+            <div class="col-md-5">
+                <label class="radio-inline">
+                    <input type="radio" name="status" value="1" />是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" value="0" />否
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">描述</label>
+            <div class="col-md-5">
+                <textarea name="remark" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+function checknode(obj) {
+  var chk = $("input[type='checkbox']");
+  var count = chk.length;
+  var num = chk.index(obj);
+  var level_top = level_bottom =  chk.eq(num).attr('level');
+
+  for (var i=num; i>=0; i--) {
+    var le = chk.eq(i).attr('level');
+    if(eval(le) < eval(level_top)) {
+      chk.eq(i).attr("checked",true);
+      var level_top = level_top-1;
+    }
+  }
+
+  for (var j=num+1; j<count; j++){
+    var le = chk.eq(j).attr('level');
+    if(chk.eq(num).prop("checked")) {
+
+      if(eval(le) > eval(level_bottom)) chk.eq(j).attr("checked",true);
+      else if(eval(le) == eval(level_bottom)) break;
+    }
+    else {
+      if(eval(le) > eval(level_bottom)) chk.eq(j).attr("checked",false);
+      else if(eval(le) == eval(level_bottom)) break;
+    }
+  }
+}
+</script>
+</block>

@@ -1,0 +1,52 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+            <div class="caseFilter">
+          
+                
+                <div class="box">
+                
+                    <h3>按行业：</h3>
+                    <ul>
+                    <volist name="typeArr[1]" id="r">
+                        <li><a <if condition="$hangye  == $r['typeid']">class="active"</if> href="{$Cats[4]['url']}?hangye={$r.typeid}">{$r.name}</a></li>
+                    </volist>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3>按地区：</h3>
+                    <ul>
+                    <volist name="typeArr[2]" id="r">
+                    <li><a <if condition="$diqu == $r['typeid']">class="active"</if> href="{$Cats[4]['url']}?diqu={$r.typeid}">{$r.name}</a></li>
+                    </volist>
+                    </ul>
+                </div>
+                  <div class="box">
+                    <h3>按产品：</h3>
+                    <ul>
+                    <volist name="typeArr[5]" id="r">
+                        <li><a <if condition="$changpin  == $r['typeid']">class="active"</if> href="{$Cats[4]['url']}?changpin={$r.typeid}">{$r.name}</a></li>
+                    </volist>
+                    </ul>
+                </div>
+                
+            </div>
+            <ul class="caseList">
+                {if $list}
+                    <volist name="list" id="r">
+                        <li><a title="{$r['title']}" href="{$r['url']}"><img width="230" height="173" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}" ></a><h3>{$r['title']}</h3></li>
+                    </volist>
+                {else}{$catname}{/if}
+            </ul>
+            <div class="clearfix"></div>
+            <div class="pagination" >{$pages}</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

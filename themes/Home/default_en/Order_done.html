@@ -1,0 +1,38 @@
+<extend name="Public:base"/>
+
+<block name="head">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="__CSS__/order.css">
+</block>
+
+
+
+<block name="main">
+
+<div id="content">
+
+    <div class="form-bootstrapWizard">
+        <ul class="bootstrapWizard form-wizard  col-md-12">
+            <li>
+                <a href="#tab1"> <span class="step">1</span> <span class="title">查看购物车</span> </a>
+            </li>
+            <li>
+                <a href="#tab2"> <span class="step">2</span> <span class="title">填写订单</span> </a>
+            </li>
+            <li class="active">
+                <a href="#tab3"> <span class="step">3</span> <span class="title">付款，完成购买</span> </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="order_ok_message">
+        {if $paybutton}{:L('click_button_to_pay')}<br>
+        {$paybutton}<br>{/if}
+        {:L('ORDER_DOSUBMIT_OK_WAIT')}<br>
+        {:L('ORDER_SN')}:{$order['sn']}<br>
+    </div>
+
+</div>
+
+<include file="Public:footer"/>
+</block>

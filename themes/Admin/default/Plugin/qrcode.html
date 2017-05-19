@@ -1,0 +1,235 @@
+<extend name="Public:base"/>
+
+<block name="style">
+    <style>
+
+        /*二维码*/
+        .qr_l {
+            width: 66px;
+            float: left;
+        }
+        .qr_l .on_qr {
+            border: 1px solid #999999;
+            color: #666666;
+        }
+        .qr_l ul {
+            padding: 0;
+            margin: 0;
+            width: 500px;
+        }
+        .qr_l ul li {
+            padding: 0;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            display: inline-block;
+            cursor: pointer;
+            width: 58px;
+        }
+        .qr_m {
+            float: left;
+            width: 320px;
+            clear: both;
+        }
+        .qr_m .qr_m_t {
+            height: 50px;
+            margin: 0 auto;
+            width: 290px;
+        }
+        .qr_m .qr_info {
+            color: #969696;
+            height: 45px;
+            display: none;
+            text-indent: 5px;
+        }
+        .qr_m .qr_text {
+            display: none;
+        }
+        .qr .qr_m .on_qr {
+            display: block;
+        }
+        .qr .qr_m .on_qrr {
+            display: block;
+        }
+        .qr .qr_m label {
+            display: inline-block;
+            height: 22px;
+            line-height: 22px;
+            padding: 0 0 0 2px;
+        }
+        .qr_m .qr-data {
+            width: 316px;
+            font-size: 12px;
+            color: #40424E;
+        }
+        .qr .qr_m .qr-tel, .qr .qr_m .qr-input_text {
+            height: 25px;
+            line-height: 25px;
+            text-indent: 10px;
+        }
+        .qr_r {
+            float: left;
+            padding-left: 10px;
+        }
+        .qr_r #qrpng {
+            text-align: center;
+            width: 250px;
+        }
+        .qr_r #qrsize {
+            padding-top: 10px;
+        }
+        .qr_r #qrsize .on_size {
+            border: 1px solid red;
+        }
+        .qr_r #qrsize p {
+            margin: 0;
+            padding-left: 10px;
+            text-align: left;
+        }
+        .qr_r #qrsize span {
+            border: 1px solid #999999;
+            cursor: pointer;
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            margin-right: 5px;
+            text-align: center;
+            width: 23px;
+        }
+        .qr_r #qrsize p.text_info {
+            border: 0 none;
+            display: inline-block;
+            padding: 5px 0;
+            text-indent: 10px;
+        }
+        .qr_r .get_qrcode {
+            height: 30px;
+            line-height: 30px;
+            text-align: left;
+            text-indent: 10px;
+            width: 250px;
+        }
+        .qr_r .get_qrcode a {
+            text-decoration: none;
+        }
+    </style>
+</block>
+<block name="main">
+<load href="./Public/js/jquery.qrcode.min.js"/>
+<load href="./Public/js/qrcode.js"/>
+
+
+<div id="yzh-content" class="col-xs-12">
+
+  <div class="qr">
+    <div class="qr_l">
+      <ul>
+        <li class="on_qr">通用文本</li>
+        <li>电话号码</li>
+        <li>电子名片</li>
+      </ul>
+    </div>
+    <div class="qr_m">
+
+      <div class="qr_info on_qr">请输入文本内容（150字以内）：支持普通文本/网址/EMAIL地址（网址请以http://或https://开头</div>
+      <div class="qr_info" >请输入你的电话号码（请以国家代码如：“+86”开头）。</div>
+      <div class="qr_info" >用二维码建立自己的电子名片（姓名和电话为必填项）</div>
+      <div class="qr_text on_qrr"><textarea id="qr-data" class="qr-data" rows="6"></textarea></div>
+      <div class="qr_text" ><input class="qr-data qr-tel" type="text" value=""></div>
+      <div class="qr_text" >
+        <input type="hidden" value="1" name="do_vcard">
+        <label>姓名(<span style="color:#f00;">*</span>)</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>电话(<span style="color:#f00;">*</span>)</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>昵称</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>EMAIL</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>联系地址</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>网址</label>
+        <input type="text" value="" class="qr-data qr-input_text"><br>
+        <label>备注</label>
+        <textarea class="qr-data" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="qr_r">
+      <div id="qrpng"></div>
+      <div id="qrsize"><p class="text_info">二维码尺寸:</p><p><span id="50">50</span><span id="100">100</span><span class="on_size" id="150">150</span><span id="200">200</span><span id="250">250</span></p></div>
+      <div class="get_qrcode"><a title="生成二维码" onclick="get_qrcode();" href="javascript:void(0);" class="btn btn-sm btn-info">生成二维码</a></div>
+    </div>
+</div>
+<script>
+var size=150;//二维码尺寸
+var curnum=0;
+var qrtype=Array('',Array('TEL'),Array('MECARD:N','TEL','NICKNAME','EMAIL','ADR','URL','NOTE'));
+    //初始
+jQuery('#qrpng').qrcode({
+    //render  : "table",
+  text  : 'http://www.baidu.com',
+  width :150,
+  height:150
+});
+
+//选择类型
+$('.qr_l li').click(function(){
+ var num=$(this).index();
+ curnum=num;
+ $(this).addClass('on_qr').siblings().removeClass('on_qr');
+ $('.qr_info').eq(num).addClass('on_qr').siblings().removeClass('on_qr');
+ $('.qr_text').eq(num).addClass('on_qrr').siblings().removeClass('on_qrr');
+});//click end
+
+
+//生成二维码size=150;
+function get_qrcode(){
+
+  var text=$('.qr_m .on_qrr').children('.qr-data');
+  var data='';
+  $.each(text,function(i,value) {
+
+          var d=qrtype[curnum][i]!=null?qrtype[curnum][i]+':':'';
+      var ed=curnum==2?';':'';
+          data+=d+$(value).val()+ed;
+  });
+
+
+  jQuery('#qrpng').html('').qrcode({
+    //render  : "table",
+  text  : utf16to8(data),
+  width :size,
+  height:size
+  });
+}
+
+//选择尺寸
+$('#qrsize span').click(function(){
+  $(this).addClass('on_size').siblings().removeClass('on_size');
+  size=this.id;
+});
+
+
+function utf16to8(str) {
+  var out, i, len, c;
+  out = "";
+  len = str.length;
+  for(i = 0; i < len; i++) {
+  c = str.charCodeAt(i);
+  if ((c >= 0x0001) && (c <= 0x007F)) {
+      out += str.charAt(i);
+  } else if (c > 0x07FF) {
+      out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+      out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+  } else {
+      out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+  }
+  }
+  return out;
+}
+</script>
+
+
+</block>

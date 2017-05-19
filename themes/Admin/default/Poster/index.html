@@ -1,0 +1,71 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div id="yzh-content">
+
+    <div class="table-toolbar">
+        <a href="{:U('Poster/add')}" class="btn btn-primary">新增</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>标题</th>
+                        <th>展示次数</th>
+                        <th>推广链接</th>
+                        <th>二维码</th>
+                        <th>添加时间</th>
+                        <th class="w-200">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <volist name="list" id="vo">
+                    <tr>
+                        <td>{$vo['appname']}</td>
+                        <td>{$vo['visit']}</td>
+                        <td>http://{$SITE_DOMAIN}/poster/{$vo['id']}.html<a target="_blank" href="/?g=admin&m=poster&a=preview&id={$vo['id']}">[预览]</a></td>
+                        <td>
+                            <a data-toggle="popover" data-original-title="">
+                                <img src="/vcard/api.php?size=7&text=http://{$SITE_DOMAIN}/poster/{$vo['id']}.html" width="30px" height="30px" style="vertical-align: -5px;width:30px;" data-pin-nopin="true">
+                            </a>
+                        </td>
+                        <td>{$vo['createtime']|toDate=###,'Y-m-d'}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('Poster/edit','id='.$vo['id'])}">编辑</a>
+                            <a class="btn btn-sm btn-primary" href="{:U('Poster/message','id='.$vo['id'])}">信息管理</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Poster/delete','id='.$vo['id'])}');">删除</a>
+                        </td>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</block>
+
+<block name="script">
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+
+$(function(){
+    $("a[data-toggle=popover]").each(function(i,e){
+        var src=$(e).find("img").attr("src");
+        $(e).popover({trigger:"hover",title:"扫一扫",html:true,content:'<img src="'+src+'" height="150" width="150"/>'})
+    });
+    $("a[data-toggle=popover]").mouseleave(function(){
+        var num=$(this).attr("data-num");
+        $("a[data-toggle=popover] + div").each(function(i,e){
+            var obj=$(e).prev();
+            if(num!=obj.attr("data-num")){
+                obj.popover("hide")
+            }
+        });
+    });
+});
+</script>
+
+</block>

@@ -1,0 +1,164 @@
+#content {
+ width: 1000px;
+ margin: 15px auto;
+    background: #fff;
+}
+.cart_top li{float: left;
+ font-family: Arial,Helvetica,sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  height: 46px;
+  line-height: 46px;
+  margin-right: -19px;
+  width: 368px;
+}
+.cart_top li a{
+	line-height: 46px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+    text-align: center;
+    width: 100%;
+}
+.order_table   { width:100%; margin:0px auto;background:#E0E0E0}
+.order_table th {background:#F7F7F7;color:#666;height:35px;}
+.order_table td {background:#FFF;padding-left:6px;}
+.order_table td .num {text-align:center;}
+
+
+.order_ok_message {color:both;padding:20px;text-align:center;font-size:14px;color:#FB0000;line-height:26px;}
+
+
+.order_checkbox h1 {border:1px solid #FFF;background:#F5F5F5;height:32px;line-height:32px;color:#555455;padding-left:30px;font-size:14px;}
+.order_checkbox h4 {background:none;padding-left:12px;color:#E77611;font-size:14px;}
+.order_checkbox .order_box {margin:10px 15px;}
+
+.order_userinfo .b1 {border:1px solid #E0E0E0;padding:10px;}
+.address_list {border:1px solid #FEDDC6;background:#FFFCF2;padding:4px;overflow:hidden;zoom:1;}
+.address_list h3 {border-bottom:1px solid #FEDDC6;line-height:26px;height:26px;padding-left:10px;margin:0 20px;font-size:14px;}
+.address_list ul li {color:both;padding-left:20px;line-height:24px;height:24px;}
+
+
+.address_form ul li {float:left;width:46%;line-height:28px;}
+.address_form ul li input.input-text {line-height:18px;height:18px;padding:2px 3px;width:190px;}
+.address_form ul li span {float:left;width:80px;}
+
+
+#prototal{line-height:24px;overflow:hidden;zoom:1;padding:13px 0;background:#FEF7E8;text-align:right;border:1px solid #ddd;;border-top:0;}
+#prototal b {color:#FF3300;font-size:14px;font-weight:bold;}
+.coutprice {height:40px;padding:12px;line-height:40px;background:#FEF7E8;overflow:hidden;zoom:1;border-top:1px dashed #ddd;}
+.coutprice ul{float:left;}
+.coutprice ul.pricenumber{float:right;font-size:14px;}
+.coutprice ul.pricenumber .red2 {color:#FB0000;font-size:18px;}
+
+#buy_button{float:right; height:35px; margin:20px 25px 0px 0;_margin:20px 15px 0 0; display:inline;}
+#buy_button img{ border:none;margin-left:60px;}
+.img_but { border:none;margin-left:60px;}
+.noborder{border:none;}
+
+
+/* 购物流程样式 */
+.form-bootstrapWizard {
+    height: 80px;
+    padding-top:30px;
+}
+.bootstrapWizard {
+    display: block;
+    list-style: outside none none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.bootstrapWizard a:active, .bootstrapWizard a:focus, .bootstrapWizard a:hover {
+    text-decoration: none;
+}
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    padding-left: 0;
+    text-align: center;
+    width: 32%;
+}
+.bootstrapWizard li::before {
+    border-top: 3px solid #55606e;
+    content: "";
+    display: block;
+    font-size: 0;
+    overflow: hidden;
+    position: relative;
+    right: 1px;
+    top: 11px;
+    width: 100%;
+    z-index: 1;
+}
+.bootstrapWizard li:first-child::before {
+    left: 50%;
+    max-width: 50%;
+}
+.bootstrapWizard li:last-child::before {
+    max-width: 50%;
+    width: 50%;
+}
+.bootstrapWizard li.complete .step {
+    background: #0aa66e none repeat scroll 0 0;
+    border: 3px solid #55606e;
+    padding: 1px 6px;
+}
+.bootstrapWizard li .step i {
+    font-size: 10px;
+    font-weight: 400;
+    position: relative;
+    top: -1.5px;
+}
+.bootstrapWizard li .step {
+    background: #b2b5b9 none repeat scroll 0 0;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    color: #fff;
+    display: inline;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: normal;
+    padding: 7px 13px;
+    position: relative;
+    text-align: center;
+    transition: all 0.1s linear 0s;
+    z-index: 2;
+}
+.bootstrapWizard li.active .step, .bootstrapWizard li.active.complete .step {
+    background: #0091d9 none repeat scroll 0 0;
+    border: 3px solid #55606e;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 7px 13px;
+}
+.bootstrapWizard li.active .title, .bootstrapWizard li.complete .title {
+    color: #2b3d53;
+}
+.bootstrapWizard li .title {
+    color: #bfbfbf;
+    display: block;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    text-align: center;
+    top: 20px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+.wizard-actions {
+    display: block;
+    list-style: outside none none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.wizard-actions li {
+    display: inline;
+}

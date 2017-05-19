@@ -1,0 +1,25 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox" style="padding:0">
+            <ul class="faqList">
+                {if $list}
+                    <volist name="list" id="r">
+                        <li>
+                            <h3><a href="{$r['url']}" title="{$r['title']}">{$r['title']|str_cut=###,85}</a></h3>
+                            <p>{$r['description']|str_cut=###,210}<a href="{$r['url']}" title="{$r['title']}">[查看详细]</a></p>
+                        </li>
+                    </volist>
+                {else}{$catname}{/if}
+            </ul>
+            <div class="clearfix"></div>
+            <div class="pagination" >{$pages}</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

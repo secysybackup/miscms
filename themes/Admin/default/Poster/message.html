@@ -1,0 +1,44 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Poster/index')}"><i class="fa fa-reply"></i>返回列表</a>
+    </div>
+    <form name="myform" id="myform" action="" method="post">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="30"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                <th class="w-50px">姓名</th>
+                <th>qq</th>
+                <th>手机号码</th>
+                <th>邮箱</th>
+                <th class="w-100px">留言时间</th>
+                <th class="w-100px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="list" id="vo" key="k">
+                <tr>
+                    <td  width="30" align="center">
+                        <input class="inputcheckbox " name="ids[]" value="{$vo['id']}" type="checkbox">
+                    </td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['qq']}</td>
+                    <td>{$vo['phone']}</td>
+                    <td>{$vo['email']}</td>
+                    <td>{$vo['addtime']|toDate=###,'Y-m-d'}</td>
+                    <td>
+                        <a href="javascript:confirm_delete('{:U('Poster/deletemsg',array(id=>$vo['id']))}')">删除</a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+
+    </form>
+
+    <div class="pagination">{$page}</div>
+</block>

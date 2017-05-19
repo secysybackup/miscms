@@ -1,0 +1,58 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="col-md-12">
+
+    <form id="myform" action="{:U('Member/edit')}" method="post">
+        <input type="hidden" name="id" value="{$member['id']}">
+        <input type="hidden" name="opassword" value="{$member['password']}">
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">用户名</label>
+            <div class="col-md-5"><input type="text" class="form-control"  name="username" value="{$member['username']}" ></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">密码</label>
+            <div class="col-md-5"><input type="password" name="password" class="form-control" /></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">确认密码</label>
+            <div class="col-md-5"><input type="password" name="repassword" class="form-control" /></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">邮箱</label>
+            <div class="col-md-5"><input type="text" class="form-control" value="{$member['email']}" name="email"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">手机</label>
+            <div class="col-md-5"><input type="text" class="form-control" value="{$member['mobile']}" name="mobile"></div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">会员组</label>
+            <div class="col-md-5">
+                <select name="groupid" class="form-control">
+                    <volist name="membergroup" id="vo">
+                    <option value="{$vo['id']}"  <if condition="$member['groupid'] == $vo['id']">selected="selected"</if>>{$vo['name']}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">是否激活</label>
+            <div class="col-md-5">
+                <label class="radio-inline">
+                    <input type="radio" name="status" value="1" <eq name="member['status']" value="1">checked="checked"</eq> />是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" value="0" <eq name="member['status']" value="0">checked="checked"</eq> />否
+                </label>
+               </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+</div>
+
+</block>

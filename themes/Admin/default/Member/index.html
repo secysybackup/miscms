@@ -1,0 +1,88 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{:U('Member/add')}"> 新增</a>
+                <button class="btn btn-danger" onclick="return confirm_deleteall()">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <form id="myform" action="{:U('Member/delete')}" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="check_box" onclick="selectall('ids[]');" />
+                    </th>
+                    <th>头像</th>
+                    <th>ID</th>
+                    <th>昵称</th>
+                    <th>邮箱</th>
+                    <th>会员组</th>
+                    <th>注册时间</th>
+                    <th>状态</th>
+                    <th width="120">操作管理</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="ulist" id="user" key="k">
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{$user['id']}" /></td>
+                    <td>
+                    <empty name="user.avatar">
+                        <img src="__PUBLIC__/images/default_avatar.jpg" width="32">
+                    <else />
+                        <img height="32" src="{$user['avatar']}">
+                    </empty>
+                    </td>
+                    <td>{$user['id']}</td>
+                    <td>{$user['username']}</td>
+                    <td>{$user['email']}</td>
+                    <td>{$user['groupname']}</td>
+                    <td>{$user['reg_time']|date="Y-m-d H:m:s",###}</td>
+                    <td>
+                    <eq name="user['status']" value="1">
+                    {:L('enable')}
+                    <else />
+                    {:L('disable')}
+                    </eq>
+                    </td>
+                    <td>
+                    <a class="btn btn-sm btn-primary" href="{:U('Member/edit',array(id=>$user['id']))}">编辑</a>
+                    <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Member/delete',array(id=>$user['id']))}')">删除</a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </form>
+    <div id="pages">{$page}</div>
+
+    <script>
+        // 确认删除
+        function confirm_deleteall(){
+            var str = 0;
+            var id = tag = '';
+            $('input[name="ids[]"]:checked').each(function(){
+                str = 1;
+                id += tag + $(this).val();
+                tag = ',';
+            });
+            if (str == 0) {
+                layer.msg('您没有勾选信息，无法进行操作！', {
+                    icon: 2,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
+            }alert(id);
+            layer.confirm("确认要删除信息吗?", function(){
+                myform.action='/?g=admin&m=member&a=delete&id='+id;
+                $('#myform').submit();
+            });
+        }
+    </script>
+</block>

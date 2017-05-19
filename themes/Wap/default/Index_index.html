@@ -1,0 +1,123 @@
+<extend name="Public:base"/>
+
+<block name="style">
+	<link href="__CSS__/index.css" rel="stylesheet" type="text/css" />
+</block>
+<block name="main">
+
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<div class="section">
+	<div class="section-title">
+		<h2>推荐产品</h2>
+		<a href="{$Cats[2]['url']}" class="more">更多<i class="icon iconfont">&#xe606;</i></a>
+	</div>
+	<div class="section-body">
+		<div class="row small-up-2 medium-up-3">
+			<Gr:list catid="2" id="r" key="i" field="id,catid,title,url,thumb" limit="6">
+				<div class="column">
+					<a href="{$r.url}">
+						<span class="a_img">
+							<img src="{$r['thumb']|thumb=###,'200'}">
+						</span>
+						<span class="a_cnt">{$r['title']}</span>
+					</a>
+				</div>
+			</Gr:list>
+		</div>
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		<h2>产品分类</h2>
+		<a href="{$Cats[2]['url']}" class="more">更多<i class="icon iconfont">&#xe606;</i></a>
+	</div>
+	<div class="section-body">
+		<ul class="cpfl">
+			<Gr:cat catid="2" id="r" key="i">
+				<li><a href="{$r.url}"><i class="icon iconfont">&#xe60f;</i>{$r['catname']}</a></li>
+			</Gr:cat>
+		</ul>
+	</div>
+
+</div>
+
+<div class="section">
+	<div class="section-title">
+		<h2>资质证书</h2>
+		<a href="{$Cats[12]['url']}" class="more">更多<i class="icon iconfont">&#xe606;</i></a>
+	</div>
+	<div class="section-body">
+		<!-- Swiper -->
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<Gr:list catid="12" id="r" field="title,thumb,url" limit="6">
+					<div class="swiper-slide"><a>
+						<div><img src="{$r['thumb']|thumb=###,'120'}" alt="{$r['title']}" title="{$r['title']}"/></div>
+						<span>{$r['title']}</span>
+					</a></div>
+				</Gr:list>
+			</div>
+			<!-- Add Navigation -->
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		<h2>关于我们</h2>
+		<a href="{$Cats[1]['url']}">更多></a>
+	</div>
+	<div class="section-body yzh-editable" editable-type="block" editable-id="19" style="padding:5px">
+		 {$block['19']}
+	</div>
+</div>
+
+<div class="section">
+	<ul class="tabs tags" data-tabs id="example-tabs">
+		<li class="tabs-title is-active"><a href="#panel1">公司新闻</a></li>
+		<li class="tabs-title"><a href="#panel2">行业新闻</a></li>
+		<a class="more" href="{$Cats[5]['url']}">更多<i class="icon iconfont">&#xe606;</i></a>
+	</ul>
+	<div class="tabs-content" data-tabs-content="example-tabs">
+		<div class="tabs-panel is-active" id="panel1">
+			<ul class="news_i">
+			<Gr:list catid="33" id="r" key="i" field="id,catid,title,url" limit="6">
+			<li>
+				<a href="{$r.url}" title="{$r['title']}"><i class="icon iconfont">&#xe60f;</i>{$r['title']}</a>
+			</li>
+			</Gr:list>
+
+			</ul>
+		</div>
+		<div class="tabs-panel" id="panel2">
+			<ul class="news_i">
+			<Gr:list catid="34" id="r" key="i" field="id,catid,title,url" limit="6">
+			<li>
+				<a href="{$r.url}" title="{$r['title']}"><i class="icon iconfont">&#xe60f;</i>{$r['title']}</a>
+			</li>
+			</Gr:list>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).foundation();
+
+	var swiper = new Swiper('.swiper-container', {
+		nextButton: '.swiper-button-next',
+		prevButton: '.swiper-button-prev',
+		slidesPerView: 3,
+		paginationClickable: true,
+		spaceBetween: 15
+	});
+</script>
+</block>

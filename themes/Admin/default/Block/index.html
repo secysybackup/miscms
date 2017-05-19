@@ -1,0 +1,71 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <if condition="$Think.session.admin.id eq 1">
+    <div class="table-toolbar">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{:U('Block/add')}">添加碎片</a>
+            </div>
+        </div>
+    </div>
+    </if>
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="w-50">ID</th>
+                    <th align="left">碎片名称</th>
+                    <th>类型</th>
+                    <th>所属组</th>
+                    <th class="w-200">操作管理</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="list" id="vo" key="k">
+                    <tr>
+                        <td>{$vo['id']}</td>
+                        <td>{$vo['name']}</td>
+                        <td>
+                            <switch name="vo.type" >
+                                <case value="url">
+                                    链接地址
+                                </case>
+                                <case value="img">
+                                    图片
+                                </case>
+                                <case value="text">
+                                    纯文本
+                                </case>
+                                <case value="rtf">
+                                    富文本
+                                </case>
+                                <default/>
+                            </switch>
+                        </td>
+                        <td>
+                            <switch name="vo.groupid" >
+                                <case value="1">
+                                    pc端
+                                </case>
+                                <case value="2">
+                                    wap端
+                                </case>
+                                <default/>
+                            </switch>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('Block/edit',array('id'=>$vo['id']))}">编辑</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Block/delete',array('id'=>$vo['id']))}')">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right pagination">{$page}</div>
+    </div>
+
+</block>

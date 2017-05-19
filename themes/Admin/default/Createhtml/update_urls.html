@@ -1,0 +1,116 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <style>
+        .module-select{
+            margin:10px;
+            width:130px;
+        }
+        .form-control{
+            overflow: scroll;
+        }
+    </style>
+    <table class="table table-bordered">
+        <form class="myform" action="{:U('Createhtml/ajax_update_urls')}" method="get">
+            <thead>
+                <tr>
+                    <th width="150">选择模型更新</th>
+                    <th width="386">选择栏目范围</th>
+                    <th>选择操作内容</th>
+                </tr>
+            </thead>
+            <tbody class="td-line">
+                <tr>
+                    <td rowspan="4">
+                        <select name="modelid" id="modelid" size="15" class="form-control module-select" onclick="change_model(this.value)">
+                            <option value="" selected>不限模型</option>
+                            <volist name="model" id="vo">
+                            <option value='{$vo.id}'>{$vo.name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="4" id="category">
+                        <select name="catids[]" id="catids" size="15" multiple="multiple" class="form-control">
+                        <option value='0' selected>不限栏目</option>
+                        {$select_categorys}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            每轮更新
+                        <input type="text" name="pagesize" value="10" size="4"> 条信息
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="dosubmit" value="1">
+                        <input type="submit" value="开始更新URL" class="btn btn-primary" >
+                    </td>
+                </tr>
+            </tbody>
+        </form>
+    </table>
+
+</block>
+
+<block name="script">
+
+<script>
+    function change_model(modelid){
+        $.ajax({
+            url: "{:U('Createhtml/update_urls')}&isajax=1&modelid="+modelid,
+            success:function(data){
+                var html = '<select name="catids[]" id="catids" size="15" multiple="multiple" class="form-control">'+
+                        '<option value="0" selected>不限栏目</option>'+
+                        data+
+                        '</select>';
+                $('#category').html(html);
+            }
+        });
+    }
+
+    $("#modelid").attr("value",'{$modelid}');
+
+    $('.myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        beforeSend:function(){
+            layer.open({
+                type: 1,
+                closeBtn: 0,
+                shadeClose: true,
+                area: '800px',
+                title: false, //不显示标题
+                content:'<div class="progress" style="margin-bottom:0">'+
+                '<div id="msg" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0;">'+
+                '</div>'+
+                '</div>', //捕获的元素
+            });
+        },
+        dataType: 'json'
+    });
+
+    function complete(data){
+        $('#msg').html(data.message);
+        $('.progress-bar').css('width',data.percent);
+        update(data.forward);
+    }
+
+    function update(url){
+        $.ajax({
+            url: url,
+            success:function(data){
+                $('#msg').html(data.message);
+                $('.progress-bar').css('width',data.percent);
+                if (!data.fin){
+                    update(data.forward);
+                }
+            }
+        });
+    }
+</script>
+</block>

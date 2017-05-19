@@ -1,0 +1,31 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<section class="search">
+			<form action="/?m=search" method="get">
+			    <input type="hidden" name="m" value="search">
+			    <input type="text" class="sear_text"  name="keyword" placeholder="请输入搜索关键词" value="{if isset($keyword)}{$keyword}{/if}" />
+			    <input type="submit" class="sear_btn" value=" "/>
+			</form>
+		</section>
+		<div class="picList">
+			{if $list}
+			<ul>
+				<volist name="list" id="r">
+				    <li>
+				          <a href="{$r.url}" class="pImg"><img src="{$r.thumb}" /></a>
+				          <div class="font">
+						<h5>{$r.title}</h5>
+				          </div>
+				    </li>
+				</volist>
+			</ul>
+			{else}
+			对不起，没有找到您要的结果
+			{/if}
+		</div>
+	</div>
+</block>

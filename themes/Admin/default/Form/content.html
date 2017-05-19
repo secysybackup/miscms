@@ -1,0 +1,48 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a class="btn btn-primary" href="{:U('Form/index')}"><i class="fa fa-reply"></i>返回反馈管理</a>
+    </div>
+
+    <form name="myform" action="{:U('Form/listorder')}" method="post">
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th class="w-50">ID</th>
+                <volist name="listfields" id="fieldname">
+                    <th>{$fields[$fieldname]['name']}</th>
+                </volist>
+                <th>添加时间</th>
+                <th>状态</th>
+                <th class="manage w-300">操作管理</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="list" id="vo" key="k">
+                <tr>
+                    <td align="center">{$vo['id']}</td>
+                    <volist name="listfields" id="fieldname">
+                        <th>{$vo[$fieldname]}</th>
+                    </volist>
+                    <td>{$vo['createtime']|toDate=###,'Y-m-d H:i:s'}</td>
+                    <td>
+                        <if condition="$vo[status]==1">
+                        <a class="btn btn-sm btn-success" href="{:U('Form/status',array('id'=>$vo['id'],'status'=>0))}">已审核</a>
+                        <else />
+                        <a class="btn btn-sm btn-danger" href="{:U('Form/status',array('id'=>$vo['id'],'status'=>1))}">待审核</a>
+                        </if>
+                    </td>
+                    <td class="manage table-cell-3">
+                        <a class="btn btn-sm btn-primary" href="{:U('Form/contentedit',array('formid'=>$formid,'id'=>$vo['id']))}">查看/修改</a>
+                        <a class="btn btn-sm btn-primary" href="javascript:confirm_delete('{:U('Form/contentdelete',array('formid'=>$formid,'id'=>$vo['id']))}')" >删除</a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </form>
+    <div class="pagination">{$page}</div>
+
+</block>

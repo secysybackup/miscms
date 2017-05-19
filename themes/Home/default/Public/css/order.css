@@ -1,0 +1,324 @@
+#content {
+    padding:25px;
+ width: 1000px;
+ margin: 15px auto;
+    background: #fff;
+}
+h3{
+    font-size: 16px;
+    line-height:40px;
+}
+.cart_top li{
+    float: left;
+  font-size: 16px;
+  font-weight: bold;
+  height: 46px;
+  line-height: 46px;
+  margin-right: -19px;
+  width: 368px;
+}
+.cart_top li a{
+	line-height: 46px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+    width: 100%;
+}
+input {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.order_table   { width:100%; margin:0px auto;background:#E0E0E0}
+.order_table th {background:#F7F7F7;color:#666;height:35px;}
+.order_table td {background:#FFF;padding-left:6px;}
+.order_table td .num {text-align:center;}
+
+
+.order_ok_message {
+    clear:both;
+    padding:20px;
+    text-align:center;font-size:14px;
+    color:#FB0000;
+    line-height:26px;
+}
+
+
+.order_checkbox h1 {
+    border:1px solid #FFF;background:#F5F5F5;height:32px;line-height:32px;color:#555455;padding-left:30px;font-size:14px;}
+.order_checkbox h4 {background:none;padding-left:12px;
+    color:#E77611;
+    font-size:14px;}
+.order_checkbox .order_box {margin:10px 15px;}
+
+.order_userinfo .b1 {border:1px solid #E0E0E0;padding:10px;}
+.address_list {border:1px solid #FEDDC6;background:#FFFCF2;padding:4px;overflow:hidden;zoom:1;}
+.address_list h3 {border-bottom:1px solid #FEDDC6;line-height:26px;height:26px;padding-left:10px;margin:0 20px;font-size:14px;}
+.address_list ul li {color:both;padding-left:20px;line-height:24px;height:24px;}
+
+.address_form{
+    font-size: 13px;
+}
+
+.address_form select{
+    line-height: 28px;
+    height:28px;
+}
+
+.address_form ul li {
+    float:left;
+    width:46%;
+    line-height:28px;
+    padding: 5px 10px;
+}
+.address_form ul li input.form-control {
+    padding: 7px;
+    min-width: 310px;
+    border: 1px solid #c1c1c1;
+}
+.address_form ul li span {
+    float:left;
+    width:80px;
+}
+
+#prototal{
+    line-height:24px;
+    overflow:hidden;
+    zoom:1;
+    padding:13px 0;
+    text-align:right;
+    border-top:0;
+}
+#prototal b {color:#FF3300;font-size:14px;font-weight:bold;}
+.coutprice {
+    height:40px;
+    padding:12px;
+    line-height:40px;
+    overflow:hidden;
+    text-align: right;
+    border-top:1px dashed #ddd;
+}
+.coutprice ul{float:left;}
+.coutprice ul.pricenumber{float:right;font-size:14px;}
+.coutprice ul.pricenumber .red2 {color:#FB0000;font-size:18px;}
+
+#buy_button{
+    height: 35px;
+    text-align: right;
+    width: 100%;
+}
+
+
+.card{
+    margin:0 5px 10px;
+    float: left;
+    width: 100%;
+}
+
+.order-title{
+    position: relative;
+    padding: 5px;
+    border-bottom: 2px solid #c0c0c0;
+}
+.order-title h2 {
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 600;
+}
+.order-title a{
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+.card-block{
+    padding: 5px;
+}
+
+/* 购物流程样式 */
+.form-bootstrapWizard {
+    height: 80px;
+    padding-top:30px;
+}
+.bootstrapWizard {
+    display: block;
+    list-style: outside none none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.bootstrapWizard a:active, .bootstrapWizard a:focus, .bootstrapWizard a:hover {
+    text-decoration: none;
+}
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    padding-left: 0;
+    text-align: center;
+    width: 32%;
+}
+.bootstrapWizard li::before {
+    border-top: 3px solid #b2b5b9;
+    content: "";
+    display: block;
+    font-size: 0;
+    overflow: hidden;
+    position: relative;
+    right: 1px;
+    top: 11px;
+    width: 100%;
+    z-index: 1;
+}
+.bootstrapWizard li:first-child::before {
+    left: 50%;
+    max-width: 50%;
+}
+.bootstrapWizard li:last-child::before {
+    max-width: 50%;
+    width: 50%;
+}
+.bootstrapWizard li.complete .step {
+    background: #0aa66e none repeat scroll 0 0;
+    padding: 1px 6px;
+}
+.bootstrapWizard li .step i {
+    font-size: 10px;
+    font-weight: 400;
+    position: relative;
+    top: -1.5px;
+}
+.bootstrapWizard li .step {
+    background: #b2b5b9 none repeat scroll 0 0;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    color: #fff;
+    display: inline;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: normal;
+    padding: 7px 13px;
+    position: relative;
+    text-align: center;
+    transition: all 0.1s linear 0s;
+    z-index: 2;
+}
+.bootstrapWizard li.active .step, .bootstrapWizard li.active.complete .step {
+    background: #0091d9 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 7px 13px;
+}
+.bootstrapWizard li.active .title, .bootstrapWizard li.complete .title {
+    color: #2b3d53;
+}
+.bootstrapWizard li .title {
+    color: #bfbfbf;
+    display: block;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    text-align: center;
+    top: 20px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+.wizard-actions {
+    display: block;
+    list-style: outside none none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.wizard-actions li {
+    display: inline;
+}
+
+.btn{
+    padding: 5px 8px;
+}
+
+
+/*收货地址*/
+.user-address-list .address-item {
+    float: left;
+    margin-right: 17px;
+    margin-bottom: 20px;
+}
+.address-item-new {
+    text-align: center;
+    color: #b0b0b0;
+}
+
+.address-item {
+    width: 268px;
+    overflow: hidden;
+    height: 178px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    position: relative;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+}
+.address-item dl {
+    padding: 15px 24px 0;
+    margin: 0;
+}
+.address-item dt {
+    margin: 0 0 10px;
+    line-height: 30px;
+}
+.address-item .uname {
+    font-size: 18px;
+    color: #333;
+    font-style: normal;
+}
+.address-item dd {
+    margin: 0;
+    line-height: 22px;
+    color: #757575;
+}
+.address-item .action{
+    position: absolute;
+    bottom: 10px;
+    right: 24px;
+    font-size: 13px;
+}
+.address-item  span.default{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    right: -35px;
+    top: -35px;
+    height: 80px;
+    padding: 42px 12px 20px;
+    border-radius: 40px;
+    width: 80px;
+    background: #2772ee;
+    color: #fff;
+}
+.address-item-new .iconfont {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 63px auto 8px;
+    font-size: 30px;
+    line-height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 17px;
+    text-align: center;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+    color: #fff;
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}

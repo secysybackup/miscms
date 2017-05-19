@@ -1,0 +1,128 @@
+/* CSS Document */
+body, button, input, select, textarea {
+    font: 12px/1.5 tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;
+}
+blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body{
+    padding-top: 50px;
+}
+ol, ul {
+    list-style: none outside none;
+}
+
+a{color:#000000; text-decoration:none}
+
+a:hover{color:#FF0000}
+
+/*header*/
+.header{
+    margin: 0 auto;
+    width: 1000px;
+    height:40px; 
+    position: relative;
+}
+.header .header_logo{
+  height:40px; 
+}
+
+.steps {
+    border-bottom: 2px solid #e6e6e6;
+    height: 46px;
+    position: relative;
+}
+
+.steps ol {
+    margin: 0 auto;
+    width: 900px;
+}
+
+.steps ol li.active {
+    border-bottom: 2px solid #ff4700;
+    color: #3e3e3e;
+}
+.steps ol li {
+    color: #999;
+    display: inline;
+    float: left;
+    font-family: "微软雅黑","华文细黑","黑体",arial;
+    font-size: 16px;
+    font-weight: bold;
+    height: 46px;
+    line-height: 46px;
+    padding-left: 40px;
+    width: 170px;
+}
+
+
+.steps ol li.active i {
+    background-image: url("../img/ico-circle1.png");
+}
+.steps ol li i {
+    background: url("../img/ico-circle2.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 5px;
+    text-align: center;
+    width: 24px;
+}
+
+
+
+.content{
+    margin-top:8px;
+}
+.content{
+    padding:13px 150px; 
+}
+.licenseblock {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #eee;
+    height: 400px;
+    margin-bottom: 15px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 8px;
+}
+.licenseblock h1{
+  margin: 5px 0px 0px 10px; color: rgb(0, 0, 0); 
+  line-height: 30px; 
+  font-size: 14px; 
+  text-align: center;
+}
+
+.licenseblock p{line-height:18px;}
+.licenseblock h2,h3{height:25px; line-height:25px;}
+.licenseblock h2{font-size:14px;}
+.licenseblock h3{font-size:12px;}
+
+
+fieldset {
+    border: 1px solid #cccccc;
+    margin-bottom:5px; 
+}
+fieldset legend {
+    background:#EDEDED;
+    border: 1px solid #cccccc;
+    color: #3d70a6;
+    margin: 0 0 0 10px;
+    padding: 3px;
+    width: 100px; 
+    font-size: 16px;
+}
+.setup_process{
+    width: 750px;
+    height: 350px;
+    overflow: scroll;
+}
+
+.act{
+  text-align: center;
+}

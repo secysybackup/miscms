@@ -1,0 +1,35 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <form method="post" action="{:U('Type/add')}">
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">上级:</label>
+            <div class="col-md-5">
+                <select name="parentid" class="form-control">
+                    <if condition="empty($select_type)">
+                        <option value="0">{:L('menu_top_menu')}</option></if>
+                    {$select_type}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">名称:</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="name" id="name" value="{$vo.name}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">简介:</label>
+            <div class="col-md-5">
+                <textarea class="form-control" name="description" rows="5" cols="57">{$vo.description}</textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="hidden" name="keyid" id="keyid" value="{$keyid}" />
+            <input type="hidden" name="forward" value="{$_SERVER['HTTP_REFERER']}" />
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+        </div>
+    </form>
+</block>

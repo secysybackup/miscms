@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="w3c">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="国人在线|www.36099.com">
+    <meta name="keywords" content="{$seo_keywords}" />
+    <meta name="description" content="{$seo_description}" />
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/yzh.css">
+    <script src="__STATIC__/yzh.js"></script>
+    <script src="__JS__/superslide.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+    <title>{$seo_title}-{$site_name}</title>
+    <block name="head"></block>
+</head>
+<body>
+
+<!-- 头部 -->
+<div class="headerOne">
+    <div class="w980">
+        <p class="fl">Welcome to the excellent color specifically significant brand's official website！</p>
+        <p class="fr">
+            <a href="/">中文</a>|
+            <a href="{$Cats[46]['url']}">online feedback</a>|
+            <a href="{$Cats[45]['url']}">Follow us</a>|
+            <a href="{:U('Sitemap/index')}">Sitemap</a>
+        </p>
+    </div>
+</div>
+<div class="headerTwo">
+    <div class="w980">
+        <h1 class="logo"><a class="yzh-editable" editable-type="config" editable-id="2" title="优色专显-专用显示解决方案领军品牌" href="/">
+            <img alt="优色专显-专用显示解决方案领军品牌" src="{$site_logo}" >
+        </a></h1>
+        <div class="dwy">
+            <span>AAA grade credit enterprise</span><span>阿里国际&TUV审厂认证</span><br/><span>平安城市推荐品牌</span><span>Industry expertise was the top ten brands</span><p>Dedicated display solutions leading brands</p>
+        </div>
+        <div class="gxjs"><img src="__IMG__/gx.jpg"></div>
+        <div class="tel">National service hotline<span class="yzh-editable" editable-type="config" editable-id="32">{$site_tel400}</span></div>
+    </div>
+</div>
+<script type="text/javascript">
+// 主导航
+$(function(){
+    vNav();
+})
+function vNav(){
+    var speed = 300;
+    $('.nav > li').hover(function(){
+        $(this).children('a').addClass('active').next().stop().slideDown(speed);
+    },function(){
+        $(this).children('a').removeClass('active').next().stop().slideUp(speed);
+    })
+}
+</script>
+<div class="headerNav">
+    <ul class="nav">
+        <li class="none"><a class="{if $current=='/'}active{/if}" href="/en" title="Home">Home</a></li>
+        <Gr:cat catid="0" id="r" key="i">
+            <li><a class="{if $max_parent_catid==$r['id']}active{/if}" href="{$r.url}" title="{$r.catname}">{$r.catname}<i></i></a>
+                {if $r['child']=="1"}
+                <ol>
+                    <Gr:cat catid="$r['id']" id="rr">
+                        <li><a href="{$rr.url}" title="{$rr.catname}">{$rr.catname}</a></li>
+                    </Gr:cat>
+                </ol>
+                {/if}
+            </li>
+        </Gr:cat>
+    </ul>
+</div>
+<div class="clearfix"></div>
+{if !empty($isIndex)}
+<php>$slide = getSlide(1);</php>
+<div class="fullSlide">
+    <div class="bd">
+        <ul>
+            <volist name="slide" id="r">
+                <li class="yzh-editable" editable-type="slide" editable-id="{$r['id']}" style="background:url({$r['pic']}) center no-repeat;"><a title="{$r['title']}" target="_blank" href="{$r['link']}"></a></li>
+            </volist>
+        </ul>
+    </div>
+    <a class="prev" href="javascript:void(0)"></a>
+    <a class="next" href="javascript:void(0)"></a>
+</div>
+<script type="text/javascript">
+    jQuery(".fullSlide").slide({ mainCell:"ul", effect:"leftLoop", autoPlay:true, mouseOverStop:false ,interTime:"4000",delayTime:"700"});
+</script>
+{else}
+<div class="pageBanner"><img src="{if $Cats[$max_parent_catid]['image']}{$Cats[$max_parent_catid]['image']}{else}{$Cats[1]['image']}{/if}" alt="{$catname}" height="200"></div>
+{/if}
+
+<block name="main"></block>
+
+<include file="Public:footer"/>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script type="text/javascript">
+    var iscookie = document.cookie.indexOf("firstVisit="); //得到分割的cookie名值
+
+    if(iscookie==-1){ //判断cookie是否存在
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate()+30); //设置过期时间为30天
+        document.cookie="firstVisit=1;expires="+exdate.toGMTString();
+        $.ajax({
+            url:"{:U('Fiesta/index')}",
+            success:function(data){
+                if (data) {
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        closeBtn: 0,
+                        area: ['542px','318px'],
+                        skin: 'layui-layer-nobg', //没有背景色
+                        shadeClose: true,
+                        content:data, //捕获的元素
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+<include file="Public:kefu"/>
+<!--访问统计-->
+<script>
+    window.onload = function()
+    {
+        $.ajax({
+            url:"{:U('Api/Hitstall/index')}",
+        });
+    }
+</script>
+</body>
+</html>
+

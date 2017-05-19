@@ -1,0 +1,49 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form id="myform" class="form-horizontal" action="{:U('Posid/edit')}" method="post">
+
+    <div class="form-group">
+        <label class="control-label col-md-2">推荐位名称</label>
+        <div class="col-md-5">
+            <input type="text" name="name" class="form-control" value="{$vo['name']}" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="hidden" id="id" name="id" value="{$vo['id']}" />
+        <input type="submit" value="提交" class="btn btn-primary">
+        <input class="btn btn-default" type="button" onclick="javascript:history.back(-1);" value="返 回" >
+    </div>
+</form>
+
+</block>
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

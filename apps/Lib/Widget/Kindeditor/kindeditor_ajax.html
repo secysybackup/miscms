@@ -1,0 +1,18 @@
+<textarea id="{$editid}" name="{$name}" class="form-control" style="height: 400px;">{$value}</textarea>
+<script type="text/javascript" src="__STATIC__/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript">
+
+KindEditor.create('#{$editid}', {
+    cssPath : '/public/static/kindeditor/plugins/code/prettify.css',
+    fileManagerJson:'{$upurl}',
+    editorid:'content',
+    upImgUrl:'{$upImgUrl}',
+    upFlashUrl:'{$upFlashUrl}',
+    upMediaUrl:'{$upMediaUrl}',
+    allowFileManager : true,
+    filterMode: false,
+    hunqinglineTag:'br',
+    items: ['undo', 'redo', 'cut', 'copy', 'paste','plainpaste', '|', 'justifyleft', 'justifycenter', 'justifyright','justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 'selectall', '-','title', 'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold','italic', 'underline', 'strikethrough', 'removeformat', '|', 'image', 'advtable', 'hr', 'link', 'unlink'],
+    afterBlur: function () { this.sync(); }
+});
+</script>

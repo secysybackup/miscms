@@ -1,0 +1,25 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="alert alert-info">本站为誉字号程序V1.0最新版，请放心使用。</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#qr_form').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if(data.status==1){
+            layer.msg('修改成功');
+        }else{
+            layer.msg(data.info);
+        }
+
+    }
+</script>
+</block>

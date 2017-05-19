@@ -1,0 +1,25 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <link rel="stylesheet" type="text/css" href="__CSS__/fresco.css"/>
+    <script type="text/javascript" src="__JS__/fresco.js"></script>
+    <div class="w980 ptb25 oh">
+        <include file="Public:left"/>
+        <div class="pageContent fr">
+            <include file="Public:title"/>
+            <div class="pageContentBox">
+                <ul class="honorList">
+                    {if $list}
+                    <volist name="list" id="r">
+                        <li><a href="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" class='fresco' data-fresco-group='example' data-fresco-caption="{$r.title}" title="{$r.title}"><img alt="{$r.title}" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" ><span>{$r.title|str_cut=###,35}</span></a></li>
+                    </volist>
+                    {else}{$catname}{/if}
+                </ul>
+                <div class="clearfix"></div>
+                <div class="clearfix"></div>
+                <div class="pagination" >{$pages}</div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</block>

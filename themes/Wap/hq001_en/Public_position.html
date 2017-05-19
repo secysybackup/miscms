@@ -1,0 +1,45 @@
+<div class="breadCrumb">
+    <p><a href="{:URL()}">首页</a> /<Gr:catpos catid="catid" space=" / " /></p>
+    <span class="fenlei"><a href="javascript:;" id="catlist">分类</a></span>
+</div>
+
+
+<script>
+    var d = document,
+            dw = d.documentElement.clientWidth,
+            dh = d.documentElement.clientHeight;
+    d.addEventListener("DOMContentLoaded", function(){
+        var catalog = d.querySelector(".catalog");
+        catalog.style.height = d.body.scrollHeight+"px";
+        catalog.style.webkitTransform = "translateX("+dw+"px)";
+        catalog.getElementsByTagName("ul")[0].style.height = d.body.scrollHeight+"px";
+        //catalog.webkitTransform = "translateX("+dw+"px)";
+        d.querySelector(".catbtn").addEventListener("click", function(){
+            catalog.style.webkitTransform = "translateX("+dw+"px)";
+            setTimeout(function(){
+                catalog.style.display = "none";
+            },200);
+        });
+        d.querySelector("#catlist").addEventListener("click", function(){
+            catalog.style.display = "block";
+            catalog.style.webkitTransform = "translateX(0px)";
+        });
+    });
+</script>
+<div class="catalog">
+    <ul>
+        <li><a href="javascript:;">√{$max_parent_catname} </a></li>
+        <Gr:cat catid="$max_parent_catid" id="r">
+            <li><a href="{$r['url']}">　{$r['catname']}</a>
+                {if $r['child']==1}
+                <ul>
+                    <Gr:cat catid="r['id']" id="rr">
+                        <li><a href="{$r['url']}">{$rr['catname']}</a></li>
+                    </Gr:cat>
+                </ul>
+                {/if}
+            </li>
+        </Gr:cat>
+    </ul>
+    <span class="catbtn"><img src="__IMG__/icon_slid.png" width="30" alt="右" /></span>
+</div>

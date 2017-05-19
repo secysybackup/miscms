@@ -1,0 +1,63 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form class="form-horizontal" action="<if condition="$action_name=='add'">{:U($module_name.'/insert')}<else />{:U($module_name.'/update')}</if>" method="post">
+
+    <div class="form-group">
+        <label class="control-label col-md-2">是否生成静态？</label>
+        <div class="col-md-6">
+          {:Form::radio(array('field'=>'ishtml','options'=>array('1'=>L('yes'),'0'=>L('no'))),$vo['ishtml'])}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">内容页URL示例</label>
+        <div class="col-md-6">
+            <input type="text" id="showexample" name="showexample" class="form-control" value="{$vo['showexample']}" validate="required:true,minlength:2, maxlength:200" />{:L(examples)}:news/show/1.html
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">内容页URL规则</label>
+        <div class="col-md-6">
+            <input type="text" id="showurlrule" name="showurlrule" class="form-control" value="{$vo['showurlrule']}"  validate="required:true,minlength:2, maxlength:200" /> {:L(examples)}:<literal>{$catdir}/show/{$id}.html</literal>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">内容页可用变量</label>
+        <div class="col-md-8">
+            栏目目录：{$catdir} , 栏目ID：{$catid} , 模型名称：{$module} , 模型id：{$moduleid} ，ID：{$id}
+      年：{$year} 月：{$month}，日：{$day} ， 分页：{$page}
+      生成HTML页时可用父栏目路径：{$parentdir}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">列表页URL示例</label>
+        <div class="col-md-6">
+          <input type="text" id="listexample" name="listexample" class="form-control" value="{$vo['listexample']}" validate="required:true,minlength:2, maxlength:200" />{:L(examples)}:news/
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">列表页URL规则</label>
+        <div class="col-md-6">
+            <input type="text" id="listurlrule" name="listurlrule" class="form-control" value="{$vo['listurlrule']}" validate="required:true,minlength:2, maxlength:200" /> {:L(examples)}:<literal>{$catdir}</literal>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">列表页可用变量</label>
+        <div class="col-md-8">
+            栏目目录：{$catdir} ， 栏目ID：{$catid} , 模型名称：{$module} , 模型id：{$moduleid}
+          分页：{$page}
+          生成HTML页时可用父栏目路径：{$parentdir}
+        </div>
+    </div>
+    <div class="form-actions">
+        <if condition="$vo['urlruleid']!=''">
+            <input type="hidden" name="urlruleid" value="{$vo.urlruleid}">
+        </if>
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:history.back(-1);return false;">返回</button>
+    </div>
+</form>
+
+</block>

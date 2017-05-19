@@ -1,0 +1,48 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form name="myform" id="myform" action="" method="post">
+    <div class="row table-container">
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="30">
+                            <input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');">
+                        </th>
+                        <th width="40">ID</th>
+                        <th>邮箱</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr class="table-data-empty">
+                        <td class="text-center empty-info" colspan="8">
+                            <i class="fa fa-database"></i> 暂无数据<br>
+                        </td>
+                    </tr>
+                    <else/>
+                    <volist name="list" id="vo" key="k">
+                        <tr>
+                            <td  width="30" align="center">
+                                <input class="inputcheckbox " name="ids[]" value="{$vo['id']}" type="checkbox" ></td>
+                            <td width="40" align='center'><input name='listorders[{$vo.id}]' type='text' size='3' value='{$vo.listorder}' class='input-text-c'></td>
+                            <td align="center">{$vo['id']}</td>
+                            <td>{$vo['email']} </td>
+                            <td align="center">
+                                <a href="javascript:confirm_delete('{:U($module_name.'/delete',array(id=>$vo['id']))}')">删除</a>
+                            </td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<div class="pagination">{$page}</div>
+
+</block>

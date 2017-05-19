@@ -1,0 +1,145 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+    <script src="__STATIC__/laydate/laydate.js"></script>
+
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="__JS__/swfupload/swfupload.css" />
+    <link rel='stylesheet' type='text/css' href='__CSS__/style.css'>
+
+    <style>
+        html {
+            _overflow-y: scroll;
+        }
+
+        body {
+            font-size: 12px;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        .tab-content {
+            padding: 10px 8px 0;
+        }
+        #divStatus {
+            height: 25px;
+            line-height: 25px;
+            padding: 0 0 10px;
+        }
+        .attachment-list .img p a {
+            height: 10px;
+        }
+        .max-upload{
+            color:#454545;clear:both;line-height:24px;height:24px;
+        }
+        .water-select{
+            color:#959595;
+            line-height:24px;
+            height:24px;
+            background:url() no-repeat;
+            padding-left:20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <div id="tabs">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="upload_1">
+                <div id="divMovieContainer">
+                    <div class="selectbut">
+                        <span id="spanButtonPlaceHolder"></span>
+                    </div>
+                    <input type="button" value="开始上传" id="uploadbut" onclick="swfu.startUpload();"/>
+                    <div class="max-upload">
+                        支持<span class="text-danger">{$attach['file_types']}</span> 格式。
+                        最多上传<span class="text-danger">{$small_upfile_limit}</span> 个附件,单文件最大<span class="text-danger">{$attach['file_size']}</span>
+                    </div>
+                </div>
+
+                <input type="hidden" value="test" id="btnCancel" />
+                <div  id="swfupload-box">
+                    <ul id="fsUploadProgress"></ul>
+                    <ul class="attachment-list" id="thumbnails">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myuploadform" style="display:none;"></div>
+
+<script type="text/javascript" src="__JS__/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="__JS__/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="__JS__/swfupload/handlers.js"></script>
+<script type="text/javascript">
+    $.ajaxSetup ({ cache: false });
+
+    var file_limit = {$attach['file_limit']};
+    var swfu;
+    $(function(){
+        var settings = {
+            flash_url : "__PUBLIC__/admin/js/swfupload/swfupload.swf?"+Math.random(),
+            upload_url: "/?g=admin&m=poster&a=upload",
+            file_post_name : "filedata",
+            post_params: {
+                "session_id" : "<?php echo session_id(); ?>",
+                "userid":"{$userid}",
+                "swf_auth_key": "{$swf_auth_key}",
+                "isthumb" : "{$attach['isthumb']}",
+                "modelid" : "{$attach['modelid']}",
+                "addwater":"{:intval($watermark_enable)}",
+            },
+            file_size_limit : "{$attach['file_size']}",
+            file_types : "{$attach['file_types']}",
+            file_types_description : "All Files",
+            file_upload_limit : "{$attach['file_limit']}",
+            file_queue_limit : 0,
+            custom_settings : {
+                progressTarget : "fsUploadProgress",
+                cancelButtonId : "btnCancel",
+                tdFilesQueued : document.getElementById("tdFilesQueued"),
+                tdFilesUploaded : document.getElementById("tdFilesUploaded"),
+                tdErrors : document.getElementById("tdErrors")
+            },
+            debug: false,
+            prevent_swf_caching : false,
+
+            button_image_url : "",
+            button_placeholder_id: "spanButtonPlaceHolder",
+            button_width: 75,
+            button_height: 29,
+            button_text : '',
+            button_text_style : '',
+            button_text_top_padding: 0,
+            button_text_left_padding: 0,
+            button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+            button_cursor: SWFUpload.CURSOR.HAND,
+            swfupload_preload_handler : preLoad,
+            swfupload_load_failed_handler : loadFailed,
+
+            file_queued_handler : fileQueued,
+            file_queue_error_handler : fileQueueError,
+            upload_start_handler : uploadStart,
+            upload_progress_handler : uploadProgress,
+            upload_error_handler : uploadError,
+            upload_success_handler : uploadSuccess,
+            upload_complete_handler : uploadComplete,
+            file_dialog_complete_handler:fileDialogComplete
+        };
+
+        swfu = new SWFUpload(settings);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="row">
+    <volist name="themes" id="vo">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">主题名称:{$vo.name}</div>
+                <img class="card-img-top" src="{$vo.preview}">
+                <div class="card-block">
+                    <if condition="$vo['use']==1">
+                        <button class="btn btn-sm btn-success" disabled>已使用</button>
+                        <else/>
+                        <a class="btn btn-sm btn-danger" href="{:U('Wap/theme?action=chose&theme='.$vo[name])}">未使用</a>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </volist>
+</div>
+</block>

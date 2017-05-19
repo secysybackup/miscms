@@ -1,0 +1,33 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+
+	<div class="cont">
+		{if $list}
+		<volist name="list" id="r">
+			<dd><em></em><span><b>职位：</b>{$r.title}</span><span><b>人数：</b>{$r.num}人</span><span><b>学历：</b>{$r.education}</span><span><b>时间：</b>{$r.createtime|toDate=###,'Y-m-d'}</span></dd>
+			<dt>
+			<p>
+				<strong>职位描述：</strong><br/>
+				{$r.jobdes}
+				<br/><br/>
+				<strong>职位要求：</strong><br/>
+				{$r.requirements}
+			</p>
+			<a href="{$r.url}" class="gr-apply">立即申请</a>
+			</dt>
+			<hr>
+		</volist>
+		{else}
+		{$catname}
+		{/if}
+		<p class="clear h15"></p>
+	</div>
+	<include file="Public:footer"/>
+</block>

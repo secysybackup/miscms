@@ -1,0 +1,622 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<script type="text/javascript">
+    window.app=window.app?window.app:{};
+    window.app.id='{$poster.id}';
+    window.app.maxpage=18;
+    window.app.basePath='/';
+    window.app.name='{$poster.appname}';
+    window.app.data=eval('({$poster.data})');
+</script>
+
+<div class="poster-header">
+    <h4 id="editSpan">
+        <span class="app-name-show" app-name="空模版"><a href="javascript:void(0)" style="cursor:default;">{$poster.appname}</a></span>
+        <span class="rew css_sprite s-bg-rew f-cur  edit-app-name" title="编辑微海报名称"></span>
+        <span class="btn btn-default" onclick="location.href='/?g=admin&m=poster&a=index'" style="float: right;margin-right: 3px;font-size: 14px;" title="返回到微海报列表">返回微海报列表</span>
+        <span class="btn btn-warning spanPreview" onclick="window.open('/?g=admin&m=poster&a=preview&id={$poster.id}')" style="float: right;margin-right: 4px;margin-left:0px;font-size: 14px;color:white;" title="预览前请确保微海报已保存">预览</span>
+        <span id="save" class="btn btn-success" style="float: right;margin-right: 4px;font-size: 14px;color:white;" title="微海报保存后才会生效">保存微海报</span>
+        <img style="float: right;margin-right: 7px;margin-top: -7.5px; opacity: 0.7;" src="/poster/images/save-guide.png">
+    </h4>
+</div>
+
+<div class="poster-body">
+
+    <div class="item mobile">
+        <div class="top">
+            <div class="setting" style="width:175px;" title="微海报设置"><img src="/poster/images/setting.png">微海报设置</div>
+        </div>
+        <div style="background-color:white;height: 420px;overflow-y: auto;">
+            <ul id="page" class="ui-sortable">
+                <script>
+                    for(var i=0;i<(window.app.data.length);i++){
+                        if(i==0){
+                            document.writeln('<li idx="'+i+'" class="page-li selected"><span>'+(i+1)+'</span>第'+(i+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png"></li>');
+                        }else{
+                            document.writeln('<li idx="'+i+'" class="page-li"><span>'+(i+1)+'</span>第'+(i+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png"></li>');
+                        }
+                    }
+                </script>
+            </ul>
+        </div>
+        <div class="bottom" id="addPage" title="添加页面">
+            <img src="/poster/images/addWidget.png" style="vertical-align: -2px;margin-right: 5px;">添加页面
+        </div>
+    </div>
+
+
+    <div class="item view">
+        <div class="top">
+            <div class="editBackground" rightchange="true" title="编辑背景" style="margin-left:10px;"><img src="/poster/images/editBackground.png">编辑背景</div>
+        </div>
+        <iframe id="screen" src="" frameborder="0"></iframe>
+    </div>
+
+
+    <div class="item" style="float: right;width: 382px;">
+        <div class="edit setting">
+            <div class="top"><h3>微海报设置</h3></div>
+            <div class="item-body">
+                <div class="form-group">
+                    <label class="control-label">微海报名称</label>
+                    <input type="text" name="appname" class="form-control" value="{$poster['appname']}" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">背景音乐</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="music" value="http://www.grwy.net/mp3/大气.mp3" checked>
+                            大气.mp3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="music" value="http://www.grwy.net/mp3/欢乐.mp3">
+                            欢乐.mp3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="music" value="http://www.grwy.net/mp3/节日.mp3">
+                            节日.mp3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="music" value="http://www.grwy.net/mp3/劲爆.mp3">
+                            劲爆.mp3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="music" value="http://www.grwy.net/mp3/舒缓.mp3">
+                            舒缓.mp3
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit bg" style="display: block;">
+            <div class="top"><h3>背景设置</h3></div>
+            <div class="item-body">
+                <div class="block bg_img" style="border-bottom-width: 0px; display: block;">
+                    <p class="title">背景图片：<span class="tips">(建议尺寸：640像素x960像素)</span></p>
+                    <p>
+                    </p>
+                    <div class="wcenter pagebg" title="点击选择图片" id="bgImage" style="height: 300px; line-height: 295px; font-size: 18px; color: rgb(153, 153, 153);">
+                        <span class="forbitSelect"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/jquery-ui-min.js"></script>
+<script>
+    var iframe = document.getElementById('screen');
+
+    $('#screen').attr('src','/?g=admin&m=poster&a=action_screen&page=0');
+    if(window.app.data[0].content != ''){
+        $('#bgImage').css('background-image','url('+window.app.data[0].content+')');
+    }
+    $("input[name='music'][value='{$poster.music}']").attr("checked",'checked');
+
+    $("input[name='appname']").change(function(){
+        var appname = $(this).val();
+        $.ajax({
+            type: "POST",     //提交方式
+            url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+            data: {
+                'id': window.app.id,
+                'appname': appname
+            },
+            success: function (data) { //如果执行成功，那么执行此方法
+                $('.app-name-show').html(appname);
+            },
+        });
+    });
+
+    $("input[name='music']").change(function(){
+        var music = $(this).val();
+        $.ajax({
+            type: "POST",     //提交方式
+            url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+            data: {
+                'id': window.app.id,
+                'music': music
+            },
+            success: function (data) { //如果执行成功，那么执行此方法
+
+            },
+        });
+    });
+
+
+    var currEditObj=null;
+
+    //编辑
+    var TYPE_SETTING='setting';
+    var TYPE_WIDGET='widget';
+    var TYPE_BG='bg';
+    var TYPE_TEXT='text';
+    var TYPE_IMAGE='image';
+    var TYPE_BUTTON='button';
+    var TYPE_VEDIO='vedio';
+    var TYPE_BOOK='book';
+    var TYPE_MESSAGE='message';
+    var TYPE_MASK='mask';
+    var TYPE_IFRAME='iframe';
+
+    var $menuUl;
+    $(function(){
+        setTimeout(function(){
+            $menuUl=$('.create-menu ul');
+        },500);
+    });
+     
+    $('.poster-body .setting').click(function(){
+        $('.edit').hide();
+        $('.edit.setting').show();
+    });
+
+    $('#page').on('click','li',function(){
+        historyData=[];
+        $('#page>li').removeClass('selected');
+        $('#page>li').removeClass('hover');
+        $(this).addClass('selected');
+        var index = $(this).index()-1;
+        var r=new Date().getTime()+''+Math.ceil(Math.random()*10000);
+        $('#screen').attr('src','/?g=admin&m=poster&a=action_screen&page='+index+'&r='+r);
+        $('.poster-body .top .editBackground').click();
+    });
+    $('#page').on('mouseover','li',function(){
+        $(this).addClass('hover');
+    });
+    $('#page').on('mouseout','li',function(){
+        $(this).removeClass('hover');
+    });
+    function resort(ui){
+        //json排序
+        var fromIdx=parseInt(ui.item.attr('idx'));
+        var toIdx=ui.item.index()-1;
+        if(toIdx>fromIdx){
+            //向下拖动
+            if(fromIdx==0){
+                var temp=window.app.data[fromIdx];
+                window.app.data[fromIdx]=window.app.data[fromIdx+1];
+                window.app.data[fromIdx].isMusic=temp.isMusic;
+                window.app.data[fromIdx].musicUrl=temp.musicUrl;
+                for(var i=fromIdx+2;i<=toIdx;i++){
+                    window.app.data[i-1]=window.app.data[i];
+                }
+                delete temp.isMusic;
+                delete temp.musicUrl;
+                window.app.data[toIdx]=temp;
+            }else{
+                var temp=window.app.data[fromIdx];
+                for(var i=fromIdx+1;i<=toIdx;i++){
+                    window.app.data[i-1]=window.app.data[i];
+                }
+                window.app.data[toIdx]=temp;
+            }
+        }else{
+            //向上拖动
+            if(toIdx==0){
+                var temp=window.app.data[fromIdx];
+                for(var i=fromIdx-1;i>=toIdx;i--){
+                    window.app.data[i+1]=window.app.data[i]
+                }
+                window.app.data[toIdx]=temp;
+                window.app.data[0].isMusic=window.app.data[1].isMusic;
+                window.app.data[0].musicUrl=window.app.data[1].musicUrl;
+                delete window.app.data[1].isMusic;
+                delete window.app.data[1].musicUrl;
+            }else{
+                var temp=window.app.data[fromIdx];
+                for(var i=fromIdx-1;i>=toIdx;i--){
+                    window.app.data[i+1]=window.app.data[i]
+                }
+                window.app.data[toIdx]=temp;
+            }
+        }
+
+        $.ajax({
+            type: "POST",     //提交方式
+            url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+            data: {
+                'id': window.app.id,
+                'data': window.app.data
+            },
+            success: function (data) { //如果执行成功，那么执行此方法
+                //重排
+                var $pageli=$('#page>li');
+                $pageli.each(function(i){
+                    $(this).attr('idx',i).html('<span>'+(i+1)+'</span>第'+(i+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png">');
+                });
+            },
+        });
+
+    }
+
+     //拖动
+     $('#page').sortable({
+         update: function(event, ui) {
+             resort(ui);
+             if(!ui.item.hasClass('selected')){
+                ui.item.click();
+             }
+         }
+     });
+
+    //添加
+    $('#addPage').on('click',function(){
+        //判断是否超出页数
+        if(window.app.data.length-1>=window.app.maxpage){
+            alert('您已经达到页数上限，普通用户最多只能添加'+window.app.maxpage+'页');
+            return;
+        }
+
+        //页面处理
+        var count=$('#page>li').length;
+
+        data = {'content':''};
+        window.app.data.push(data);
+        $.ajax({
+            type: "POST",     //提交方式
+            url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+            data: {
+                'id': window.app.id,
+                'data': window.app.data
+            },
+            success: function (data) { //如果执行成功，那么执行此方法
+                var html=' <li idx="'+count+'" class="page-li selected"><span>'+(count+1)+'</span>第'+(count+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png"></li>';
+                var $newPage=$(html);
+                var $page=$('#page');
+                $page.append($newPage);
+                $('#page>li').last().click();
+                $page.parent().animate({scrollTop:1000000},0);
+            },
+        });
+    });
+
+    $('.poster-body .top .editBackground').click(function(){
+        var currIdx=$('#page li.selected').index()-1;
+         $('.edit').hide();
+        $('.bg').show();
+        var backroundImage = 'url('+window.app.data[currIdx].content+')';
+        $('#bgImage').css('background-image',backroundImage);
+    });
+
+    function edit(type,content,hideedit){
+        if($('#screen')[0].contentWindow.Bar && $('#screen')[0].contentWindow.Bar.currEl){
+            var t=currEditObj.elType?currEditObj.elType:'image';
+            $('.edit.mobile.'+t).find('input,select').blur();
+        }
+        //如果是场景设置，则马上赋值
+        if(currEditObj && currEditObj.length>1 && $('.mobile.edit.'+TYPE_SETTING).css('display')=='block'){
+            var lastObj=currEditObj[currEditObj.length-1];
+            window.app.name=$('.content .appname').val().replace(/"/g,"").replace(/'/g,"");
+            lastObj.title=$('.content .sharetitle').val().replace(/"/g,"");
+            lastObj.description=$('.content .sharedesc').val().replace(/"/g,"");
+        }
+        setTimeout(function(){
+            currEditObj=content;
+            if(!hideedit){
+                $('.poster-body .edit').hide();
+                $('.poster-body .edit.'+type).show();
+            }else{
+                //默认显示编辑背景
+                $('.poster-body .edit').hide();
+                $('.poster-body .edit.'+TYPE_BG).show();
+            }
+            if(type==TYPE_WIDGET){
+                if($('#page li.selected').index()==1){
+                    $('.additem .item_mod[data-add="mask"]').show();
+                }else{
+                    $('.additem .item_mod[data-add="mask"]').hide();
+                }
+            }else if(type==TYPE_SETTING){
+                editSetting();
+            }else if(type==TYPE_BG){
+                editBg();
+            }else if(type==TYPE_TEXT){
+                editText();
+            }else if(type==TYPE_IMAGE){
+                editImage();
+            }else if(type==TYPE_BUTTON){
+                editButton();
+            }else if(type==TYPE_VEDIO){
+                editVedio();
+            }else if(type==TYPE_BOOK){
+                editBook();
+            }else if(type==TYPE_MESSAGE){
+                editMessage();
+            }else if(type==TYPE_MASK){
+                editMask();
+            }else if(type==TYPE_IFRAME){
+                editIframe();
+            }
+            $('.poster-body .mobile.edit .content').scrollTop(0);
+        },10);
+    }
+
+    //复制
+    $('#page').on('click','li .copy',function(e){
+        if(window.confirm('确定要复制此页？')){
+            //判断是否超出页数
+            if(window.app.data.length-1>=window.app.maxpage){
+                alert('您已经达到页数上限，普通用户最多只能添加'+window.app.maxpage+'页');
+                return;
+            }
+            var $currli=$(this).parent();
+            var idx=parseInt($currli.attr('idx'));
+            //如果是最后一页
+            if((window.app.data.length-2)==idx){
+                var copy={};
+                $.extend(true, copy, window.app.data[idx]);
+                if(idx==0){
+                    delete copy.isMusic;
+                    delete copy.musicUrl;
+                }
+                //过滤预约、留言、涂抹控件
+                if(copy.anm && copy.anm.length>0){
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='mask'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='message'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='book'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                }
+                var end=window.app.data[idx+1];
+                window.app.data.push(copy);
+                window.app.data[idx+2]=end;
+                window.app.data[idx+1]=copy;
+            }else{
+                var newData=[];
+                for(var i=0;i<(idx+1);i++){
+                    newData.push(window.app.data[i]);
+                }
+                var copy={};
+                $.extend(true, copy, newData[idx]);
+                if(idx==0){
+                    delete copy.isMusic;
+                    delete copy.musicUrl;
+                }
+                //过滤预约、留言、涂抹控件
+                if(copy.anm && copy.anm.length>0){
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='mask'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='message'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                    for(var i=0;i<copy.anm.length;i++){
+                        if(copy.anm[i].elType=='book'){
+                            delete copy.anm.splice(i,1);
+                        }
+                    }
+                }
+                newData.push(copy);
+                for(var i=idx+1;i<window.app.data.length;i++){
+                    newData.push(window.app.data[i]);
+                }
+                window.app.data=newData;
+            }
+            $.ajax({
+                type: "POST",     //提交方式
+                url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+                data: {
+                    'id': window.app.id,
+                    'data': window.app.data
+                },
+                success: function (data) { //如果执行成功，那么执行此方法
+                   var html=' <li idx="'+(idx+1)+'" class="page-li selected"><span>'+(idx+2)+'</span>第'+(idx+2)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png"></li>';
+                    var $newPage=$(html);
+                    var $pageli=$('#page>li');
+                    $newPage.insertAfter($pageli.eq(idx));
+                    //重排
+                    $pageli=$('#page>li');
+                    $pageli.each(function(i){
+                        $(this).attr('idx',i).html('<span>'+(i+1)+'</span>第'+(i+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png">');
+                    });
+                    $pageli.eq(idx+1).click();
+                },
+            });
+         }
+        e.stopPropagation();
+    });
+
+    //删除
+    $('#page').on('click','li .del',function(e){
+        if(window.confirm('确定要删除此页？')){
+            if($('#page>li').length==1){
+                alert('至少要保留一页哦！');
+                return;
+            }
+            var $currli=$(this).parent();
+            var idx=parseInt($currli.attr('idx'));
+            if(idx==0){
+                window.app.data[idx+1].isMusic=window.app.data[idx].isMusic;
+                window.app.data[idx+1].musicUrl=window.app.data[idx].musicUrl;
+            }
+            delete window.app.data[idx];
+            var newData=[];
+            for(var i=0;i<window.app.data.length;i++){
+                if(!window.app.data[i]) continue;
+                newData.push(window.app.data[i]);
+            }
+            window.app.data=newData;
+            $.ajax({
+                type: "POST",     //提交方式
+                url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+                data: {
+                    'id': window.app.id,
+                    'data': window.app.data
+                },
+                success: function (data) { //如果执行成功，那么执行此方法
+                    $currli.remove();
+                    //重排
+                    var $pageli=$('#page>li');
+                    $pageli.each(function(i){
+                        $(this).attr('idx',i).html('<span>'+(i+1)+'</span>第'+(i+1)+'页<img class="del" title="删除" src="/poster/images/del.png"><img class="copy" title="复制" src="/poster/images/copy.png">');
+                    });
+                    if(!$pageli.eq(idx).hasClass('selected')){
+                        if(idx==(window.app.data.length-1)){
+                            $pageli.eq(idx-1).click();
+                        }else{
+                            $pageli.eq(idx).click();
+                        }
+                    }
+                },
+            });
+        }
+        e.stopPropagation();
+    });
+
+
+    //保存微海报
+    $('#save').on('click',function(){
+        $.ajax({
+            url: '/?g=admin&m=poster&a=html&id='+window.app.id,
+            success:function(data){
+                layer.msg('保存成功！');
+            }
+        });
+    });
+
+    $('#bgImage').click(function(){
+        url = '/?g=admin&m=poster&a=swfupload&auth=' + "<php>echo get_yzh_auth(1,'1MB',$poster['id']);</php>";
+        layer.open({
+            type: 2,
+            title: '上传图片',
+            closeBtn: 0,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['500px', '400px'],
+            content: url ,//iframe的url
+            btn: ['确认', '取消'],
+            yes: function(index, layero){
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                okdo.call(this,iframeWin);
+                layer.close(index); //一般设定yes回调，必须进行手工关闭
+            }
+        });
+    })
+
+    $('#upload_music').click(function(){
+        url = '/?g=admin&m=poster&a=music_template';
+        layer.open({
+            type: 2,
+            title: '配置音乐',
+            closeBtn: 0,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['500px', '300px'],
+            content: url ,//iframe的url
+            btn: ['确认', '取消'],
+            yes: function(index, layero){
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                ok_music_do.call(this,iframeWin,'music');
+                layer.close(index); //一般设定yes回调，必须进行手工关闭
+            }
+        });
+    })
+    function okdo(iframeWin) {
+
+        var num = iframeWin.$('#myuploadform div').length;
+        if(num){
+            var status =  iframeWin.$("input[name='status']").val();
+            var aids = iframeWin.$("input[name='aids[]']").val();
+            var filedata = iframeWin.$("input[name='filedata[]']").val();
+            var namedata = iframeWin.$("input[name='namedata[]']").val();
+
+            if(filedata){
+                //页面处理
+                var index = $('#page li.selected').index()-1;
+                var id = window.app.data[index].id;
+                window.app.data[index].content = filedata;
+                $.ajax({
+                    type: "POST",     //提交方式
+                    url: "/?g=admin&m=poster&a=update",    //提交的页面，方法名
+                    data: {
+                        'id': window.app.id,
+                        'data': window.app.data
+                    },
+                    success: function (data) { //如果执行成功，那么执行此方法
+                        var backroundImage = 'url('+filedata+')';
+                        $('#screen').contents().find('.page-con').css('background-image',backroundImage);
+                        $('#bgImage').css('background-image',backroundImage);
+                    },
+                });
+            }
+        }
+    }
+    function ok_music_do(iframeWin,inputid) {
+        var musicUrl = iframeWin.$('input[name="musicUrl"]:checked ').val();
+        $('#'+inputid).val(musicUrl);
+    }
+</script>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#myform').ajaxForm({
+            success:  complete,  // post-submit callback
+            dataType: 'json'
+        });
+    });
+
+    function complete(data){
+        if (data.status == 1) {
+            layer.msg(data.info, {
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            });
+        } else {
+            layer.msg(data.info, {
+                icon: 2,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            });
+        }
+    }
+</script>
+</block>

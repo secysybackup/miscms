@@ -1,0 +1,120 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">邮箱发送配置（用于网站发送邮件）</div>
+            <div class="card-block">
+                <form class="myform form-horizontal" method='post' action="{:U('Sysconfig/save')}">
+
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">邮件服务器</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="SMTP_HOST" value="{$sysconf['SMTP_HOST']}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">邮件发送端口</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="SMTP_PORT" value="{$sysconf.SMTP_PORT}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">发件人地址</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="mail_from" value="{$sysconf.mail_from}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">验证用户名</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="SMTP_USER" value="{$sysconf.SMTP_USER}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">验证密码</label>
+                        <div class="col-md-7" id="mail_password">
+                            <php>if(!empty($sysconf['SMTP_PASS'])){</php>
+                            <p class="form-control-static" style="width: 100px;float:left;">*********</p>
+                            <button type="button" onclick="changepwd()" class="btn btn-sm btn-primary" style="float:left;">修改</button>
+                            <php>}else{</php>
+                            <input type="password" class="form-control" name="SMTP_PASS" value=""/>
+                            <php>}</php>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">邮件设置测试</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="mail_to" id="mail_to" value=""/>
+                            <input type="button" class="btn btn-sm btn-primary" onClick="javascript:test_mail();" value="测试发送">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" value="保存" class="btn btn-primary">
+                        <input type="reset" value="重置" class="btn btn-primary">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">邮箱接收配置（用于接收邮件）</div>
+            <div class="card-block">
+                <form class="myform" method='post' action="{:U('Sysconfig/save')}">
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3">邮箱地址</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="mail_accept" id="mail_server" value="{$sysconf['mail_accept']}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <input type="submit" value="保存" class="btn btn-primary">
+                        <input type="reset" value="重置" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+function changepwd(){
+    var html = '<input type="password" class="form-control" name="SMTP_PASS" value=""/>';
+    $('#mail_password').html(html);
+}
+function test_mail(){
+    $.ajax({
+        url:'{:U("Sysconfig/testmail")}&mail_to='+$('#mail_to').val(),
+        beforeSend:function(){
+            layer.msg('正在发送邮件');
+        },
+        success:function(data){
+            layer.msg(data.info);
+        }
+    });
+}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        dataType: 'json'
+    });
+});
+
+function complete(data){
+    if(data.status==1){
+        layer.msg('修改成功');
+    }else{
+        layer.msg(data.info);
+    }
+}
+</script>
+</block>

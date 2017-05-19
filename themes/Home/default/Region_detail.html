@@ -1,0 +1,187 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <script type="text/javascript" src="__JS__/imagezoom.min.js"></script>
+    <script type="text/javascript" src="__JS__/base.js"></script>
+    <div class="w980 ptb25 oh">
+        <div class="pageSidebar fl">
+            <div class="sidebarOne">
+                <h2>{$Cats[2][catname]}</h2>
+                <ul>
+                    <Gr:cat catid="2" id="r" key="i">
+                        <li><a class="{if $catid==$r['id'] || $parentid==$r['id']}active{/if}"  href="/{$region.letter}/{$r.id}.html" title="{$r.catname}">{$region.name}{$r.catname}</a>
+                            {if $r['child']=="1"}
+                            <ol {if $catid==$r['id'] || $r['id']==$Cats[$catid][parentid] || $r['id']==$Cats[$parentid][parentid]} style="display: block;"
+                            {else}style="display: none;"{/if}>
+                            <Gr:cat catid="$r['id']" id="rr" key='ii'>
+                        <li>
+                            <a class="{if $catid==$rr['id']}active{/if}" href="/{$region.letter}/{$rr.id}.html" title="{$rr.catname}">{$region.name}{$rr.catname}</a>
+                            {if $rr['child']=="1"}
+                            <ul {if $catid==$rr['id']} style="display: block;"{elseif $rr['id']==$Cats[$catid][parentid]}style="display: block;"{else}style="display: none;"{/if}>
+                            <Gr:cat catid="$rr['id']" id="rrr" key='ii'>
+                        <li><a href="/{$region.letter}/{$rrr.id}.html" {if $catid==$rrr['id']}style="color:red"{/if} >{$region.name}{$rrr.catname}</a></li>
+                    </Gr:cat>
+                </ul>
+                {/if}
+                </li>
+                </Gr:cat>
+                </ol>
+                {/if}
+                </li>
+                </Gr:cat>
+                </ul>
+
+            </div>
+            <div class="sidebarTwo">
+                <h2>推荐产品</h2>
+                <div class="bd">
+                    <div class="box">
+                        <ul>
+                            <Gr:list order="listorder asc,id desc" catid="2" key="i" posid="1" field="title,url,thumb" limit="3" id="r">
+                                <li>
+                                    <a href="/{$region.letter}/pro_{$r.id}.html" title="{$r[title]}"><img width="172" height="129" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a>
+                                    <span>{$r['title']|str_cut=###,25}</span>
+                                </li>
+                            </Gr:list>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarThree">
+                <h2>联系优色</h2>
+                <div class="twoCont">
+                    <h3>全国服务热线：<span>{$site_tel400}</span></h3>
+                    <p>
+                        电话：{$site_telephone}<br/>
+                        传真：{$site_fax}<br/>
+                        地址：{$site_address}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(".sidebarTwo").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:2,interTime:30});
+        </script>
+        <div class="pageContent fr">
+            <include file="Public:title"/>
+            <div class="pageContentBox">
+                <div class="productShowPic fl">
+                    <div class="box">
+                        <div class="tb-booth tb-pic tb-s310">
+                            <a href="{$product.thumb}"><img src="{$product.thumb}" alt="{$product.title}" rel="{$product.thumb}" class="jqzoom" /></a>
+                        </div>
+                        <div class="tb-picList">
+                            <a class="prev"></a><a class="next"></a>
+                            <div class="tb-thumb">
+                                <ul id="thumblist">
+                                    <li><a class="tb-selected" href="javascript:;"><img alt="{$product.title}" src="{$product.thumb}" mid="{$product.thumb}" big="{$product.thumb}"></a></li>
+                                    <volist name="product.pics" id="r">
+                                        <li><a class="" href="javascript:;" title="{$r.filename}"><img alt="{$r.filename}" src="{$r[filepath]}" mid="{$r[filepath]}" big="{$r[filepath]}"></a></li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右侧标题简介 -->
+                <div class="productShowTitle fl">
+                    <h2>{$region.name}{$product.title}</h2>
+                        <div class="descriptionBox">
+                            产品分类：{$Cats[$product['catid']]['catname']}<br/>
+                            产品说明：{$product.description}
+                        </div>
+
+                        <div class="productOrder"><a id="submit" class="btn btn-default" href="javascript:;">加入购物车</a></div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <!-- 产品说明标签切换 -->
+            <div class="tabListBox">
+                <div class="tabList">
+                    <ul>
+                        <li>产品描述</li>
+                    </ul>
+                </div>
+                <div class="tabBox" style="background:#fff;overflow:hidden;">
+                    <div class="tabBoxC">{$product.content}</div>
+                </div>
+            </div>
+            <!-- 产品定购 -->
+            <div class="orderBox" id="order">
+                <div class="recTitle" style=" overflow: hidden;">采购：{$product.title}</div>
+                <div class="orderTable">
+                    <form id="orderform" action="/?m=form&a=insert" method="post">
+                        <input type="hidden" name="formid" value="2"/>
+                        <input name="product_name" type="hidden" value="{$product.title}"/>
+                        <input name="product_url" type="hidden" value="{$product.url}"/>
+                        <div class="tableRow"><span>联 系 人</span><input name="username" class="rowInput" type="text" placeholder="请填写您的真实姓名" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="tableRow"><span>手机号码</span><input name="phone" class="rowInput" type="text" placeholder="请填写您的联系电话" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="tableRow"><span>电子邮件</span><input name="email" class="rowInput" type="text" placeholder="请填写您的电子邮件" onfocus="this.value=''" onkeydown="this.style.color='#666'" validate="required:true"/></div>
+                        <div class="clearfix"></div>
+                        <div class="tableRowA">
+                            <span>采购意<br/>向描述</span>
+                            <textarea name="content" onfocus="this.value=''" onkeydown="this.style.color='#666'" class="rowTextarea" placeholder="请填写订购的产品数量和产品描述，方便我们进行统一备货"></textarea>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="tableRow grCode pt15">
+                            <input class="subtA" type="submit" name="submit" value="提 交" id="submit">
+                            <input class="subtB" type="reset" value="重 置">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 相关产品 -->
+            <div class="relatedProduct">
+                <div class="recTitle">相关产品</div>
+                <ul>
+                    <volist name="relation" limit="3" id="r">
+                        <li><a href="{$r[url]}" title="{$r[title]}"><img width="230" height="173" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}" alt="{$r[title]}"></a><h3>{$r['title']|str_cut=###,30}</h3></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    </div>
+    <script type="text/javascript">
+        jQuery(".tabListBox").slide({ titCell:".tabList li", mainCell:".tabBox",delayTime:0 });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".jqzoom").imagezoom();
+            $("#thumblist li a").click(function(){
+                $(this).addClass("tb-selected");
+                $(this).parents().siblings().children("a").removeClass("tb-selected");
+                $(".jqzoom").attr('src',$(this).find("img").attr("mid"));
+                $(".jqzoom").attr('rel',$(this).find("img").attr("big"));
+            });
+        });
+
+        $("#orderform").submit(function () {
+            var self = $(this);
+            $.post(self.attr("action"), self.serialize(), success, "json");
+            return false;
+
+            function success(data) {
+                if (data.status) {
+                    layer.msg('提交成功！');
+                    $('#orderform')[0].reset();
+                    $.ajax({
+                        url: '/form/send',
+                        type: 'post',
+                        data:{
+                            message:data.msg
+                        }
+                    });
+                } else {
+                    layer.msg(data.info);
+                }
+            }
+        });
+
+
+    </script>
+
+
+</block>

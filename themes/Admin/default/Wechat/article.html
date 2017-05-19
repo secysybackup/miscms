@@ -1,0 +1,31 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="col-md-12">
+
+    <div class="table-actions">
+        <a href="{:U('Wechat/article_add')}" class="btn btn-sm btn-primary">添加</a>
+        <button type="button" class="btn btn-sm btn-primary" onclick="myform.action='{:U('Wechat/delMenuAll')}';return confirm_deleteall()">删除</button>
+    </div>
+
+    <form id="myform" class="form-horizontal" action="" method="post">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>标题</th>
+                </tr>
+            </thead>
+            <tbody>
+            <volist name="list" id="vo">
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['title']}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+</block>

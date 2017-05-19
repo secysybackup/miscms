@@ -1,0 +1,164 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <style>
+        /* 弹出样式 */
+        .yzh-dialog-bg{
+            z-index:9998;
+            position:fixed;
+            top:0;left:0;
+            width:100%;
+            height:100%;opacity:0.9;display:none;
+            filter:alpha(opacity=90);background: rgba(0,0,0,.9);}
+        .yzh-dialog{
+            z-index:9999;
+            position:fixed;
+            top:50%;
+            left:50%;
+            width:400px;
+            height:280px;
+            margin:-140px 0 0 -200px;
+            background:#fff;
+            display:none;
+            text-align:center;
+            border-top:12px solid #D9B047;
+        }
+        .yzh-dialog-close{width:30px;
+            height:31px;position:absolute;top:-45px;right:-40px;cursor:pointer;}
+        .yzh-dialog-close a img{
+            transition:All 0.4s ease-in-out;
+            -webkit-transition:All 0.4s ease-in-out;
+            -moz-transition:All 0.4s ease-in-out;
+            -o-transition:All 0.4s ease-in-out;
+        }
+        .yzh-dialog-close a:hover img{
+            transform:rotate(90deg);
+            -webkit-transform:rotate(90deg);
+            -moz-transform:rotate(90deg);
+            -o-transform:rotate(90deg);
+            -ms-transform:rotate(90deg);
+        }
+        .dialog-box{padding:55px 91px 0;overflow:hidden;}
+        .dialog-box h3{font-size:18px;font-weight:bold;color:#333;}
+        .dialog-box p{line-height:20px;padding-top:30px;}
+        .dialog-box img{margin-top:35px;}
+    </style>
+
+
+    <div class="table-toolbar">
+        <a href="{:U('Vcard/add')}" class="btn btn-primary">新增</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="w-50">id</th>
+                    <th>名称</th>
+                    <!--<th>展示次数</th>-->
+                    <th>外链地址</th>
+                    <th>添加时间</th>
+                    <th class="w-200">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="list" id="vo">
+                    <tr>
+                        <td>{$vo['id']}</td>
+                        <td><a href="javascript:get_qrcode({$vo['id']})">{$vo['name']}</a></td>
+                        <!--<td>{$vo['visit']}</td>-->
+                        <td><a target="_blank" href="http://{$SITE_DOMAIN}/vcard/{$vo['id']}.html">http://{$SITE_DOMAIN}/vcard/{$vo['id']}.html</a></td>
+                        <td>{$vo['createtime']|toDate=###,'Y-m-d'}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="javascript:get_qrcode({$vo['id']})">分享</a>
+                            <a class="btn btn-sm btn-primary" href="{:U('Vcard/edit','id='.$vo['id'])}">编辑</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('Vcard/delete','id='.$vo['id'])}');">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="yzh-dialog" style="display: none;">
+        <div class="yzh-dialog-box">
+            <p style="padding: 18px 5px;">扫描下面二维码访问微名片</p>
+            <div id="qrpng"></div>
+        </div>
+        <div class="yzh-dialog-close">
+            <a href="javascript:;"><img src="__IMG__/close.png"></a>
+        </div>
+    </div>
+    <div class="yzh-dialog-bg" style="display: none;"></div>
+</block>
+
+<block name="script">
+<load href="__JS__/jquery.qrcode.min.js"/>
+
+<script>
+var size = 150;//二维码尺寸
+var curnum =0;
+var qrtype = Array('',Array('TEL'),Array('MECARD:N','TEL','NICKNAME','EMAIL','ADR','URL','NOTE'));
+    //初始
+jQuery('#qrpng').qrcode({
+    //render  : "table",
+    text  : 'http://{$SITE_DOMAIN}/vcard/index',
+    width :150,
+    height:150
+});
+
+
+
+//生成二维码size=150;
+function get_qrcode(id){
+
+    var data = 'http://{$SITE_DOMAIN}/vcard/'+id+'.html';
+
+    $('.yzh-dialog-bg').fadeIn(100);
+    $('.yzh-dialog').slideDown(200);
+
+
+    jQuery('#qrpng').html('').qrcode({
+        //render  : "table",
+        text  : utf16to8(data),
+        width :size,
+        height:size
+    });
+
+    return false;
+}
+
+$('.yzh-dialog-close').click(function(){
+    $('.yzh-dialog-bg').fadeOut(100);
+    $('.yzh-dialog').slideUp(200);
+})
+
+//选择尺寸
+$('#qrsize span').click(function(){
+    $(this).addClass('on_size').siblings().removeClass('on_size');
+    size = this.id;
+});
+
+function utf16to8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for(i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)) {
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        } else {
+            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        }
+    }
+    return out;
+}
+</script>
+</block>

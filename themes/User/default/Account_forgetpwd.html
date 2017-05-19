@@ -1,0 +1,105 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie6"><![endif]-->
+<!--[if IE 7 ]><html class="ie7"><![endif]-->
+<!--[if IE 8 ]><html class="ie8"><![endif]-->
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="w3c"><!--<![endif]-->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="__CSS__/layout.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/yzh.css">
+
+	<link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="__STATIC__/jquery-1.10.2.min.js"></script>
+
+	<script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<script type="text/javascript" src="__STATIC__/jquery.form.js"></script>
+	<script type="text/javascript" src="__STATIC__/yzh.js"></script>
+
+	<title>{$seo_title}-{$site_name}</title>
+</head>
+<body class="login">
+
+<div class="logo">
+	<a href="/" title="EVA工具包"><img src="{$site_logo}" alt="{$site_name}" title="{$site_name}"/></a>
+</div>
+
+<div class="content" style="margin-top: 10px">
+	<h3 class="form-title font-green">找回密码</h3>
+	<div class="panel-body" id="sendmail_form">
+		<form method="post" id="myform" action="{:U('Login/sendmail')}" class="form-horizontal">
+			<div id="result"></div>
+			<div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" name="email" class="form-control" placeholder="邮箱"/>
+                    </div>
+                </div>
+			</div>
+			<div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input name="verifyCode" class="form-control" placeholder="验证码" id="verifyCode"/>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{:U('verify')}" onclick="javascript:resetVerifyCode();" align="absmiddle" title="点击刷新验证码" id="verifyImage"/>
+                    </div>
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="col-md-8">
+					<input type="hidden" name="ajax" value="1">
+					<input type="submit" value="找回密码" class="btn btn-primary btn-sm">
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div id="sendmailok">
+		尊敬的会员 <span id="send_username"></span>您好，重置密码信息已发送至您的邮箱 <span
+			id="send_email"></span>，<br>请注意查收，密码修改请在72小时内完成。<br>如果没有收到密码重置邮件，请到垃圾邮箱中找找看.。
+	</div>
+</div>
+<style>
+	#sendmailok {
+		display: none;
+		padding: 15px;
+		line-height: 24px;
+	}
+
+	#send_username, #result, #send_email {
+		font-weight: bold;
+		color: #FB0000;
+	}
+</style>
+<script language="JavaScript">
+	jQuery(document).ready(function ($) {
+		$('#myform').ajaxForm({
+			beforeSend: function () {
+				$('#result').html('<img src="__PUBLIC__/images/msg_loading.gif">').show();
+			},
+			success: complete,  // post-submit callback
+			dataType: 'json'
+		});
+	});
+	function complete(data) {
+		if (data.status == 1) {
+			$('#sendmail_form').hide();
+			$('#sendmailok').show();
+			$('#send_username').html(data.data.username);
+			$('#send_email').html(data.data.email);
+		} else {
+			$('#result').html(data.info).show();
+		}
+	}
+
+</script>
+
+</body>
+</html>

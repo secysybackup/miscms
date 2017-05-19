@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="w3c">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="__CSS__/elpis.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="__STATIC__/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+
+<script type="text/javascript" src="__JS__/admin.js"></script>
+<title>誉字号v1</title>
+</head>
+
+<body>
+<style>
+html{
+    height:100%;
+}
+body{
+    height: 100%;
+    padding-top: 50px;
+    font-size: 16px;
+}
+.section-edit{
+    width: 100%;
+    border-bottom: 2px solid #666;
+}
+.navbar-brand{
+    background:url(__IMG__/logo.png);
+    background-size: 28%;
+    background-repeat: no-repeat;
+    padding-left: 37px;
+}
+.iframe_div{
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+}
+#frontend{
+    background: #fff none repeat scroll 0 0;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+</style>
+
+<nav class=" navbar navbar-light bg-faded navbar-fixed-top section-edit">
+
+    <a class="navbar-brand" href="{:U("Admin/Index/index")}">外观设置</a>
+
+    <ul class="nav navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/?g=admin&m=visual&a=index">桌面</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/?g=admin&m=visual&a=index&client=wap">移动</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav pull-sm-right">
+        <li class="nav-item"><a class="nav-link" href="javascript:update_cache();">刷新</a></li>
+        <li class="nav-item"><a class="nav-link" href="/" target="_blank" data-toggle="tooltip" >预览</a></li>
+        <li class="nav-item"><a class="nav-link" href="{:U("Admin/Index/index")}">后台</a></li>
+    </ul>
+</nav>
+
+<div class="iframe_div">
+    <iframe id="frontend" src="{$client_url}" frameborder="0" scrolling="yes" width="100%"></iframe>
+</div>
+
+
+
+<script type="text/javascript">
+
+var iframe = document.getElementById('frontend');
+
+if (iframe.attachEvent){
+    iframe.attachEvent("onload", function(){
+        editblock();
+    });
+} else {
+    iframe.onload = function(){
+        editblock();
+    };
+}
+
+function editblock(){
+
+    $('#frontend').contents().find(".yzh-editable").css({
+        position: 'relative',
+      }).append('<div class="block-fade"><div><span>编辑</span></div></div>')
+
+    $('#frontend').contents().find(".yzh-editable").click(function(event) {
+        var editableType = $(this).attr('editable-type');
+        var editableId = $(this).attr('editable-id');
+
+        $.ajax({
+            url: "{:U('Visual/edit')}",
+            type: 'get',
+            // dataType: '',
+            data: {
+                'editableType': editableType,
+                'editableId': editableId
+            },
+            success: function(data){
+               layer.open({
+                   type: 1,
+                   zIndex: 10000,
+                   shadeClose: true,
+                   area: '830px',
+                   title: '编辑', //不显示标题
+                   content:data, //捕获的元素
+              });
+            }
+        })
+    });
+}
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var APP = '';
+var ROOT = '';
+var PUBLIC = '/Public';
+
+//更新缓存
+function update_cache(){
+    $.ajax({
+        url:"{:U('Public/cache')}",
+        beforeSend:function(){
+            layer.msg('正在更新缓存');
+        },
+        success:function(data){
+            window.location.reload();
+        }
+    });
+}
+</script>
+</body>
+</html>

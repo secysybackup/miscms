@@ -1,0 +1,73 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+	<div id="focus" class="banner">
+		<div class="bd">
+			<ul>
+				<gr:slide slideid="2" id="r">
+				<li><a href="{$r.link}"><img src="{$r.pic}" alt=""/></a></li>
+				</gr:slide>
+			</ul>
+		</div>
+		<div class="hd"><ul></ul></div>
+	</div>
+	<script type="text/javascript">
+		TouchSlide({
+			slideCell:"#focus",
+			titCell:".hd ul",
+			mainCell:".bd ul",
+			effect:"leftLoop",
+			autoPlay:true,//自动播放
+			autoPage:true, //自动分页
+		});
+	</script>
+	<section class="conMenu">
+		<ul>
+			<li><img src="__IMG__/menu1.jpg" alt=""><span>服务项目</span></li>
+			<li><img src="__IMG__/menu2.jpg" alt=""><span>运输专线</span></li>
+			<li><img src="__IMG__/menu3.jpg" alt=""><span>实力展示</span></li>
+		</ul>
+	</section>
+	<!-- 服务项目 -->
+	<section class="proMenu">
+		<h2 class="homeTitle"><a class="iconfont more" href="{$Cats[2]['ur']}">&#xe62c;</a><span>产品分类</span></h2>
+		<ul>
+			<Gr:cat catid="2" id="r" key="i">
+				<li><a href="{$r.url}">{$r['catname']}</a></li>
+			</Gr:cat>
+		</ul>
+	</section>
+	<!-- 实力展示 -->
+	<section class="product">
+		<h2 class="homeTitle"><a class="iconfont more" href="{$Cats[2]['ur']}">&#xe62c;</a><span>实力展示</span></h2>
+		<ul class="proMain">
+			<gr:list catid="2" name="product" id="r" field="thumb,url,title" limit="4">
+				<li><a href="{$r.url}"><img src="{$r.thumb}" alt=""><span>{$r.title}</span></a></li>
+			</gr:list>
+
+		</ul>
+	</section>
+	<!-- 关于我们 -->
+	<section class="about">
+		<h2 class="homeTitle"><a class="iconfont more" href="#">&#xe62c;</a><span>关于我们</span></h2>
+		<div class="font con">
+			{$block[19]}
+
+		</div>
+	</section>
+	<!-- 新闻资讯 -->
+	<section class="news">
+		<h2 class="homeTitle"><a class="icon iconfont more" href="{$Cats[5]['ur']}">&#xe62c;</a><span>新闻资讯</span></h2>
+		<ul >
+
+			<Gr:list catid="5" id="r" key="i" field="id,thumb,title,url" limit="6">
+				{if $i==1}
+				<li class="n1"><a href="{$r.url}" style="background-image:url({$r.thumb})"><p>{$r.title}</p></a></li>
+				{else}
+				<li><a href="{$r.url}">{$r.title}</a></li>
+				{/if}
+			</Gr:list>
+		</ul>
+	</section>
+</block>

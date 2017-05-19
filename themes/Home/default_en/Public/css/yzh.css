@@ -1,0 +1,90 @@
+﻿/*全局样式*/
+.clear{clear:both;overflow:hidden;height:0;}
+
+/*客服窗口样式*/
+/* 在线客服样式 */
+.kefuBox{position:fixed;z-index:1000;top:180px;right:0;width:auto; _position:absolute;_top: expression(documentElement.scrollTop +45);}
+.kefuBox .kefuLeft{float:left;overflow:hidden;width:30px;height: 157px;cursor:pointer;background:url(../images/qq/kefu_l.png) no-repeat}
+.kefuBox .kefuRight{display:block;float:left;overflow:hidden;width:0;}
+.kefuBox .kefuTop{width:154px;height:46px;background:url(../images/qq/kefu_top.png) no-repeat;}
+.kefuBox .kefuClose{float:right;overflow:hidden;width:154px; height:46px;display:block;cursor:pointer;}
+.kefuBox .kefuBottom{width:154px;height:12px;background:url(../images/qq/kefu_bottom.png) no-repeat;}
+.kefuBox .kefuCont{width:154px;padding:0 12px;background:url(../images/qq/kefu_line.png) repeat-y;overflow:hidden;}
+.kefuBox .kefuCont ul{margin:0;padding:0;}
+.kefuBox .kefuCont ul li{width:80px;line-height:28px;overflow:hidden;height:28px;padding-left:40px;padding-right:10px;text-overflow:ellipsis;white-space:nowrap;margin-bottom:5px;}
+.kefuBox .kefuCont ul li a{color:#333;}
+.kefuBox .kefuCont ul li.pic{width:130px;height:89px;margin-bottom:10px;padding:0;}
+.kefuBox .kefuCont ul li.qq{background:url(../images/qq/qq.png) no-repeat;}
+.kefuBox .kefuCont ul li.wang{background:url(../images/qq/wangwang.png) no-repeat}
+.kefuBox .kefuCont ul li.spk{background:url(../images/qq/skype.png) no-repeat}
+.kefuBox .kefuCont ul li.codeer{display:block;width:130px;height: 165px;text-align:center;color:#fff;padding:10px 0 0;font-family:"微软雅黑";font-size:14px;margin-bottom:0;}
+.kefuBox .kefuCont ul li.codeer p{display:block;height:35px;line-height:35px;}
+.kefuBox .kefuCont ul li.codeer span{display:block;width:130px;height:130px;padding:7px;background:url(../images/qq/cobj.png) no-repeat;}
+.kefuBox .kefuCont ul li.codeer span img{width:116px;height:116px;}
+
+
+/*分页样式*/
+.pagination{font:12px;overflow:hidden;width:723px;padding:10px 0 10px;text-align:center;}
+.pagination a{font-size:12px;line-height:22px;display:inline-block;height:22px;padding:0 8px;text-align:center;color:#333;border:1px solid #e3e3e3;background:#fff;}
+.pagination a.a1{line-height:22px;height:22px;margin-top:0;padding:0 12px;}
+.pagination a:hover{text-decoration:none;color:#000;background:#f1f1f1;}
+.pagination span{line-height:22px;display:inline-block;height:22px;padding:0 8px;text-align:center;color:#fff;border:1px solid #df4c18;background:#df4c18;}
+
+/* 内页留言样式 */
+.yzh-table-feedback tr{height:40px;}
+.yzh-table-feedback .input-label{font-size:14px;line-height:20px;width:80px;height:20px;padding:5px;vertical-align:top;}
+.yzh-table-feedback .left_cont{vertical-align:middle;}
+.yzh-table-feedback .input-text{line-height:34px;width:400px;height:34px;margin-bottom:15px;padding:10px 5px;border:1px solid #ccc;background:#fff;box-sizing:border-box;}
+.yzh-table-feedback .input-textarea{width:470px;height:240px;margin-bottom:10px;padding:5px;border:1px solid #ccc;background:#fff;box-sizing:border-box;}
+.yzh-table-feedback .input-verifycode{line-height:14px;width:100px;height:34px;margin-bottom:15px;padding:10px 5px;border:1px solid #ccc;background:#fff;box-sizing:border-box;float:left;}
+.yzh-table-feedback .input-text:focus,.input-textarea:focus{border-color:#666;outline:0;}
+.yzh-table-feedback .yzh-btn{font-size:18px;line-height:35px;display:block;float:left;width:110px;height:35px;margin-right:15px;cursor:pointer;text-align:center;color:#fff;border:0;background:#5eb02a;}
+.yzh-table-feedback .btn:hover{background:#333;}
+/*---网站地图---*/
+.yzh-map-main{overflow:hidden;margin:10px 0;padding-bottom:10px;border:solid 5px #f0f0f0;background:#fff;}
+.yzh-map-main .sitemap_con{width:845px;margin:0 auto;color:#666;}
+.yzh-map-main .sitemap_con .map_top{border-bottom:solid 1px #d7d7d7;}
+.yzh-map-main .sitemap_con .map_top img{float:left;}
+.yzh-map-main .site_r_link{float:right;width:120px;margin-top:45px;/*上边界根据需要进行调整*/padding:5px 10px;border:1px solid #cdcdcd;background:#f8f8f8;}
+
+/*网站地图，显示方式样式，上边界根据需要进行调整*/
+.yzh-map-main .site_plc{padding:5px 0;text-indent:10px;background:url(../images/ico-plus.gif) no-repeat 0 8px;}
+.yzh-map-main .sitemap_con h4{line-height:30px;}
+.yzh-map-main .b4{border:solid 1px #e0e0e0;}
+.yzh-map-main .b4 ul{padding:0 11px;}
+.yzh-map-main .b4 li{line-height:25px;float:left;overflow:hidden;width:164px;}
+.yzh-map-main .b4 li a{color:#666;}
+.yzh-map-main .b4 li a:hover{color:#0f6bd6;}
+
+
+/*可编辑碎片遮罩*/
+.block-fade{
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+.block-fade div{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.block-fade span {
+    color: #fff;
+    position: absolute;
+    display: block;
+    z-index: 1000;
+    background: #2772ee;
+    border-radius: 20px;
+    font-size: 12px;
+    line-height: 40px;
+    left: 50%;
+    width: 40px;
+    bottom: 20%;
+    height: 40px;
+    margin-left: -20px;
+}

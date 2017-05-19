@@ -1,0 +1,27 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+	
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="cont">
+	<h1>{$picture.title}</h1>
+	<p class="time">{$picture.createtime|toDate=###,'Y-m-d'}</p>
+	<div style="padding:0 10px;">
+		<p class="b10" align="center">
+			<img alt="{$picture.title}" src="{$picture.thumb}"/>
+		</p>
+	</div>
+</div>
+
+</block>
+
+<block name="footer">
+	<include file="Public:footer"/>
+</block>

@@ -1,0 +1,59 @@
+<extend name="Public:base"/>
+
+
+<block name="main">
+
+    <form id="myform" method="post" action="{:U('Plugin/statistics')}">
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">统计代码:</label>
+            <div class="col-md-8">
+            <textarea class="form-control" rows="7" cols="80" name="code">{$code}</textarea>
+            <label><a class="btn btn-info btn-sm" target="_blank" href="http://tongji.baidu.com/web/welcome/login">注册百度统计</a>(您可以将第三方的流量监控代码放置在此区域，并将查看账户与查看密码备注在下方，点击登录输入账户和密码即能查看网站状态统计数据。)</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">用户名:</label>
+            <div class="col-md-8">
+            <input type="text" class="form-control" name="tongji_user" value="{$data['tongji_user']}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">密码:</label>
+            <div class="col-md-8">
+            <input type="text" class="form-control" name="tongji_pwd" value="{$data['tongji_pwd']}">
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">登录网址:</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control w-500px pull-left" name="tongji_site" value="{$data['tongji_site']}">
+                <a class="btn btn-info pull-left" target="_blank" href="{$data['tongji_site']}">点击登录</a>
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" value="保存" class="btn btn-primary">
+            <input type="reset" value="重置" class="btn btn-primary">
+        </div>
+    </form>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if(data.status==1){
+                layer.msg('修改成功');
+            }else{
+                layer.msg(data.info);
+            }
+        }
+    </script>
+</block>

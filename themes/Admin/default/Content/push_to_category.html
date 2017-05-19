@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='__PUBLIC__/admin/css/style.css'>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.form.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+</head>
+<body>
+
+<div class="modal-body">
+    <div class="table-tabs">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:U($model_name.'/push',array('action'=>'position_list','modelid'=>$modelid,'catid'=>$catid,'id'=>$id))}">推送到推荐位</a></li>
+                    <li class="active"><a href="{:U($model_name.'/push',array('action'=>'push_to_category','modelid'=>$modelid,'catid'=>$catid,'id'=>$id))}">推送到其他栏目</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <form id="myform" class="form-horizontal" action="{:U($model_name.'/push','action=push_to_category')}" method="post">
+        <input type="hidden" name="modelid" value="{$modelid}">
+        <input type='hidden' name="id" value='{$id}'>
+        <div class="form-group">
+            <label class="control-label col-md-2">选择栏目</label>
+            <div class="col-md-8">
+                <select name="catid" class="form-control move_catid">
+                    <option value="">选择栏目</option>
+                    {$select_categorys}
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm">取消</button>
+            <button type="submit" class="btn btn-primary btn-sm">确认</button>
+        </div>
+    </form>
+    <script>
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                setTimeout(function(){
+                    parent.location.reload();
+                    parent.layer.close(index);
+                },1000);
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</div>
+</body>

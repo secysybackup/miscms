@@ -1,0 +1,98 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="card">
+        <div class="card-header">主营产品 <a class="pull-right" href="javascript:add_item();"><i class="fa fa-plus"></i>新增</a></div>
+        <div class="card-block">
+            <form class="myform" method="post" action="">
+                <div id="mainpro">
+                    <empty name="mainpro">
+                        <div class="item item_1">
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-1">产品名称</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="product_name[]">
+                                </div>
+                                <label class="form-control-label col-md-1">产品链接</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="product_url[]">
+                                </div>
+                            </div>
+                        </div>
+                        <else/>
+                        <volist name="mainpro" id="r" key="k">
+                            <div class="item item_{$k}">
+                                <div class="form-group row">
+                                    <label class="form-control-label col-md-1">产品名称</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="product_name[]" value="{$r['product_name']}">
+                                    </div>
+                                    <label class="form-control-label col-md-1">产品链接</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control"  name="product_url[]" value="{$r['product_url']}">
+                                    </div>
+                                <neq name="k" value="1">
+                                    <div class="col-md-1">
+                                        <button type="button" onclick="del_item({$k})" class="btn btn-primary btn-sm">删除</button>
+                                    </div>
+                                </neq>
+                                </div>
+                            </div>
+                        </volist>
+                    </empty>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" value="保存" class="btn btn-primary" />
+                    <input type="reset" value="重置" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if(data.status==1){
+                layer.msg(data.info);
+            }else{
+                layer.msg(data.info);
+            }
+        }
+
+
+        function add_item(num)
+        {
+            var num = $('.item').length+1;
+            var html = '<div class="item item_'+num+'">';
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-md-1">产品名称</label>';
+            html += '<div class="col-md-3">';
+            html += '<input class="form-control" type="text" name="product_name[]" >';
+            html += '</div>';
+            html += '<label class="form-control-label col-md-1">链接地址</label>';
+            html += '<div class="col-md-5">';
+            html += '<input class="form-control" type="text" name="product_url[]">';
+            html += '</div>';
+            html += '<div class="col-md-1">';
+            html += '<button type="button" onclick="del_item('+num+')" class="btn btn-primary btn-sm">删除</button>';
+            html += '</div>';
+            html += '</div>';
+            $('#mainpro').append(html);
+        }
+
+        function del_item(num){
+            $('.item_'+num).remove();
+        }
+    </script>
+</block>

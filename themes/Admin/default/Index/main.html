@@ -1,0 +1,346 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <notempty name="message">
+        <div class="alert alert-info">
+            <h6>提示建议</h6>
+            <div class="content">
+                <div class="bk20 hr"><hr /></div>
+                <volist name="message" id="val">
+                    <div class="on{$val.type}">&nbsp;{$val.content}</div><br />
+                </volist>
+            </div>
+        </div>
+    </notempty>
+
+    <?php if(APP_DEBUG){?>
+    <div class="alert alert-danger">
+        <h6>提示建议</h6>
+        <div class="content">
+            <div class="bk20 hr"><hr /></div>
+            上线之后请将APP_DEBUG参数设为false
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if(is_dir('./install')){?>
+    <div class="alert alert-danger">
+        <h6>提示建议</h6>
+        <div class="content">
+            <div class="bk20 hr"><hr /></div>
+            上线之后请将install文件夹删除
+        </div>
+    </div>
+    <?php } ?>
+
+    <div class="page-header">
+
+        <div class="pull-left">
+            <h1>欢迎使用誉字号后台管理系统</h1>
+        </div>
+
+        <div class="pull-right">
+            <ul class="stats">
+                <li class="lightred">
+                    <i class="fa fa-calendar"></i>
+                    <div class="details">
+                        <span class="big"><?php echo date("F j, Y")?></span>
+                        <span id="time"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content metro-nav">
+
+        <div class="metro-nav-block">
+            <a href="">
+                <i class="fa fa-eye"></i>
+                <div class="info" id="views_pv">0</div>
+                <div class="status">浏览量(PV)</div>
+            </a>
+        </div>
+        <div class="metro-nav-block">
+            <a href="">
+                <i class="fa fa-user"></i>
+                <div class="info" id="views_ip">0</div>
+                <div class="status">访客数量(IP)</div>
+            </a>
+        </div>
+        <div class="metro-nav-block">
+            <a href="">
+                <i class="fa fa-comments"></i>
+                <div class="info" id="feedback_count">0</div>
+                <div class="status">反馈数量</div>
+            </a>
+        </div>
+        <div class="metro-nav-block">
+            <a href="">
+                <i class="fa fa-comment"></i>
+                <div class="info"  id="comment_count">0</div>
+                <div class="status">评论</div>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 chartshow">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <tr>
+                        <th style="text-align:left;"><b class="ico"></b>
+                            <span id="type">PC端统计图表</span>
+                            <a class="red" href="javascript:;" onclick="refresh_chart(this)">手机端统计图表</a>
+                            <a class="green" href="javascript:;" onclick="tab_charts_w(this)">7天</a>
+                            <a class="blue" href="javascript:;" onclick="tab_charts_m(this)">30天</a>
+                            <img src="__IMG__/loading.gif" alt="">
+                        </th>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td style="border-bottom-width:0">
+                            <div id="chart" style="height:300px;"></div>
+                        </td>
+                    </tr>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="content col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary"><i class="fa fa-bar-chart-o"></i>数据统计</div>
+                <table class="table table-hover">
+                    <tr>
+                        <th>信息名称</>
+                        <th>总数据</th>
+                        <th>操作</th>
+                    </tr>
+                    <volist name="models" id="r">
+                        <tr>
+                            <td>{$r.description}</td>
+                            <td>{$mdata[$r['tablename']]}</td>
+                            <td><a class="btn btn-primary btn-sm" href="{:U($r['tablename'].'/index')}">查看</a></td>
+                        </tr>
+                    </volist>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary">系统信息</div>
+                <table class="table table-hover">
+                    <volist name="server_info" id="v">
+                        <tr>
+                            <td>{:L($key)}:</td>
+                            <td>{$v}</td>
+                        </tr>
+                    </volist>
+                    <tr>
+                        <td>主机品牌：</td>
+                        <td>阿里云主机</td>
+                    </tr>
+                    <tr>
+                        <td>产品名称：</td>
+                        <td>誉字号v1</td>
+                    </tr>
+                    <tr>
+                        <td>版本信息：</td>
+                        <td>{$Think.config.cms_version}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+function currentTime(){
+    var d = new Date(),str = '';
+
+	var today = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+	var week = today[d.getDay()];
+
+    str += week+'&nbsp;&nbsp;';
+	str += d.getHours()+':';
+	str += d.getMinutes()+':';
+	str += d.getSeconds();
+	return str;
+}
+setInterval(function(){$('#time').html(currentTime)},1000);
+</script>
+</block>
+
+<block name="script">
+
+    <script src="__STATIC__/highcharts.js"></script>
+    <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+    <script src="__STATIC__/exporting.js"></script>
+    <script>
+        $(function(){
+            $.ajax({
+                url: "{:U('Admin/Public/public_get_views')}",
+                dataType: "json",
+                success: function (data) {
+                    var r = data.data;
+
+                    //访问数量(pv)
+                    $("#views_pv").html(r.pc_pv.views);
+                    //访问数量(IP)
+                    $("#views_ip").html(r.pc_ip.views);
+                    /*==================pc=================*/
+                    $("#day_pc_pv").html(r.pc_pv.day);
+                    $("#day_pc_ip").html(r.pc_ip.day);
+
+                    $("#yesterday_pc_pv").html(r.pc_pv.yesterday);
+                    $("#yesterday_pc_ip").html(r.pc_ip.yesterday);
+
+                    $("#week_pc_pv").html(r.pc_pv.week);
+                    $("#week_pc_ip").html(r.pc_ip.week);
+
+                    $("#month_pc_pv").html(r.pc_pv.month);
+                    $("#month_pc_ip").html(r.pc_ip.month);
+
+                    /*================mobile===============*/
+                    $("#day_mobile_pv").html(r.mobile_pv.day);
+                    $("#day_mobile_ip").html(r.mobile_ip.day);
+
+                    $("#yesterday_mobile_pv").html(r.mobile_pv.yesterday);
+                    $("#yesterday_mobile_ip").html(r.mobile_ip.yesterday);
+
+                    $("#week_mobile_pv").html(r.mobile_pv.week);
+                    $("#week_mobile_ip").html(r.mobile_ip.week);
+
+                    $("#month_mobile_pv").html(r.mobile_pv.month);
+                    $("#month_mobile_ip").html(r.mobile_ip.month);
+                },
+                error: function () {
+                }
+            });
+
+            $.ajax({
+                url: "{:U('Admin/Public/public_get_count')}",
+                dataType: "json",
+                success: function(data){
+                    $("#feedback_count").text(data.feedback);
+                }
+            });
+            render_chart();
+        });
+
+        var type = 1;
+        var day = 10;
+        function refresh_chart(obj) {
+            var text = $("#type").text();
+            $("#type").text($(obj).text());
+            $(obj).addClass("hover");
+            $(obj).text(text);
+            if(type == 1) {
+                type = 2;
+            }else {
+                type = 1;
+            }
+            day = 10;
+            render_chart();
+        }
+
+        function tab_charts_w(obj) {
+            $(".range").removeClass("range");
+            $(obj).addClass("range");
+            day = 7;
+            render_chart();
+        }
+
+        function tab_charts_m(obj) {
+            $(".range").removeClass("range");
+            $(obj).addClass("range");
+            day = 30;
+            render_chart();
+        }
+
+        function render_chart() {
+            $("#loading").css("display", "inline-block");
+            $.get("{:U('Admin/Public/public_get_chart')}", {"type":type, "day":day},
+                    function(data){
+                        $("#loading").css("display", "none");
+                        get_chart(data.type1,data.type2,data.categories,$("#type").text(),type);
+                    },"json");
+        }
+
+        function get_chart(data1,data2,categories,text,step){
+            var text = text ? text : "手机端统计图表";
+            var stepval = step ? step: 1;
+
+            Highcharts.setOptions({
+                colors:['#27A9E3','#FF6666']
+            });
+            $('#chart').highcharts({
+                chart: {
+                    renderTo: 'container',
+                    defaultSeriesType: 'line',//图表类别，可取值有：line、spline、area、areaspline、bar、column等
+                },
+                credits:{
+                    enabled:false
+                },
+                exporting :{
+                    enabled :false
+                },
+                title: {
+                    text: text,
+                    x: -20
+                },
+                xAxis: {
+                    type : 'datetime',
+                    categories: categories,
+                    labels:{
+                        step:stepval,
+                        staggerLines: 1
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'PV/IP'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }],
+                },
+                tooltip: {
+                    valueSuffix: '',
+                    //shared: true
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                    }
+                },
+                series: [{
+                    name: 'IP',
+                    data: data1
+                }, {
+                    name: 'PV',
+                    data: data2
+                }
+                ]
+            });
+        }
+    </script>
+</block>

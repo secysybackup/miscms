@@ -1,0 +1,48 @@
+@charset "utf-8";
+/**
+深圳市国人伟业信息技术有限公司
+http://www.grwy.cn/
+**/
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+fieldset,img{border:0;}
+img{vertical-align:middle;}
+ol,ul,li{list-style-type:none;}
+table{border-collapse:collapse;border-spacing:0;}
+button,input,select,textarea{font-size:12px;font-family:inherit;margin:0;outline:none;resize:none;border:none;}
+.clearfix:after {clear: both; content: "."; display: block; height: 0; overflow: hidden; visibility: hidden; }
+.clearfix { zoom:1; }
+html{verflow:-Scroll;overflow-x:hidden;zoom:1;overflow-y:scroll;overflow:-moz-scrollbars-vertical;}
+body{font:12px/24px "微软雅黑","宋体",Arial, Helvetica, sans-serif;color:#666;}
+a{color:#666;text-decoration:none;outline:none;blr:expression(this.onFocus=this.blur());}
+a:hover{color:#da251e;text-decoration:none;}:focus{outline:none;}
+
+/* CSS活动的公共样式 */
+.fl{float:left;}
+.fr{float:right;}
+.gr_center{text-align:center;}
+.grWidth{width:1000px; margin:0 auto;}
+.mb10{margin-bottom:10px;}
+.mb15{margin-bottom:15px;}
+.center{text-align:center;}
+.hidden{overflow:hidden;}
+
+
+/* 全国城市分站 */
+.cityTitle{text-align:center;font-size:34px;color:#da251e;height:100px;line-height:100px;}
+.city{border:1px solid #e4e4e4;padding:15px;width:970px;overflow:hidden;margin-bottom:80px;}
+.citySelect{height:24px;margin-bottom:15px;padding-left:10px;}
+.citySelect select{border:1px solid #a6a6a6;width:100px;height:24px;color:#666;margin-right:5px;}
+.citySelect .btn{display:inline-block;height:24px;width:60px;text-align:center;border:1px solid #a6a6a6;background:#dedede;font-size:12px;background:linear-gradient(#f6f6f6,#dedede);cursor:pointer;}
+.citySelect .btn:hover{opacity:0.8;}
+.cityTie{height:30px;line-height:30px;background:#da251e;font-size:14px;color:#fff;font-weight:normal;padding-left:10px;border-bottom:2px solid #da251e;margin-bottom:15px;}
+.cityBox{margin-bottom:15px;overflow:hidden;}
+.cityHot{padding-left:10px;overflow:hidden;font-size:0;zoom:1; }
+.cityHot a{font-size:12px;display:inline-block;margin-right:20px;}
+.cityAll{}
+.cityAll li{padding-left:10px;overflow:hidden;font-size:0;zoom:1;border-bottom:1px dashed #da251e;padding-bottom:15px;margin-bottom:15px;}
+.cityAll li .num{width:50px;float:left;font-size:16px;color:#da251e;}
+.cityAll li .main{width:900px;float:right;}
+.cityAll li .main a{font-size:12px;display:inline-block;margin-right:20px;}
+.backTop {position:fixed;right:50%;bottom:50px;margin-right:-580px;display:none;}
+.backTop a{display:inline-block;width:48px;height:49px;background:url(../images/back_top.png) no-repeat;}
+.backTop a:hover{background-position:-48px 0;}

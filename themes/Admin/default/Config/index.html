@@ -1,0 +1,123 @@
+<extend name="Public:base"/>
+
+
+<!--侧边导航-->
+<block name="aside">
+    <include file="Public:aside"/>
+</block>
+
+<block name="main">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-default">
+                <div class="card-header">公司信息</div>
+                <div class="card-block">
+                    <form class="myform" method="post" action="{:U('config/save')}">
+                        <volist name="company_config" id="vo">
+                            {if $vo['type']==1}
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{$vo.info}:</label>
+                                <div class="col-md-10">
+                                    <input type="hidden" id="{$vo.varname}" name="{$vo.varname}"  value="{$vo['value']}" size="40" />
+                                    <div class="card">
+                                        <div id="image_aid_box"></div>
+                                        <a class="thumbnail" href="javascript:swfupload('{$vo.varname}','{:get_yzh_auth(1,'200kb',1)}',yesdo)">
+                                            <img class="card-img" height="50" src="<if condition="!empty($vo['value'])">{$vo['value']}<else/>__IMG__/upload_thumb.png</if>" id="{$vo.varname}_pic" >
+                                        </a>
+                                        <input type="button" value="取消图片" onclick="javascript:clean_thumb('{$vo.varname}');" class="btn btn-sm btn-info" style="margin:0;" />
+                                    </div>
+                                    <label>(请根据前端实际图片大小进行设计后上传)</label>
+                                </div>
+                            </div>
+                            {else}
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{$vo.info}:</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="{$vo.varname}" value="{$vo.value}">
+                                </div>
+                            </div>
+                            {/if}
+                        </volist>
+
+                        <div class="form-actions">
+                            <input type="submit" value="保存" class="btn btn-primary" />
+                            <input type="reset" value="重置" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">站点信息</div>
+                <div class="card-block">
+                    <form class="myform" method="post" action="{:U('config/save')}">
+                        <div class="form-group">
+                            <label class="control-label">网站名称:</label>
+                            <input type="text" class="form-control"  name="site_name" value="{$site_config.site_name}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">网站logo:</label>
+                            <input type="hidden" id="site_logo" name="site_logo" value="{$site_config.site_logo}"/>
+                            <div class="thumb_box">
+                                <div id="image_aid_box"></div>
+                                <a class="thumbnail" href="javascript:swfupload('site_logo','{:get_yzh_auth(1,'200kb',1)}',yesdo)">
+                                    <img height="80" src="<notempty name="site_config.site_logo">{$site_config.site_logo}<else/>__IMG__/upload_thumb.png</notempty>" id="site_logo_pic" >
+                                </a>
+                                <input type="button" value="取消图片" onclick="javascript:clean_thumb('site_logo');" class="btn btn-sm btn-info"/>
+                            </div>
+                            <label>(请根据前端实际图片大小进行设计后上传)</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">首页标题:</label>
+                            <input type="text" class="form-control"  name="seo_title" value="{$site_config.seo_title}">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">首页关键词:</label>
+                            <input type="text" class="form-control"  name="seo_keywords" value="{$site_config.seo_keywords}">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">首页描述:</label>
+                            <textarea class="form-control" rows="4" cols="60" name="seo_description">{$site_config.seo_description}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">备案信息:</label>
+                            <input type="text" class="form-control"  name="site_approve" value="{$site_config.site_approve}">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">版权信息:</label>
+                            <input type="text" class="form-control" name="site_copyright" value="{$site_config.site_copyright}">
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" value="保存" class="btn btn-primary" />
+                            <input type="reset" value="重置" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.myform').ajaxForm({
+        success:  complete,  // post-submit callback
+        dataType: 'json'
+    });
+});
+
+function complete(data){
+    if(data.status==1){
+        layer.msg('修改成功');
+    }else{
+        layer.msg(data.info);
+    }
+}
+</script>
+</block>

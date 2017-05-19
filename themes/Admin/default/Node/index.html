@@ -1,0 +1,46 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <a class="btn btn-primary" href="{:U('Node/add')}">添加</a>
+</div>
+
+
+<form name="myform" action="{:U('Node/sort')}" method="post">
+    <table class="table table-condensed table-hover">
+        <thead>
+        <tr>
+            <th class="w-50px">Id</th>
+            <th>节点标题</th>
+            <th>节点名称</th>
+            <th>状态</th>
+            <th>管理操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="r">
+            <tr>
+                <td>{$r['id']}</td>
+                <td>{$r['title_show']}</td>
+                <td>{$r['name']}</td>
+                <td>
+                    <eq name="r.status" value="1">
+                        <a href=""><i class="fa fa-check text-success"></i></a>
+
+                        <else/>
+                        <a href="javascript:;"><i class="fa fa-ban text-danger"></i></a>
+                    </eq>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="{:U('node/add',array('pid'=>$r['id'],'groupid'=>$r['groupid']))}">添加子菜单</a>
+                    <a class="btn btn-sm btn-info" href="{:U('node/edit',array('id' => $r['id']))}">修改</a>
+                    <a class="btn btn-sm btn-danger" href="javascript:confirm_delete('{:U('node/delete',array( 'id' => $r['id']))}')">删除</a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</form>
+
+</block>

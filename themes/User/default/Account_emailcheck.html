@@ -1,0 +1,17 @@
+<extend name="User:Common"/>
+
+<block name="main">
+<div id="main" class="container">
+	{if  $send_ok}
+		<h3>注册成功！</h3>
+		<div class="block-msg">
+		{$username},您好！认证邮件已经发送到您的邮箱<strong>{$email}</strong>,请登陆邮箱完成注册！
+		</div>
+	{else}
+		<h3>重新发送认证邮件</h3>
+		<div class="block-msg">
+			您的帐号还未通过邮箱认证,<a href="{:U('Login/emailcheck?resend=1')}">重新发送认证邮件</a>.
+		</div>
+	{/if}
+</div>
+</block>

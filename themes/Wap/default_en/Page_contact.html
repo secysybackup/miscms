@@ -1,0 +1,40 @@
+<extend name="Public:base"/>
+
+<block name="header">
+	<include file="Public:header"/>
+</block>
+<p class="clear"></p>
+<Gr:flash flashid="2"/>
+	<div class="position">
+		<label class="fenlei"><a href="javascript:;" id="catlist">Categories</a></label>
+		<a href="/en.html">Home</a>
+	</div>
+	<p class="positionb"><img src="__IMG__/arcb.jpg"/></p>
+	<div class="catalog">
+		<ul>
+			<li><a href="javascript:;">√{$max_parent_catname} </a></li>
+			<Gr:subcat catid="$max_parent_catid" id="r">
+				<li><a href="{$r['url']}">　{$r['catname']}</a>
+				{if $r['child']==1}
+				<ul>
+					<Gr:subcat catid="r['id']" id="rr">
+						<li><a href="{$r['url']}">{$rr['catname']}</a></li>
+					</Gr:subcat>
+				</ul>
+				{/if}
+			</li>
+		</Gr:subcat>
+	</ul>
+	<span class="catbtn"><img src="__IMG__/icon_slid.png" width="30"/></span>
+</div>
+<p class="clear"></p>
+<div class="cont" style="font-size:14px;">
+	{if $content}{$content}{else}{$catname}{/if}
+	<p class="clear h15"></p>
+	<p class="calla"><a href="{$site_map_address}" target="_blank">查看地图</a></p>
+	<!--<p class="callb"><a href="{$site_map_address}" target="_blank">一键导航</a></p>-->
+	<p class="clear"></p>
+</div>
+<include file="Public:footer"/>
+</body>
+</html>

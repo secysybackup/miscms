@@ -1,0 +1,87 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<style>
+    .attachment{
+        position: relative;
+        color: #464646;
+        cursor: pointer;
+        list-style: none;
+        text-align: center;
+    }
+    .attachment .card-img{
+        height: 100px;
+        max-width: 150px;
+    }
+    .attachment .centered img{
+        height:100%;
+        width: 100%;
+    }
+</style>
+    <div class="table-toolbar yzh-filter">
+        <div class="row">
+            <div class="search-form col-md-8">
+                <form class="form-inline" action="{:U('Attachment/index')}" method="post">
+                    <div class="form-group">
+                        <input type="text" name="start_time" class="form-control laydate-icon" id="start" value="{$start_time}" style="width:200px;">
+                    </div>
+                    <div class="form-group">
+                        -
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="end_time" class="form-control laydate-icon" id="end" value="{$end_time}" style="width:200px;">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="搜索">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <volist name="list" id="vo" key="k">
+            <div id="attachment_{$vo[aid]}" class="col-md-2 attachment">
+                <div class="card">
+                    <img src="{$vo['thumb']}" alt="{$vo['filename']}" class="card-img img-responsive">
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-primary" href="{:U('Attachment/edit','aid='.$vo['aid'])}">编辑</a>
+                    </div>
+
+                </div>
+            </div>
+        </volist>
+    </div>
+
+    <div class="pagination">{$page}</div>
+</block>
+
+<block name="script">
+
+<script>
+var start = {
+    elem: '#start',
+    format: 'YYYY/MM/DD hh:mm:ss',
+//    min: laydate.now(), //设定最小日期为当前日期
+    max: '2099-06-16 23:59:59', //最大日期
+    istime: true,
+    istoday: false,
+    choose: function(datas){
+        end.min = datas; //开始日选好后，重置结束日的最小日期
+        end.start = datas //将结束日的初始值设定为开始日
+    }
+};
+var end = {
+    elem: '#end',
+    format: 'YYYY/MM/DD hh:mm:ss',
+    min: laydate.now(),
+    max: '2099-06-16 23:59:59',
+    istime: true,
+    istoday: false,
+    choose: function(datas){
+        start.max = datas; //结束日选好后，重置开始日的最大日期
+    }
+};
+laydate(start);
+laydate(end);
+</script>
+</block>

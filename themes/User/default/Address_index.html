@@ -1,0 +1,59 @@
+<extend name="Public:base"/>
+
+
+<block name="main">
+
+    <h1 class="title">收货地址</h1>
+
+    <div class="user-address-list J_addressList clearfix">
+        <div class="address-item address-item-new" data-type="" id="J_newAddress">
+            <i class="iconfont">+</i>
+            添加新地址
+        </div>
+        <volist name="list" id="r">
+        <div class="address-item">
+            <div class="box-item{if $r['isdefault']} default{/if}">
+                <dl>
+                    <dt><em class="uname">{$r.consignee}</em></dt>
+                    <dd>{$r.mobile}</dd>
+                    <dd></dd>
+                    <dd>{$area[$r['province']]}-{$area[$r['city']]}-{$area[$r['country']]}-{$area[$r['area']]}<br>{$r.address}({$r.zipcode})</dd>
+
+                </dl>
+
+                {if $r['isdefault']}
+                <span class="default">默认</span>
+                {/if}
+                <div class="action">
+                    <a href="javascript:;" onclick="edit_address({$r['id']})">修改</a>
+                    <a href="javascript:confirm_delete('{:U('Address/delete',array('id'=>$r['id']))}')">删除</a>
+                </div>
+            </div>
+        </div>
+        </volist>
+    </div>
+
+    <script>
+        $('.address-item-new').on('click', function(){
+            layer.open({
+                type: 2,
+                title: false,
+                shadeClose: true,
+                shade: 0.8,
+                area: ['460px', '550px'],
+                content: '/user/address/add' ,
+            });
+        });
+
+        function edit_address(id) {
+            layer.open({
+                type: 2,
+                title: false,
+                shadeClose: true,
+                shade: 0.8,
+                area: ['460px', '550px'],
+                content: '/user/address/edit/id/'+id,
+            });
+        }
+    </script>
+</block>

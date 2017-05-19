@@ -1,0 +1,22 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox">
+        <Gr:subcat catid="catid" id="r">
+            <h3 class="productTtile">{$r.catname}</h3>
+            <ul class="productList">
+                <Gr:subcat catid="$r['id']"  id="rr">
+                    <li><a title="{$rr['catname']}" href="{$Cats[$rr['id']]['url']}"><img width="230" height="173" src="{if $rr['image']}{$rr['image']}{else}__IMG__/nopic.jpg{/if}" alt="{$rr[catname]}" ></a><h3>{$rr['catname']}</h3></li>
+                </Gr:subcat>
+            </ul>
+            <div class="clearfix"></div>
+        </Gr:subcat>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

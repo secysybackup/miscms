@@ -1,0 +1,124 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<div class="table-toolbar">
+    <div class="row">
+        <div class="col-md-9">
+            <if condition="$Think.session.admin.id eq 1">
+            <a class="btn btn-primary" href="{:U('Category/add')}">新增栏目</a>
+            </if>
+            <button class="btn btn-primary" onclick="myform.action='{:U('Category/listorder')}';$('#myform').submit();">排序</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form name="myform" id="myform" action="{:U('category/listorder')}" method="post">
+            <table class="table table-hover table-condensed table-bordered">
+                <thead>
+                <tr>
+                    <th class="w-50">排序</th>
+                    <th class="env-class w-50">ID</th>
+                    <th>栏目名称</th>
+                    <th>栏目类型</th>
+                    <th>在新窗口打开</th>
+                    <th>pc显示</th>
+                    <th>wap显示</th>
+                    <th>访问</th>
+                    <th class="w-300">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="list" id="vo">
+                    <tr $class_id class='$class_css'>
+                        <td  class='table-cell-1'>
+                            <input name="listorders[{$vo.id}]" value="{$vo.listorder}" class="form-control input-c">
+                        </td>
+                        <td class='env-class'>{$vo.id}</td>
+                        <td>
+                            {$vo.title_prefix}{$vo.catname}
+                        </td>
+                        <td>
+                            <if condition="$vo['type'] eq 2">
+                                链接
+                                <else/>
+                                {$models[$vo['modelid']]['name']}
+                            </if>
+                        </td>
+                        <td>
+                            <eq name="vo.isblank" value="1">
+                                <i class="fa fa-check text-success"></i>
+                                <else/>
+                                <i class="fa fa-ban text-danger"></i>
+                            </eq>
+                        </td>
+                        <td>
+                            <eq name="vo.ismenu" value="1">
+                                <i class="fa fa-check text-success"></i>
+                                <else/>
+                                <i class="fa fa-ban text-danger"></i>
+                            </eq>
+                        </td>
+                        <td>
+                            <eq name="vo.is_wap_menu" value="1">
+                                <i class="fa fa-check text-success"></i>
+                                <else/>
+                                <i class="fa fa-ban text-danger"></i>
+                            </eq>
+                        </td>
+                        <td><a href="{$vo.url}" target="_blank">访问</a></td>
+                        <td class="w-300">
+                            <gt name="vo.modelid" value="1">
+                                <a class="btn btn-info btn-sm" href="{:U($vo['model'].'/add',array('catid'=>$vo['id']))}" >添加内容</a>
+                            </gt>
+                            <a class="btn btn-info btn-sm" href="{:U('Category/add',array('parentid'=>$vo['id']))}" >添加子栏目</a>
+                            <a class="btn btn-info btn-sm" href="{:U('Category/edit',array('id'=>$vo['id']))}" >编辑</a>
+                            <?php if($_SESSION['admin']['role'] > 1):?>
+                                <?php if($vo['parentid'] > 0):?>
+                                <a class="btn btn-danger btn-sm" href="javascript:confirm_delete('{:U('category/delete','id='.$vo['id'])}')">删除</a>
+                                <?php endif; ?>
+                            <?php else: ?>
+                            <a class="btn btn-danger btn-sm" href="javascript:confirm_delete('{:U('category/delete','id='.$vo['id'])}')">删除</a>
+                            <?php endif; ?>
+                            <!--<a class="btn btn-danger btn-sm" href="">终极属性转换</a>-->
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+</block>
+
+<block name="script">
+    <script>
+
+        function sort(id,listorder) {
+            layer.prompt({
+                title: '输入数字，并确认',
+                value: listorder,
+                formType: 0 //prompt风格，支持0-2
+            }, function(num){
+                $.ajax({
+                    url:"{:U('Category/listorder')}",
+                    data:{
+                        'id':id,
+                        'listorder':num,
+                    },
+                    type:'post',
+                    success:function(data){
+                        layer.msg(data.info);
+                        window.location.reload();
+                    }
+                });
+
+
+            });
+        }
+
+    </script>
+</block>

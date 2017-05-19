@@ -1,0 +1,44 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div id="yzh-content" class="col-xs-12">
+  <div class="main-title">
+    <h2><a href="{:U('Lang/index')}">多语言管理</a></h2>
+  </div>
+
+  <div class="table-actions">
+  <a class="btn btn-sm btn-primary" href="{:U('Lang/add')}">添加语言</a>
+  <a class="btn btn-sm btn-primary" href="{:U('Lang/param')}">设置语言包</a>
+  <input type="button" class="btn btn-sm btn-primary" name="dosubmit" value="删除" onclick="myform.action='{:U($module_name.'/deleteall')}';return onfirm_deleteall()"/>
+  <input type="button" class="btn btn-sm btn-primary" name="dosubmit" value="<?php echo L('listorder')?>" onclick="myform.action='{:U($module_name.'/listorder')}';$('#myform').submit();"/>
+  </div>
+
+  <form name="myform" id="myform" action="<if condition="$action_name=='add'">{:U($module_name.'/insert')}<else />{:U($module_name.'/update')}</if>" method="post">
+    <table class="form-table">
+      <tr>
+        <td width="120"><font color="red">*</font>{:L(LANG_NAME)}</td>
+        <td><input type="text" id="name" name="name" value="{$vo.name}" class="input-text"  validate="required:true,cn_username:true, minlength:2, maxlength:20"/></td>
+      </tr>
+      <tr>
+        <td width="120"><font color="red">*</font>{:L(LANG_MARK)}</td>
+        <td><input type="text" id="mark" name="mark" value="{$vo.mark}" class="input-text"  validate="required:true,en_num:true, minlength:2, maxlength:20"/> </td>
+      </tr>
+      <tr>
+        <td>{:L(LANG_FLAG)}</td>
+        <td><input type="text" id="flag" name="flag" value="{$vo.flag}" class="input-text"/></td>
+      </tr>
+
+      <tr>
+        <td>{:L(STATUS)}</td>
+        <td>{:Form::radio(array('field'=>'status','options'=>array('1'=>L('yes'),'0'=>L('no'))),$vo['status'])}</td>
+      </tr>
+
+    </table>
+    <div  class="btn">
+      <if condition="$vo['id']!=''"><input type="hidden" name="id" value="{$vo.id}"></if>
+      <input type="submit" value="{:L('dosubmit')}" class="btn btn-sm btn-primary" >
+      <input type="reset" value="{:L('cancel')}" class="btn btn-sm btn-primary">
+    </div>
+  </form>
+</div>
+</block>

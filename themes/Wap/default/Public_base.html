@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" name="viewport">
+	<meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <title>{$seo_title}-{$site_name}</title>
+    <meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}" />
+    <link href="__CSS__/foundation.min.css" rel="stylesheet" type="text/css" />
+	<link href="__CSS__/swiper.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <link href="__CSS__/elpis.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="__JS__/foundation.min.js"></script>
+	<script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+	<script type="text/javascript" src="__JS__/mobile.js"></script>
+	<block name="style"></block>
+</head>
+
+<body>
+
+<header>
+    <div class="header-top">
+        <a href="/" class="logo">
+            <img src="{$wap_logo}" alt="">
+        </a>
+        <a class="channel toggle-slide-right">
+            <i class="icon iconfont">&#xe608;</i>
+        </a>
+        <a class="lang" href="javascript:;">
+            <i class="icon iconfont">&#xe607;</i>
+        </a>
+        <a class="tel" href="tel:{$wap_tel400}">
+            <i class="icon iconfont">&#xe605;</i>
+        </a>
+    </div>
+</header>
+<nav class="g-nav">
+    <ul>
+        <li><a href="javascript:;">中文</a></li>
+        <li><a href="/en">English</a></li>
+    </ul>
+</nav>
+<script>
+    $('.lang').click(function(){
+        $('.g-nav').toggle();
+    });
+</script>
+<nav class="menu slide-menu-right">
+    <ul>
+        <li><button class="close-menu">关闭 &rarr;</button></li>
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <Gr:wapcat catid="0" id="r">
+            <li><a href="{$r.url}">{$r.catname}</a></li>
+        </Gr:wapcat>
+    </ul>
+</nav><!-- /slide menu right -->
+<div id="container">
+    <block name="main"></block>
+</div>
+
+<script type="text/javascript" src="__JS__/classie.js"></script>
+<script type="text/javascript" src="__JS__/nav.js"></script>
+<include file="Public:footer"/>
+<!--系统访问统计-->
+<script>
+	window.onload = function()
+	{
+		$.ajax({
+			type: "get",
+			async: false,
+			url: "http://{$Think.config.SITE_DOMAIN}/Api/Hitstall/index/ismobile/1",
+			dataType: "jsonp",
+		});
+	}
+</script>
+</body>
+</html>

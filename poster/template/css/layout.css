@@ -1,0 +1,97 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.container .page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-size: 100px;
+    text-align: center;
+}
+.container .page>div{
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+.xiangxiatishi{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    -webkit-transform:translateX(-50%);
+    -webkit-animation:dong 1s linear 0s infinite alternate;
+}
+
+html, body {
+    position: relative;
+    height: 100%;
+}
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color:#000;
+    margin: 0;
+    padding: 0;
+}
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+@-webkit-keyframes dong{
+    from{
+        bottom:20px;
+    }
+    to{
+        bottom: 60px;
+    }
+}
+
+#myAudio{display:none}
+.player-button{
+    display:block;
+    width:27px;height:19px;
+    position:fixed;
+    right:10px;
+    bottom:15px;
+    z-index:100000;
+    cursor:pointer;
+    background:url(../ke01_img/music.png) no-repeat;
+    background-position:0 0;
+}
+.player-button-stop{background-position:0 -19px}
+.swiper-slide{position:relative;overflow:hidden}
+.swiper-slide .bg{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0}
+.swiper-slide .bg img{display:block;width:100%;height:100%}

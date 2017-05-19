@@ -1,0 +1,45 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form name="myform" action="{:U('Urlrule/deleteall')}" method="post">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th width="20"><input type="checkbox"  id="check_box"  onclick="selectall('ids[]');" /></th>
+                    <th width="40">ID</th>
+                    <th width="150" align="center">{:L('URL_MAKE_HTML')}</th>
+                    <th width="210" align="left">{:L('URL_example')}</th>
+                    <th align="left">{:L('URL_RULE')}</th>
+                    <th class="w-100">{:L('manage')}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <volist name="list" id="vo" key="k">
+                <tr>
+                <td width="20" align="center"><input type="checkbox" name="ids[]" value="{$vo['id']}" /></td>
+                <td align="center">{$vo['urlruleid']}</td>
+                <td align="center"><eq name="vo['ishtml']" value="1">
+                {:L('yes')}
+                <else />
+                {:L('no')}
+                </eq></td>
+                <td align="left" style="line-height:20px;">{$vo['showexample']}<br>{$vo['listexample']}</td>
+                <td align="left" style="line-height:20px;">{$vo['showurlrule']}<br>{$vo['listurlrule']}</td>
+                <td class="">
+                    <a href="{:U('Urlrule/edit',array(urlruleid=>$vo['urlruleid']))}">编辑</a>
+                    <a href="javascript:confirm_delete('{:U('Urlrule/delete',array(urlruleid=>$vo['urlruleid']))}')">删除</a>
+                </td>
+                </tr>
+                </volist>
+              </tbody>
+            </table>
+
+            <div class="btn">
+                <input type="submit" class="btn btn-sm btn-primary" name="dosubmit" value="<?php echo L('delete')?>" /></div>
+        </div>
+
+    </form>
+
+    <div id="pages">{$page}</div>
+</block>

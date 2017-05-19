@@ -1,0 +1,27 @@
+<extend name="Public:base"/>
+
+<block name="main">
+	<include file="Public:banner"/>
+	<include file="Public:position"/>
+	<div class="listWrapper">
+		<div class="feedback">
+			<form id="frm" method="post" action="{:U('Form/insert')}">
+				<input type="hidden"  name="formid" value="1" />
+				<input type="hidden"  name="title" value="手机端留言" />
+				<ul>
+					<li class="f1"><input name="username" type="text"  placeholder="姓名" ></li>
+					<li class="f2"><input name="tel" type="text"  placeholder="电话" ></li>
+					<li class="f3"><input name="email" type="text"  placeholder="邮箱" ></li>
+					<li class="tarea"> <textarea name="content" cols="" rows="" placeholder="留言"></textarea></li>
+					<li class="code">
+						<input class="input-group-field" name="verifyCode" type="text">
+						<span class="input-group-field">
+							<img src="{:U('Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();" class="fl l10" alt="验证码">
+						</span>
+					</li>
+				</ul>
+				<input type="submit" value="提  交" class="button" id="submit">
+			</form>
+		</div>
+	</div>
+</block>

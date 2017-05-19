@@ -1,0 +1,23 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="content" style="font-size:14px;">
+	<notempty name="content">
+		{$content}
+	<else/>
+		{$catname}
+	</notempty>
+	<p class="clear h15"></p>
+	<p class="calla"><a href="{$site_map_address}" target="_blank">查看地图</a></p>
+	<p class="clear"></p>
+</div>
+</block>

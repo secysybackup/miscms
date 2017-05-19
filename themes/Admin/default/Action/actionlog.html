@@ -1,0 +1,47 @@
+<extend name="Public/base"/>
+
+<!--侧边导航-->
+<block name="aside">
+    <include file="Public:aside"/>
+</block>
+
+<block name="main">
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">行为名称</th>
+                <th class="">执行者</th>
+                <th class="">日志内容</th>
+                <th class="">执行时间</th>
+                <?php if($_SESSION['admin']['role'] == 1):?><th class="">操作</th><?php endif;?>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$action_list[$vo['action_id']]['title']}</td>
+                        <td><a href="{:U('Action/actionlog',array('uid'=>$vo['user_id']))}">{:get_nickname($vo['user_id'])}</a></td>
+                        <td>{$vo['remark']}</td>
+                        <td><span>{$vo.create_time|time_format}</span></td>
+                        <?php if($_SESSION['admin']['role'] == 1):?>
+                        <td>
+                            <a class="confirm ajax-get" href="{:U('Action/remove?ids='.$vo['id'])}">删除</a>
+                        </td>
+                        <?php endif;?>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="7" class="text-center"> aOh! 现在还没有记录 </td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <!-- 分页 -->
+    <div class="with-padding">{$_page}</div>
+    <!-- /分页-->
+
+</block>
+

@@ -1,0 +1,14 @@
+<div class="fullSlide">
+    <div class="bd">
+        <ul>
+            {loop}
+                <li style="background:url({$r['pic']}) center no-repeat;"><a title="{$r['title']}" target="_blank" href="{$r['link']}"></a></li>
+            {/loop}
+        </ul>
+    </div>
+    <a class="prev" href="javascript:void(0)"></a>
+    <a class="next" href="javascript:void(0)"></a>
+</div>
+<script type="text/javascript">
+jQuery(".fullSlide").slide({ mainCell:"ul", effect:"leftLoop", autoPlay:true, mouseOverStop:false ,interTime:"4000",delayTime:"700"});
+</script>

@@ -1,0 +1,89 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="content">
+    <div class="box">
+        <form id="frm" method="post" action="{:U('Form/insert')}">
+            <input type="hidden"  name="formid" value="1" />
+            <input type="hidden"  name="title" value="手机端留言" />
+            <div class="row">
+                <label>姓名：</label>
+                <input name="username" type="text">
+            </div>
+            <div>
+                <label>电话：</label>
+                <input name="tel" type="text">
+            </div>
+            <div>
+                <label>邮箱：</label>
+                <input name="email" type="text">
+            </div>
+            <div>
+                <label>留言：</label>
+                <textarea name="content" cols="" rows=""></textarea>
+            </div>
+            <div>
+                <label>验证：</label>
+                <div class="input-group">
+                    <input class="input-group-field" name="verifyCode" type="text">
+                    <span class="input-group-field">
+                        <img src="{:U('Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();" class="fl l10" alt="验证码">
+                    </span>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="提  交" class="button" id="submit">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("#frm").submit(function () {
+        var obj = document.getElementById("frm");
+        if(obj.content.value == '') {
+            layer.open({
+                content: '请填写联系信息及留言内容',
+                style: 'background-color:#09C1FF; color:#fff; border:none;',
+                time: 2
+            });
+            return false;
+        }
+        if(obj.verifyCode.value == '') {
+            layer.open({
+                content: '请输入验证码',
+                style: 'background-color:#09C1FF; color:#fff; border:none;',
+                time: 2
+            });
+            return false;
+        }
+
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data) {
+            if (data.status == 1) {
+                layer.open({
+                    content: '感谢您的留言，我们会尽快联系您',
+                    style: 'background-color:#09C1FF; color:#fff; border:none;',
+                    time: 2
+                });
+                $('#frm')[0].reset();
+            } else {
+                layer.open({
+                    content: data.info,
+                    style: 'background-color:#09C1FF; color:#fff; border:none;',
+                    time: 2
+                });
+            }
+        }
+    });
+</script>
+</block>

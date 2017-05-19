@@ -1,0 +1,81 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>全国城市分站</title>
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="__CSS__/region.css">
+</head>
+<body>
+<h1 class="cityTitle">全国城市分站</h1>
+<div class="city grWidth">
+    <div class="cityBox1">
+        <h3 class="cityTie">全国城市选择</h3>
+        <div class="citySelect">
+            <select name="province" id="province" onchange="area_change(this.value, 1,'province','city');">
+                <option value="">省份</option>
+            </select>
+            <select name="city" onchange="area_change(this.value, 2,'province','city');" id="city">
+                <option value="">城市</option>
+            </select>
+            <button class="btn" onclick="gotourl()">确定</button>
+        </div>
+    </div>
+    <div class="cityBox2 cityBox">
+        <h3 class="cityTie">热门城市</h3>
+        <div class="cityHot">
+            <php>foreach($hot as $key=>$val){</php>
+            <a href="/{$val.letter}.html">{$val.name}</a>
+            <php>}</php>
+        </div>
+    </div>
+    <div class="cityBox2 cityBox">
+        <h3 class="cityTie">所有城市</h3>
+        <ul class="cityAll hidden">
+        <php>foreach($city as $key=>$val){</php>
+            <php>if(!empty($val)){</php>
+            <li>
+                <span class="num">{$key}</span>
+                <div class="main">
+                    <php>foreach($val as $v){</php>
+                    <a href="/{$v.letter}.html">{$v.name}</a>
+                    <php>}</php>
+                </div>
+            </li>
+            <php>}</php>
+        <php>}</php>
+        </ul>
+    </div>
+</div>
+<script type="application/javascript">
+    function area_change(id,level,province,city){
+        var datas={'level':level};
+        $.ajax({
+            type:"POST",
+            url:"/index.php?m=region&a=area&id="+id,
+            data: datas,
+            timeout:"4000",
+            dataType:"JSON",
+            success: function(data){
+                if(level==0){
+                    $('#'+province).html(data.province);
+                    $('#'+city).html(data.city);
+                }else if(level==1){
+                    $('#'+city).html(data.city);
+                }
+            }
+        });
+    }
+    area_change(0, 0,'province','city');
+
+    function gotourl(){
+        var city = $("#city").find("option:selected").attr('letter');
+        if (city!=0) {
+            window.open('/'+city+'.html');
+        } else {
+            alert('请选择城市!');
+        }
+
+    }
+</script>
+</body>
+</html>

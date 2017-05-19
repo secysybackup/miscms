@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='__PUBLIC__/admin/css/style.css'>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__JS__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.form.js"></script>
+</head>
+<body>
+<style type="text/css">
+    .cu,.cu-li li,.cu-span span {cursor: hand;!important;cursor: pointer}
+    .line_ff9966,.line_ff9966:hover td{
+        background-color:#FF9966;
+    }
+    .line_fbffe4,.line_fbffe4:hover td {
+        background-color:#fbffe4;
+    }
+</style>
+<div class="panel-body">
+    <form name="searchform" action="{:U('Content/public_relationlist')}" method="post">
+        <div class="table-toolbar">
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <select name="catid" class="form-control">
+                        <option value="0">不限栏目</option>
+                        {$select_categorys}
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group search-form">
+                        <input type="text" class="form-control" name="keywords" value="{$Think.get.keywords}" placeholder="标题/关键字/ID">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">搜索</button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th align="center">点击量</th>
+                <th>发布人</th>
+                <th>发布时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        <volist name="data" id="vo">
+            <tr onClick="select_list(this,'{$vo.title}','{$field}',{$vo.id})"  class="cu" title="点击选择">
+                <td>{$vo.id}</td>
+                <td ><a href="javascript:;;">
+                    <span style="" >
+                    <if condition=" $vo['status']==1 ">{$vo.title}
+                        <else/>
+                        <font color="#FF0000">[未审核]</font> - {$vo.title}</if>
+                  </span>
+                </a>
+                    <if condition=" $vo['thumb']!='' "> <img src="__PUBLIC__/images/icon/small_img.gif" title="标题图片"> </if>
+                    <if condition=" $vo['posids'] "> <img src="__PUBLIC__/images/icon/small_elite.gif" title="推荐位"> </if>
+                    <if condition=" $vo['islink'] "> <img src="__PUBLIC__/images/icon/link.png" title="转向地址"> </if></td>
+                <td align="center">{$vo.views}</td>
+                <td>{$vo.username}</td>
+                <td>{$vo.updatetime|date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right pagination">{$Page}</div>
+        </div>
+    </div>
+</div>
+<script>
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+    function select_list(obj, title,field, id) {
+        if ($(obj).attr('class') == 'line_ff9966' || $(obj).attr('class') == null) {
+            $(obj).attr('class', 'line_fbffe4');
+            parent.$('#' + field+'_'+id).remove();
+        } else {
+            $(obj).attr('class', 'line_ff9966');
+            var str = "<li id='" + field + "_"+id+"'>·<span>" + title + "</span><a href='javascript:;' class='close' onclick=\"remove_relation('" + field + "'," + id + ")\"></a>" +
+                    "<input type='hidden' name='"+field+"[]' value='"+id+"'/></li>";
+            parent.$('#relation_text').append(str);
+        }
+    }
+</script>
+</body>
+</html>

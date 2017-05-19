@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="w3c">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="__CSS__/elpis.min.css">
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/layout.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+</head>
+<body style="padding: 25px">
+<style>
+    .select-box{
+        width: 32.4%;
+        padding: .45rem .75rem;
+        font-size: 1rem;
+        line-height: 1.25;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 0;
+    }
+</style>
+<form id="myform" method="post" action="/User/Address/edit">
+    <input type="hidden" name="id" value="{$adr.id}">
+    <div class="form-group">
+        <label>所在地区</label>
+        <div id="areaselect">
+        <select name="province" id="province" onchange="area_change(this.value, 1,'province','city','area');" class="select-box" >
+            <option value="0">请选择省份</option>
+        </select>
+        <select name="city" onchange="area_change(this.value, 2,'province','city','area');" id="city" class="select-box" >
+            <option value="0">请选择城市</option>
+        </select>
+        <select name="area" onchange="area_change(this.value, 3,'province','city','area');" id="area" class="select-box" >
+            <option value="0">请选择区域</option>
+        </select>
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2">详细地址</label>
+        <div class="col-md-6">
+            <textarea class="form-control" type="text" name="address">{$adr.address}</textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2">邮政编码</label>
+        <div class="col-md-6">
+            <input class="form-control" type="text" name="zipcode" value="{$adr.zipcode}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2">收货人姓名</label>
+        <div class="col-md-6">
+            <input class="form-control" type="text" name="consignee" value="{$adr.consignee}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2">手机号码</label>
+        <div class="col-md-6">
+            <input class="form-control" type="text" name="mobile" value="{$adr.mobile}">
+        </div>
+    </div>
+    <div class="pure-controls">
+        <label for="cb" class="col-md-offset-2">
+            <input id="cb" type="checkbox" name="isdefault" value="1" {if $adr['isdefault']==1}checked="checked"{/if}> 设置为默认收货地址
+        </label>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    address_change({$adr['id']});
+    function address_change(id){
+        $.ajax({
+            type:"POST",
+            url: "/ajax/address.html?do=get&id="+id,
+            timeout:"4000",
+            dataType:"JSON",
+            success: function(data){
+                if(data.id){
+                    area_change(0, 0,'province','city','area',data.province,data.city,data.area);
+                    $('#address').val(data.address);
+                    $('#zipcode').val(data.zipcode);
+                    $('#consignee').val(data.consignee);
+                    $('#tel').val(data.tel);
+                    $('#email').val(data.email);
+                    $('#mobile').val(data.mobile);
+                    $('#addressid').val(data.id);
+                    $('#address_li_'+data.id+" input").attr("checked",true);
+                }else{
+                    layer.msg('操作失败!', {
+                        icon: 2,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+            },
+            error:function(){
+                layer.msg('Link error,操作失败!', {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        });
+    }
+
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    $("#myform").submit(function () {
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data) {
+            if (data.status == 1) {
+                parent.layer.msg(data.info, {
+                    icon: 1,
+                    time: 5000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                parent.location.reload();
+                parent.layer.close(index);
+
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                $(".reloadverify").click();
+            }
+        }
+    });
+    function area_change(id,level,province,city,area,provinceid,cityid,areaid){
+        var datas={'level':level,'provinceid':provinceid,'cityid':cityid,'areaid':areaid};
+        $.ajax({
+            type:"POST",
+            url:"/index.php?m=ajax&a=area&id="+id,
+            data: datas,
+            timeout:"4000",
+            dataType:"JSON",
+            success: function(data){
+                if(level==0){
+                    $('#'+province).html(data.province);
+                    $('#'+city).html(data.city);
+                    $('#'+area).html(data.area);
+                }else if(level==1){
+                    $('#'+city).html(data.city);
+                    $('#'+area).html(data.area);
+                }else if(level==2){
+                    $('#'+area).html(data.area);
+                }
+            },
+            error:function(){
+                alert("time out,try it");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+<form id="myform" action="{:U('Slide/add')}</if>" method="post">
+    <div class="form-group row">
+        <label class="form-control-label col-md-2"><font color="red">*</font>{:L(name)}</label>
+        <div class="col-md-5">
+            <input type="text" name="name" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">幻灯片宽</label>
+        <div class="col-md-5">
+            <input type="text" name="width" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">幻灯片高</label>
+        <div class="col-md-5">
+            <input type="text" name="height" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">图片数量</label>
+        <div class="col-md-5">
+            <input type="text" name="num" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2">状态</label>
+        <div class="col-md-5">
+            {:Form::radio(array('field'=>'status','options'=>array('1'=>L('enable'),'0'=>L('disable'))),1)}
+        </div>
+    </div>
+    <div  class="form-actions">
+        <input type="submit" value="确认" class="btn btn-primary" />
+        <a href="{:U('Slide/index')}" class="btn btn-primary">返回广告列表</a>
+    </div>
+</form>
+
+</block>
+
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    window.location.href = "{$Think.cookie.__forward__}";
+                    return true;
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    </script>
+</block>

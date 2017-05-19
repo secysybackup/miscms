@@ -1,0 +1,63 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="/public/static/jquery-1.10.2.min.js"></script>
+	<title>Document</title>
+	<style>
+		body{
+			margin: 0;
+			padding:0;
+		}
+		.p-ct {
+			position: relative;
+			width: 640px;
+			height: 100%;
+			overflow: hidden;
+		}
+		.translate-back {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		.m-page {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 9;
+			background: #ddd;
+		}
+		.m-page .page-con {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		.page-con {
+			height: 475px!important;
+		}
+		.lazy-img, .lazy-finish {
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="p-ct" style="width: 320px">
+		<div class="translate-back">
+			<div class="m-page m-bigTxt" data-page-type="animation" style="height: 475px;">
+				<div class="page-con j-txtWrap lazy-img"></div>
+			</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+//初始化页面元素
+var globalData=window.parent.app.data[{$page}];
+var backroundImage = 'url('+globalData.content+')';
+$('.page-con').css('background-image',backroundImage);
+</script>
+</body>
+</html>

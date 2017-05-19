@@ -1,0 +1,49 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <form id="myform" method='post' action="{:U('Member/config')}">
+
+        <volist name="member_config" id="vo">
+        {if $vo[varname] =='getpwdemaitpl' || $vo[varname]=='emailchecktpl'}
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">{$vo.info}:</label>
+            <div class="col-md-10">
+                {:W('Kindeditor',array('name'=>$vo['varname'],'value'=>$vo['value']))}
+            </div>
+        </div>
+        {else}
+        <div class="form-group row">
+            <label class="form-control-label col-md-2">{$vo.info}:</label>
+            <div class="col-md-5">{:Form::radio(array('field'=>$vo[varname],'options'=>array('1'=>L('yes'),'0'=>L('no'))),$vo['value'])}</div>
+        </div>
+        {/if}
+
+        </volist>
+
+        <div class="form-actions">
+            <input type="submit" value="保存" class="btn btn-primary">
+            <input type="reset" value="重置" class="btn btn-primary">
+        </div>
+    </form>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#myform').ajaxForm({
+                success:  complete,  // post-submit callback
+                dataType: 'json'
+            });
+        });
+
+        function complete(data){
+            if(data.status==1){
+                layer.msg('修改成功');
+            }else{
+                layer.msg(data.info);
+            }
+        }
+    </script>
+</block>

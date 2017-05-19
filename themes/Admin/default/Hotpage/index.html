@@ -1,0 +1,40 @@
+<extend name="Public:base"/>
+
+<block name="main">
+
+    <div class="table-toolbar">
+        <a href="{:U('Hotpage/add')}" class="btn btn-primary">新增</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="w-50">id</th>
+                        <th>名称</th>
+                        <th>外链地址</th>
+                        <th>添加时间</th>
+                        <th style="width: 220px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <volist name="list" id="vo">
+                    <tr>
+                        <td>{$vo['id']}</td>
+                        <td>{$vo['title']}</td>
+                        <td><a target="_blank" href="http://{$SITE_DOMAIN}/hot/{$vo['id']}.html">http://{$SITE_DOMAIN}/hot/{$vo['id']}.html</a></td>
+                        <td>{$vo['createtime']|toDate=###,'Y-m-d'}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('Hotpage/html','id='.$vo['id'])}" title="生成静态">生成</a>
+                            <a class="btn btn-sm btn-primary" href="{:U('Hotpage/message','id='.$vo['id'])}">留言管理</a>
+                            <a class="btn btn-sm btn-primary" href="{:U('Hotpage/edit','id='.$vo['id'])}">编辑</a>
+                            <a class="btn btn-sm btn-danger" href="{:U('Hotpage/delete','id='.$vo['id'])}">删除</a>
+                        </td>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</block>

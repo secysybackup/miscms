@@ -1,0 +1,29 @@
+<extend name="Public:base"/>
+
+<block name="main">
+<div class="w980 ptb25 oh">
+    <include file="Public:left"/>
+    <div class="pageContent fr">
+        <include file="Public:title"/>
+        <div class="pageContentBox" style="padding:0">
+            <ul class="newsList">
+                <notempty name="list">
+                    <volist name="list" id="r">
+                        <li>
+                            <a href="{$r['url']}" title="{$r['title']}"><img alt="{$r['title']}" height="150" src="{if $r['thumb']}{$r['thumb']}{else}__IMG__/nopic.jpg{/if}"/></a>
+                            <h3><a href="{$r['url']}" title="{$r['title']}">{$r['title']|str_cut=###,65}</a></h3>
+                            <h4>{$r['createtime']|toDate=###,'Y-m-d'}</h4>
+                            <p>{$r['description']|str_cut=###,180}<a href="{$r['url']}" title="{$r['title']}">[查看详细]</a></p>
+                        </li>
+                    </volist>
+                <else/>
+                    {$catname}
+                </notempty>
+            </ul>
+            <div class="clearfix"></div>
+            <div class="pagination">{$pages}</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</block>

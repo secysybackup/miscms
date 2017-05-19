@@ -1,0 +1,92 @@
+<div class="section">
+	<ul id="tags">
+		<li class="selectTag"><a onClick="selectTag('tagContent0',this)" href="javascript:void(0)">联系我们</a></li>
+		<li><a onClick="selectTag('tagContent1',this)" href="javascript:void(0)">在线留言</a></li>
+		<li><a onClick="selectTag('tagContent2',this)" href="javascript:void(0)">我要评论</a></li>
+	</ul>
+	<div id="tagContent">
+		<div class="tagContent selectTag" id="tagContent0">
+			<ul class="contact">
+				<li><a href="tel:{$site_telephone}"><div><img src="__IMG__/c_tel.jpg"/><br/>电话咨询</div></a></li>
+				<li><a href="sms:+86 {$site_phone}"><div><img src="__IMG__/c_sms.jpg"/><br/>短信咨询</div></a></li>
+				<li><a href="mailto:{$site_email}"><div><img src="__IMG__/c_email.jpg"/><br/>邮件咨询</div></a></li>
+			</ul>
+		</div>
+		<div class="tagContent" id="tagContent1">
+			<form id="frm" method="post" action="{:U('Form/insert')}">
+				<input type="hidden" name="formid" value="1" />
+				<input type="hidden" name="title" value="手机端留言" />
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="username" type="text" id="inp_name" placeholder="姓名">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="tel" type="text" id="inp_tel" placeholder="手机">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							<input name="email" type="text" id="inp_tel" placeholder="邮箱">
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+						<textarea name="content" cols="10" rows="4" placeholder="留言"></textarea></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+						<div class="input-group">
+							<input name="verifyCode" type="text" class="input-group-field" placeholder="验证码">
+							<span class="input-group-field"><img src="{:U('Wap/Public/verify')}" onClick="this.src='{:U('Public/verify')}?'+Math.random();"></span>
+						</div>
+						</label>
+					</div>
+				</div>
+				<div class="small-12 columns">
+					<input type="submit" value="提  交" class="expanded button" id="submit">
+				</div>
+			</form>
+		</div>
+		<div class="tagContent" id="tagContent2">
+			<!-- UY BEGIN -->
+			<div id="uyan_frame"></div>
+			<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js"></script>
+			<!-- UY END -->
+		</div>
+	</div>
+</div>
+<script>
+$("#frm").submit(function () {
+	var self = $(this);
+	$.post(self.attr("action"), self.serialize(), success, "json");
+	return false;
+
+	function success(data) {
+		if (data.status == 1) {
+			layer.open({
+				content: '感谢您的留言，我们会尽快联系您',
+				style: 'background-color:#09C1FF; color:#fff; border:none;',
+				time: 2
+			});
+			$('#frm')[0].reset();
+		} else {
+			layer.open({
+				content: data.info,
+				style: 'background-color:#09C1FF; color:#fff; border:none;',
+				time: 2
+			});
+		}
+	}
+});
+</script>

@@ -1,0 +1,29 @@
+<extend name="Public:base"/>
+
+<div class="main">
+<!--搜索-->
+<include file="Public:search"/>
+
+<!--广告-->
+<include file="Public:slide"/>
+
+<!--当前位置-->
+<include file="Public:position"/>
+
+<div class="news_list">
+	<ul>
+		<volist name="list" id="r">
+			<li>
+				<a href="{:U('Article/show',array('id'=>$r['catid'],'chid'=>$r['id']))}"><h2><img src="__IMG__/arcc.jpg"/>{$r.title|str_cut=###,30}</h2>
+					<p>{$r.description|str_cut=###,180}</p></a>
+			</li>
+		</volist>
+
+		<p class="clear"></p>
+		<div id="pagelist">
+			{$pages}
+		</div>
+	</ul>
+</div>
+<include file="Public:footer"/>
+</div>

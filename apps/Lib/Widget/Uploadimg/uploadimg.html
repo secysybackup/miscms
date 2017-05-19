@@ -1,0 +1,7 @@
+<input type="hidden" id="{$data['name']}" name="{$data['name']}" value="{$data['value']}" />
+<div class="thumb_box" style ="left:500px;width:97px;height:130px;padding:2px;top:-7px;">
+    <div id="image_aid_box"></div>
+    <a href="javascript:swfupload('{$data['name']}','{:get_yzh_auth(1,'1MB',-1)}',yesdo)">
+        <img style="width:100px;height: 100px;" src="<if condition="!empty($data['value'])">{$data['value']}<else/>__IMG__/upload_thumb.png</if>" id="{$data['name']}_pic" ></a><br>
+    <input type="button" value="取消图片" onclick="javascript:clean_thumb('{$data['name']}');" class="btn btn-sm btn-info" style="margin:0;" />
+</div>

@@ -1,0 +1,22 @@
+<extend name="Public:base"/>
+
+<block name="main">
+    <div class="list_wrapper gr_width">
+        <include file="Public:left"/>
+        <!-- 内页右侧 -->
+        <div class="list_right">
+            <!-- 当前位置 -->
+            <include file="Public:title"/>
+            <div class="list_box">
+                <!-- 右侧主体内容 -->
+                <div class="case_detail">
+                    <h2 class="title">{$video.title}</h2>
+                    <div class="case_detail_con">
+                        <iframe height=498 width=510 src="{$video.content}" frameborder=0 allowfullscreen></iframe>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
